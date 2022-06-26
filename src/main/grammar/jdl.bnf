@@ -99,8 +99,9 @@ serviceOption ::= SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? e
     recoverWhile = notBraceOrNextBlock
 }
 
-entityBlock ::= ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? (LBRACE entityContent RBRACE)? {
+entityBlock ::= ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? (LBRACE entityFieldMapping* RBRACE)? {
     pin = 1
+    recoverWhile = notBraceOrNextBlock
 }
 
 wildcardLiteral ::= WILDCARD {
@@ -111,9 +112,9 @@ entityTableName ::= IDENTIFIER {
     name = "table name"
 }
 
-private entityContent ::= entityFieldMapping*
-
-entityFieldMapping ::= fieldName fieldType COMMA?
+entityFieldMapping ::= fieldName fieldType COMMA? {
+    recoverWhile = notBraceOrNextBlock
+}
 
 enumBlock ::= ENUM_KEYWORD id LBRACE enumContent RBRACE {
     pin = 1
