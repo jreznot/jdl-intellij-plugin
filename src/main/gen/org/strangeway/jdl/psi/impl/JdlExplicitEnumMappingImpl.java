@@ -11,14 +11,14 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlEnumValueImpl extends ASTWrapperPsiElement implements JdlEnumValue {
+public class JdlExplicitEnumMappingImpl extends ASTWrapperPsiElement implements JdlExplicitEnumMapping {
 
-  public JdlEnumValueImpl(@NotNull ASTNode node) {
+  public JdlExplicitEnumMappingImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitEnumValue(this);
+    visitor.visitExplicitEnumMapping(this);
   }
 
   @Override
@@ -28,15 +28,9 @@ public class JdlEnumValueImpl extends ASTWrapperPsiElement implements JdlEnumVal
   }
 
   @Override
-  @NotNull
-  public JdlEnumKey getEnumKey() {
-    return findNotNullChildByClass(JdlEnumKey.class);
-  }
-
-  @Override
   @Nullable
-  public JdlExplicitEnumMapping getExplicitEnumMapping() {
-    return findChildByClass(JdlExplicitEnumMapping.class);
+  public JdlStringLiteral getStringLiteral() {
+    return findChildByClass(JdlStringLiteral.class);
   }
 
 }

@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlEnumValue extends PsiElement {
-
-  @NotNull
-  JdlEnumKey getEnumKey();
+public interface JdlExplicitEnumMapping extends PsiElement {
 
   @Nullable
-  JdlExplicitEnumMapping getExplicitEnumMapping();
+  JdlStringLiteral getStringLiteral();
 
 }

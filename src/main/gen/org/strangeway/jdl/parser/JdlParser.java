@@ -418,15 +418,38 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // enumValue*
+  // enumValue (COMMA enumValue)*
   static boolean enumContent(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enumContent")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = enumValue(b, l + 1);
+    r = r && enumContent_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COMMA enumValue)*
+  private static boolean enumContent_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enumContent_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!enumValue(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "enumContent", c)) break;
+      if (!enumContent_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "enumContent_1", c)) break;
     }
     return true;
+  }
+
+  // COMMA enumValue
+  private static boolean enumContent_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enumContent_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && enumValue(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -442,15 +465,23 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // enumKey
+  // enumKey explicitEnumMapping?
   public static boolean enumValue(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enumValue")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = enumKey(b, l + 1);
+    r = r && enumValue_1(b, l + 1);
     exit_section_(b, m, ENUM_VALUE, r);
     return r;
+  }
+
+  // explicitEnumMapping?
+  private static boolean enumValue_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enumValue_1")) return false;
+    explicitEnumMapping(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -462,6 +493,29 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, EXCEPT_KEYWORD);
     r = r && entitiesList(b, l + 1);
     exit_section_(b, l, m, r, false, JdlParser::notBraceOrNextBlock);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // LPARENTH (IDENTIFIER | stringLiteral) RPARENTH
+  public static boolean explicitEnumMapping(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "explicitEnumMapping")) return false;
+    if (!nextTokenIs(b, LPARENTH)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPARENTH);
+    r = r && explicitEnumMapping_1(b, l + 1);
+    r = r && consumeToken(b, RPARENTH);
+    exit_section_(b, m, EXPLICIT_ENUM_MAPPING, r);
+    return r;
+  }
+
+  // IDENTIFIER | stringLiteral
+  private static boolean explicitEnumMapping_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "explicitEnumMapping_1")) return false;
+    boolean r;
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = stringLiteral(b, l + 1);
     return r;
   }
 

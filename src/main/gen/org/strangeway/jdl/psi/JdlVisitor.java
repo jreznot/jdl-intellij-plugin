@@ -71,6 +71,10 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitExplicitEnumMapping(@NotNull JdlExplicitEnumMapping o) {
+    visitPsiElement(o);
+  }
+
   public void visitFieldName(@NotNull JdlFieldName o) {
     visitPsiElement(o);
   }

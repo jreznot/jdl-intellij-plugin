@@ -24,6 +24,7 @@ public interface JdlTokenTypes {
   IElementType ENUM_KEY = new JdlElementType("ENUM_KEY");
   IElementType ENUM_VALUE = new JdlElementType("ENUM_VALUE");
   IElementType EXCEPT_ENTITIES = new JdlElementType("EXCEPT_ENTITIES");
+  IElementType EXPLICIT_ENUM_MAPPING = new JdlElementType("EXPLICIT_ENUM_MAPPING");
   IElementType FIELD_NAME = new JdlElementType("FIELD_NAME");
   IElementType FIELD_TYPE = new JdlElementType("FIELD_TYPE");
   IElementType ID = new JdlElementType("ID");
@@ -120,6 +121,9 @@ public interface JdlTokenTypes {
       }
       else if (type == EXCEPT_ENTITIES) {
         return new JdlExceptEntitiesImpl(node);
+      }
+      else if (type == EXPLICIT_ENUM_MAPPING) {
+        return new JdlExplicitEnumMappingImpl(node);
       }
       else if (type == FIELD_NAME) {
         return new JdlFieldNameImpl(node);
