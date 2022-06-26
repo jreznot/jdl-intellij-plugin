@@ -10,7 +10,7 @@ import org.strangeway.jdl.psi.*;
 public class JdlPropertyNameAnnotator implements Annotator {
   @Override
   public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-    if (element instanceof JdlOptionName) {
+    if ((element instanceof JdlOptionName) || (element instanceof JdlFieldName)) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_NAME)

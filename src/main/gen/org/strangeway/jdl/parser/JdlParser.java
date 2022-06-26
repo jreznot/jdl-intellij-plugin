@@ -364,7 +364,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // fieldName fieldType
+  // fieldName fieldType COMMA?
   public static boolean entityFieldMapping(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entityFieldMapping")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -372,8 +372,16 @@ public class JdlParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = fieldName(b, l + 1);
     r = r && fieldType(b, l + 1);
+    r = r && entityFieldMapping_2(b, l + 1);
     exit_section_(b, m, ENTITY_FIELD_MAPPING, r);
     return r;
+  }
+
+  // COMMA?
+  private static boolean entityFieldMapping_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityFieldMapping_2")) return false;
+    consumeToken(b, COMMA);
+    return true;
   }
 
   /* ********************************************************** */
@@ -809,7 +817,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption?
+  // SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? exceptEntities?
   public static boolean serviceOption(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "serviceOption")) return false;
     boolean r, p;
@@ -817,7 +825,8 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, SERVICE_KEYWORD);
     p = r; // pin = 1
     r = r && report_error_(b, serviceOption_1(b, l + 1));
-    r = p && serviceOption_2(b, l + 1) && r;
+    r = p && report_error_(b, serviceOption_2(b, l + 1)) && r;
+    r = p && serviceOption_3(b, l + 1) && r;
     exit_section_(b, l, m, r, p, JdlParser::notBraceOrNextBlock);
     return r || p;
   }
@@ -835,6 +844,13 @@ public class JdlParser implements PsiParser, LightPsiParser {
   private static boolean serviceOption_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "serviceOption_2")) return false;
     withOption(b, l + 1);
+    return true;
+  }
+
+  // exceptEntities?
+  private static boolean serviceOption_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "serviceOption_3")) return false;
+    exceptEntities(b, l + 1);
     return true;
   }
 

@@ -11,6 +11,9 @@ public interface JdlServiceOption extends PsiElement {
   JdlEntitiesList getEntitiesList();
 
   @Nullable
+  JdlExceptEntities getExceptEntities();
+
+  @Nullable
   JdlWildcardLiteral getWildcardLiteral();
 
   @Nullable

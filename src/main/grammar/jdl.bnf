@@ -94,7 +94,7 @@ paginateOption ::= PAGINATE_KEYWORD (wildcardLiteral | entitiesList) withOption?
     recoverWhile = notBraceOrNextBlock
 }
 
-serviceOption ::= SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? {
+serviceOption ::= SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? exceptEntities? {
     pin = 1
     recoverWhile = notBraceOrNextBlock
 }
@@ -113,7 +113,7 @@ entityTableName ::= IDENTIFIER {
 
 private entityContent ::= entityFieldMapping*
 
-entityFieldMapping ::= fieldName fieldType
+entityFieldMapping ::= fieldName fieldType COMMA?
 
 enumBlock ::= ENUM_KEYWORD id LBRACE enumContent RBRACE {
     pin = 1

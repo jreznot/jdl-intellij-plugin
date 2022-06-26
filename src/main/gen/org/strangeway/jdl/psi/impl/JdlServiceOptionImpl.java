@@ -35,6 +35,12 @@ public class JdlServiceOptionImpl extends ASTWrapperPsiElement implements JdlSer
 
   @Override
   @Nullable
+  public JdlExceptEntities getExceptEntities() {
+    return findChildByClass(JdlExceptEntities.class);
+  }
+
+  @Override
+  @Nullable
   public JdlWildcardLiteral getWildcardLiteral() {
     return findChildByClass(JdlWildcardLiteral.class);
   }
