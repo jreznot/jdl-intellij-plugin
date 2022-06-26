@@ -68,6 +68,8 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
     "with"                               { return WITH_KEYWORD; }
     "except"                             { return EXCEPT_KEYWORD; }
     "deployment"                         { return DEPLOYMENT_KEYWORD; }
+    "relationship"                       { return RELATIONSHIP_KEYWORD; }
+    "to"                                 { return TO_KEYWORD; }
 
     {IDENTIFIER}                         { return IDENTIFIER; }
     {INTEGER_LITERAL}                    { return INTEGER_NUMBER; }

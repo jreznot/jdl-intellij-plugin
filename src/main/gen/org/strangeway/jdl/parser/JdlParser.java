@@ -556,7 +556,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD)
+  // !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD|RELATIONSHIP_KEYWORD)
   static boolean notBraceOrNextBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "notBraceOrNextBlock")) return false;
     boolean r;
@@ -566,7 +566,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // '}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD
+  // '}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD|RELATIONSHIP_KEYWORD
   private static boolean notBraceOrNextBlock_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "notBraceOrNextBlock_0")) return false;
     boolean r;
@@ -579,6 +579,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, PAGINATE_KEYWORD);
     if (!r) r = consumeToken(b, ENUM_KEYWORD);
     if (!r) r = consumeToken(b, DEPLOYMENT_KEYWORD);
+    if (!r) r = consumeToken(b, RELATIONSHIP_KEYWORD);
     return r;
   }
 
@@ -705,7 +706,81 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (applicationBlock | entityBlock | enumBlock | deploymentBlock | paginateOption | dtoOption | serviceOption)*
+  // RELATIONSHIP_KEYWORD relationshipType LBRACE relationshipMapping (COMMA relationshipMapping)* RBRACE
+  public static boolean relationshipBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipBlock")) return false;
+    if (!nextTokenIs(b, RELATIONSHIP_KEYWORD)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, RELATIONSHIP_BLOCK, null);
+    r = consumeToken(b, RELATIONSHIP_KEYWORD);
+    p = r; // pin = 1
+    r = r && report_error_(b, relationshipType(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, LBRACE)) && r;
+    r = p && report_error_(b, relationshipMapping(b, l + 1)) && r;
+    r = p && report_error_(b, relationshipBlock_4(b, l + 1)) && r;
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // (COMMA relationshipMapping)*
+  private static boolean relationshipBlock_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipBlock_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!relationshipBlock_4_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "relationshipBlock_4", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA relationshipMapping
+  private static boolean relationshipBlock_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipBlock_4_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && relationshipMapping(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // entityId TO_KEYWORD entityId withOption?
+  public static boolean relationshipMapping(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipMapping")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = entityId(b, l + 1);
+    r = r && consumeToken(b, TO_KEYWORD);
+    r = r && entityId(b, l + 1);
+    r = r && relationshipMapping_3(b, l + 1);
+    exit_section_(b, m, RELATIONSHIP_MAPPING, r);
+    return r;
+  }
+
+  // withOption?
+  private static boolean relationshipMapping_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipMapping_3")) return false;
+    withOption(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean relationshipType(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipType")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, RELATIONSHIP_TYPE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // (applicationBlock | entityBlock | enumBlock | relationshipBlock | deploymentBlock | paginateOption | dtoOption | serviceOption)*
   static boolean root(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root")) return false;
     while (true) {
@@ -716,7 +791,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // applicationBlock | entityBlock | enumBlock | deploymentBlock | paginateOption | dtoOption | serviceOption
+  // applicationBlock | entityBlock | enumBlock | relationshipBlock | deploymentBlock | paginateOption | dtoOption | serviceOption
   private static boolean root_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_0")) return false;
     boolean r;
@@ -724,6 +799,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = applicationBlock(b, l + 1);
     if (!r) r = entityBlock(b, l + 1);
     if (!r) r = enumBlock(b, l + 1);
+    if (!r) r = relationshipBlock(b, l + 1);
     if (!r) r = deploymentBlock(b, l + 1);
     if (!r) r = paginateOption(b, l + 1);
     if (!r) r = dtoOption(b, l + 1);

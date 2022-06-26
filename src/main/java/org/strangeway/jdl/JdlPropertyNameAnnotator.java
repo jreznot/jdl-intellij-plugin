@@ -28,6 +28,11 @@ public class JdlPropertyNameAnnotator implements Annotator {
             .textAttributes(JdlSyntaxHighlighter.JDL_IDENTIFIER)
             .create();
       }
+    } else if (element instanceof JdlRelationshipType) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(element.getTextRange())
+          .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
+          .create();
     }
 
     // todo resolve optionValue id

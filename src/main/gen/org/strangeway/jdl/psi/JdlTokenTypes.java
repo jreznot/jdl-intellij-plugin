@@ -34,6 +34,9 @@ public interface JdlTokenTypes {
   IElementType PAGINATE_OPTION = new JdlElementType("PAGINATE_OPTION");
   IElementType PATTERN_CALL = new JdlElementType("PATTERN_CALL");
   IElementType REGEX_LITERAL = new JdlElementType("REGEX_LITERAL");
+  IElementType RELATIONSHIP_BLOCK = new JdlElementType("RELATIONSHIP_BLOCK");
+  IElementType RELATIONSHIP_MAPPING = new JdlElementType("RELATIONSHIP_MAPPING");
+  IElementType RELATIONSHIP_TYPE = new JdlElementType("RELATIONSHIP_TYPE");
   IElementType SERVICE_OPTION = new JdlElementType("SERVICE_OPTION");
   IElementType STRING_LITERAL = new JdlElementType("STRING_LITERAL");
   IElementType VALUE = new JdlElementType("VALUE");
@@ -64,9 +67,11 @@ public interface JdlTokenTypes {
   IElementType RBRACE = new JdlTokenType("}");
   IElementType RBRACKET = new JdlTokenType("]");
   IElementType REGEX_STRING = new JdlTokenType("REGEX_STRING");
+  IElementType RELATIONSHIP_KEYWORD = new JdlTokenType("relationship");
   IElementType RPARENTH = new JdlTokenType(")");
   IElementType SERVICE_KEYWORD = new JdlTokenType("service");
   IElementType STRUDEL = new JdlTokenType("@");
+  IElementType TO_KEYWORD = new JdlTokenType("to");
   IElementType TRUE = new JdlTokenType("true");
   IElementType WILDCARD = new JdlTokenType("*");
   IElementType WITH_KEYWORD = new JdlTokenType("with");
@@ -151,6 +156,15 @@ public interface JdlTokenTypes {
       }
       else if (type == REGEX_LITERAL) {
         return new JdlRegexLiteralImpl(node);
+      }
+      else if (type == RELATIONSHIP_BLOCK) {
+        return new JdlRelationshipBlockImpl(node);
+      }
+      else if (type == RELATIONSHIP_MAPPING) {
+        return new JdlRelationshipMappingImpl(node);
+      }
+      else if (type == RELATIONSHIP_TYPE) {
+        return new JdlRelationshipTypeImpl(node);
       }
       else if (type == SERVICE_OPTION) {
         return new JdlServiceOptionImpl(node);

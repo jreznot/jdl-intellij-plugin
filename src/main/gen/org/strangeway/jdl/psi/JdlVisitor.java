@@ -111,6 +111,18 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRelationshipBlock(@NotNull JdlRelationshipBlock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRelationshipMapping(@NotNull JdlRelationshipMapping o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRelationshipType(@NotNull JdlRelationshipType o) {
+    visitPsiElement(o);
+  }
+
   public void visitServiceOption(@NotNull JdlServiceOption o) {
     visitPsiElement(o);
   }
