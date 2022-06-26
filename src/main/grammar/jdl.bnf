@@ -31,6 +31,7 @@
     CONFIG_KEYWORD='config'
     ENTITIES_KEYWORD='entities'
     ENTITY_KEYWORD='entity'
+    ENUM_KEYWORD='enum'
     DTO_KEYWORD='dto'
     PAGINATE_KEYWORD='paginate'
     SERVICE_KEYWORD='service'
@@ -39,7 +40,7 @@
   ]
 }
 
-root ::= (applicationBlock | entityBlock | paginateOption | dtoOption | serviceOption)*
+root ::= (applicationBlock | entityBlock | enumBlock | paginateOption | dtoOption | serviceOption)*
 
 applicationBlock ::= APPLICATION_KEYWORD LBRACE applicationContent RBRACE {
     pin = 1
@@ -95,12 +96,40 @@ serviceOption ::= SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? {
     recoverWhile = notBraceOrNextBlock
 }
 
-entityBlock ::= ENTITY_KEYWORD id {
+entityBlock ::= ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? (LBRACE entityContent RBRACE)? {
     pin = 1
 }
 
 wildcardLiteral ::= WILDCARD {
     name = "*"
+}
+
+entityTableName ::= IDENTIFIER {
+    name = "table name"
+}
+
+private entityContent ::= entityFieldMapping*
+
+entityFieldMapping ::= fieldName fieldType
+
+enumBlock ::= ENUM_KEYWORD id LBRACE enumContent RBRACE {
+    pin = 1
+}
+
+private enumContent ::= enumValue*
+
+enumValue ::= enumKey /* todo value since v6 */
+
+enumKey ::= IDENTIFIER {
+    name = "enum key"
+}
+
+fieldName ::= IDENTIFIER {
+    name = "field name"
+}
+
+fieldType ::= IDENTIFIER {
+    name = "field type"
 }
 
 id ::= IDENTIFIER {
@@ -120,7 +149,7 @@ private arrayElement ::= value (COMMA|&RBRACKET) {
 }
 
 private notBracketOrNextValue ::= !(RBRACKET|value)
-private notBraceOrNextBlock ::= !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD)
+private notBraceOrNextBlock ::= !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD)
 
 patternCall ::= 'pattern' LPARENTH regexLiteral RPARENTH
 

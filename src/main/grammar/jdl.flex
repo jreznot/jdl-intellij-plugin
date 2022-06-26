@@ -62,10 +62,12 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
     "entities"                           { return ENTITIES_KEYWORD; }
     "dto"                                { return DTO_KEYWORD; }
     "entity"                             { return ENTITY_KEYWORD; }
+    "enum"                               { return ENUM_KEYWORD; }
     "paginate"                           { return PAGINATE_KEYWORD; }
     "service"                            { return SERVICE_KEYWORD; }
     "with"                               { return WITH_KEYWORD; }
     "except"                             { return EXCEPT_KEYWORD; }
+    "deployment"                         { return DEPLOYMENT_KEYWORD; }
 
     {IDENTIFIER}                         { return IDENTIFIER; }
     {INTEGER_LITERAL}                    { return INTEGER_NUMBER; }

@@ -5,6 +5,7 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.strangeway.jdl.psi.JdlEnumKey;
 import org.strangeway.jdl.psi.JdlOptionName;
 import org.strangeway.jdl.psi.JdlWithOptionValue;
 
@@ -16,7 +17,7 @@ public class JdlPropertyNameAnnotator implements Annotator {
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_NAME)
           .create();
-    } else if (element instanceof JdlWithOptionValue) {
+    } else if ((element instanceof JdlWithOptionValue) || (element instanceof JdlEnumKey)) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)

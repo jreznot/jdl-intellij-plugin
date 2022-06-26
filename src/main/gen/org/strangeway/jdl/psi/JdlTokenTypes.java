@@ -16,8 +16,15 @@ public interface JdlTokenTypes {
   IElementType ENTITIES_LIST = new JdlElementType("ENTITIES_LIST");
   IElementType ENTITIES_OPTION = new JdlElementType("ENTITIES_OPTION");
   IElementType ENTITY_BLOCK = new JdlElementType("ENTITY_BLOCK");
+  IElementType ENTITY_FIELD_MAPPING = new JdlElementType("ENTITY_FIELD_MAPPING");
   IElementType ENTITY_ID = new JdlElementType("ENTITY_ID");
+  IElementType ENTITY_TABLE_NAME = new JdlElementType("ENTITY_TABLE_NAME");
+  IElementType ENUM_BLOCK = new JdlElementType("ENUM_BLOCK");
+  IElementType ENUM_KEY = new JdlElementType("ENUM_KEY");
+  IElementType ENUM_VALUE = new JdlElementType("ENUM_VALUE");
   IElementType EXCEPT_ENTITIES = new JdlElementType("EXCEPT_ENTITIES");
+  IElementType FIELD_NAME = new JdlElementType("FIELD_NAME");
+  IElementType FIELD_TYPE = new JdlElementType("FIELD_TYPE");
   IElementType ID = new JdlElementType("ID");
   IElementType NUMBER_LITERAL = new JdlElementType("NUMBER_LITERAL");
   IElementType OPTION_NAME = new JdlElementType("OPTION_NAME");
@@ -41,6 +48,7 @@ public interface JdlTokenTypes {
   IElementType DTO_KEYWORD = new JdlTokenType("dto");
   IElementType ENTITIES_KEYWORD = new JdlTokenType("entities");
   IElementType ENTITY_KEYWORD = new JdlTokenType("entity");
+  IElementType ENUM_KEYWORD = new JdlTokenType("enum");
   IElementType EXCEPT_KEYWORD = new JdlTokenType("except");
   IElementType FALSE = new JdlTokenType("false");
   IElementType IDENTIFIER = new JdlTokenType("IDENTIFIER");
@@ -87,11 +95,32 @@ public interface JdlTokenTypes {
       else if (type == ENTITY_BLOCK) {
         return new JdlEntityBlockImpl(node);
       }
+      else if (type == ENTITY_FIELD_MAPPING) {
+        return new JdlEntityFieldMappingImpl(node);
+      }
       else if (type == ENTITY_ID) {
         return new JdlEntityIdImpl(node);
       }
+      else if (type == ENTITY_TABLE_NAME) {
+        return new JdlEntityTableNameImpl(node);
+      }
+      else if (type == ENUM_BLOCK) {
+        return new JdlEnumBlockImpl(node);
+      }
+      else if (type == ENUM_KEY) {
+        return new JdlEnumKeyImpl(node);
+      }
+      else if (type == ENUM_VALUE) {
+        return new JdlEnumValueImpl(node);
+      }
       else if (type == EXCEPT_ENTITIES) {
         return new JdlExceptEntitiesImpl(node);
+      }
+      else if (type == FIELD_NAME) {
+        return new JdlFieldNameImpl(node);
+      }
+      else if (type == FIELD_TYPE) {
+        return new JdlFieldTypeImpl(node);
       }
       else if (type == ID) {
         return new JdlIdImpl(node);

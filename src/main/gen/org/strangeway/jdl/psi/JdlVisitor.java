@@ -39,11 +39,39 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEntityFieldMapping(@NotNull JdlEntityFieldMapping o) {
+    visitPsiElement(o);
+  }
+
   public void visitEntityId(@NotNull JdlEntityId o) {
     visitPsiElement(o);
   }
 
+  public void visitEntityTableName(@NotNull JdlEntityTableName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnumBlock(@NotNull JdlEnumBlock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnumKey(@NotNull JdlEnumKey o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnumValue(@NotNull JdlEnumValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitExceptEntities(@NotNull JdlExceptEntities o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFieldName(@NotNull JdlFieldName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFieldType(@NotNull JdlFieldType o) {
     visitPsiElement(o);
   }
 

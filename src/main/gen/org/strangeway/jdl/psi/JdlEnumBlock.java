@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlEntityBlock extends PsiElement {
+public interface JdlEnumBlock extends PsiElement {
 
   @NotNull
-  List<JdlEntityFieldMapping> getEntityFieldMappingList();
+  List<JdlEnumValue> getEnumValueList();
 
-  @Nullable
-  JdlEntityTableName getEntityTableName();
-
-  @Nullable
+  @NotNull
   JdlId getId();
 
 }
