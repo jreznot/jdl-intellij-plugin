@@ -1,0 +1,66 @@
+// This is a generated file. Not intended for manual editing.
+package org.strangeway.jdl.psi.impl;
+
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
+import static org.strangeway.jdl.psi.JdlTokenTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.strangeway.jdl.psi.*;
+
+public class JdlValueImpl extends ASTWrapperPsiElement implements JdlValue {
+
+  public JdlValueImpl(@NotNull ASTNode node) {
+    super(node);
+  }
+
+  public void accept(@NotNull JdlVisitor visitor) {
+    visitor.visitValue(this);
+  }
+
+  @Override
+  public void accept(@NotNull PsiElementVisitor visitor) {
+    if (visitor instanceof JdlVisitor) accept((JdlVisitor)visitor);
+    else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public JdlArrayLiteral getArrayLiteral() {
+    return findChildByClass(JdlArrayLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlBooleanLiteral getBooleanLiteral() {
+    return findChildByClass(JdlBooleanLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlId getId() {
+    return findChildByClass(JdlId.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlNumberLiteral getNumberLiteral() {
+    return findChildByClass(JdlNumberLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlPatternCall getPatternCall() {
+    return findChildByClass(JdlPatternCall.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlStringLiteral getStringLiteral() {
+    return findChildByClass(JdlStringLiteral.class);
+  }
+
+}

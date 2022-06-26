@@ -1,0 +1,1 @@
+rootProject.name = "jdl-intellij-plugin"

@@ -1,0 +1,23 @@
+<idea-plugin>
+  <id>org.strangeway.jdl</id>
+
+  <name>JHipster JDL</name>
+  <vendor email="github@strangeway.org" url="https://www.strangeway.org">Yuriy Artamonov</vendor>
+
+  <description><![CDATA[
+    Provides JHipster-specific domain language (JDL) editor support.
+  ]]></description>
+
+  <depends>com.intellij.modules.platform</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <lang.parserDefinition language="JDL" implementationClass="org.strangeway.jdl.psi.JdlParserDefinition"/>
+    <lang.braceMatcher language="JDL" implementationClass="org.strangeway.jdl.JdlPairedBraceMatcher"/>
+    <lang.quoteHandler language="JDL" implementationClass="org.strangeway.jdl.JdlQuoteHandler"/>
+    <lang.syntaxHighlighterFactory language="JDL" implementationClass="org.strangeway.jdl.JdlSyntaxHighlighterFactory"/>
+    <annotator language="JDL" implementationClass="org.strangeway.jdl.JdlPropertyNameAnnotator"/>
+    <lang.commenter language="JDL" implementationClass="org.strangeway.jdl.JdlCommenter"/>
+
+    <fileType name="JHipster JDL" language="JDL" implementationClass="org.strangeway.jdl.JdlFileType" extensions="jdl"/>
+  </extensions>
+</idea-plugin>

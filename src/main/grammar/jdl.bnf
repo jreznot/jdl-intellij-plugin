@@ -1,0 +1,129 @@
+{
+  parserClass="org.strangeway.jdl.parser.JdlParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Jdl"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.strangeway.jdl.psi"
+  psiImplPackage="org.strangeway.jdl.psi.impl"
+
+  elementTypeHolderClass="org.strangeway.jdl.psi.JdlTokenTypes"
+  elementTypeClass="org.strangeway.jdl.psi.JdlElementType"
+  tokenTypeClass="org.strangeway.jdl.psi.JdlTokenType"
+  tokens = [
+    LINE_COMMENT='regexp://.*'
+    BLOCK_COMMENT='regexp:/\*([^*]|\*+[^*/])*(\*+/)?'
+    LBRACE='{'
+    RBRACE='}'
+    LBRACKET='['
+    RBRACKET=']'
+    LPARENTH='('
+    RPARENTH=')'
+    COMMA=','
+    COLON=':'
+    TRUE='true'
+    FALSE='false'
+    WILDCARD='*'
+    STRUDEL='@'
+
+    APPLICATION_KEYWORD='application'
+    CONFIG_KEYWORD='config'
+    ENTITIES_KEYWORD='entities'
+    ENTITY_KEYWORD='entity'
+    DTO_KEYWORD='dto'
+    PAGINATE_KEYWORD='paginate'
+    SERVICE_KEYWORD='service'
+    WITH_KEYWORD='with'
+    EXCEPT_KEYWORD='except'
+  ]
+}
+
+root ::= (applicationBlock | entityBlock | paginateOption | dtoOption | serviceOption)*
+
+applicationBlock ::= APPLICATION_KEYWORD LBRACE applicationContent RBRACE {
+    pin = 1
+}
+
+private applicationContent ::= configBlock (entitiesOption| dtoOption | paginateOption | serviceOption)*
+
+configBlock ::= CONFIG_KEYWORD LBRACE optionNameValue* RBRACE {
+    pin = 1
+}
+
+optionNameValue ::= (optionName value) {
+    name = "option"
+}
+
+optionName ::= IDENTIFIER {
+    name="option name"
+}
+
+value ::= id | booleanLiteral | stringLiteral | numberLiteral | arrayLiteral | patternCall
+
+entitiesOption ::= ENTITIES_KEYWORD (wildcardLiteral | entitiesList) exceptEntities? {
+    pin = 1
+    recoverWhile = notBraceOrNextBlock
+}
+
+exceptEntities ::= EXCEPT_KEYWORD entitiesList {
+    recoverWhile = notBraceOrNextBlock
+}
+
+entitiesList ::= entityId (COMMA entityId)*
+
+entityId ::= IDENTIFIER {
+    name = "entity identifier"
+}
+
+dtoOption ::= DTO_KEYWORD WILDCARD withOption? {
+    pin = 1
+    recoverWhile = notBraceOrNextBlock
+}
+
+private withOption ::= WITH_KEYWORD withOptionValue
+
+withOptionValue ::= IDENTIFIER
+
+paginateOption ::= PAGINATE_KEYWORD (wildcardLiteral | entitiesList) withOption? exceptEntities? {
+    pin = 1
+    recoverWhile = notBraceOrNextBlock
+}
+
+serviceOption ::= SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? {
+    pin = 1
+    recoverWhile = notBraceOrNextBlock
+}
+
+entityBlock ::= ENTITY_KEYWORD id {
+    pin = 1
+}
+
+wildcardLiteral ::= WILDCARD {
+    name = "*"
+}
+
+id ::= IDENTIFIER {
+    name = "identifier"
+}
+
+booleanLiteral ::= TRUE | FALSE
+numberLiteral ::= DOUBLE_NUMBER | INTEGER_NUMBER
+stringLiteral ::= DOUBLE_QUOTED_STRING
+arrayLiteral ::= LBRACKET arrayElement* RBRACKET {
+    pin = 1
+}
+
+private arrayElement ::= value (COMMA|&RBRACKET) {
+    pin = 1
+    recoverWhile = notBracketOrNextValue
+}
+
+private notBracketOrNextValue ::= !(RBRACKET|value)
+private notBraceOrNextBlock ::= !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD)
+
+patternCall ::= 'pattern' LPARENTH regexLiteral RPARENTH
+
+regexLiteral ::= REGEX_STRING {
+    name = "regex literal"
+}
