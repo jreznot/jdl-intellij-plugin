@@ -23,6 +23,10 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDeploymentBlock(@NotNull JdlDeploymentBlock o) {
+    visitPsiElement(o);
+  }
+
   public void visitDtoOption(@NotNull JdlDtoOption o) {
     visitPsiElement(o);
   }

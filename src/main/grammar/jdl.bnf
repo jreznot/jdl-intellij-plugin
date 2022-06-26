@@ -37,10 +37,11 @@
     SERVICE_KEYWORD='service'
     WITH_KEYWORD='with'
     EXCEPT_KEYWORD='except'
+    DEPLOYMENT_KEYWORD='deployment'
   ]
 }
 
-root ::= (applicationBlock | entityBlock | enumBlock | paginateOption | dtoOption | serviceOption)*
+root ::= (applicationBlock | entityBlock | enumBlock | deploymentBlock | paginateOption | dtoOption | serviceOption)*
 
 applicationBlock ::= APPLICATION_KEYWORD LBRACE applicationContent RBRACE {
     pin = 1
@@ -136,6 +137,10 @@ id ::= IDENTIFIER {
     name = "identifier"
 }
 
+deploymentBlock ::= DEPLOYMENT_KEYWORD LBRACE optionNameValue* RBRACE {
+    pin = 1
+}
+
 booleanLiteral ::= TRUE | FALSE
 numberLiteral ::= DOUBLE_NUMBER | INTEGER_NUMBER
 stringLiteral ::= DOUBLE_QUOTED_STRING
@@ -149,7 +154,7 @@ private arrayElement ::= value (COMMA|&RBRACKET) {
 }
 
 private notBracketOrNextValue ::= !(RBRACKET|value)
-private notBraceOrNextBlock ::= !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD)
+private notBraceOrNextBlock ::= !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD)
 
 patternCall ::= 'pattern' LPARENTH regexLiteral RPARENTH
 

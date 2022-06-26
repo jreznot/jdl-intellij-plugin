@@ -5,9 +5,7 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-import org.strangeway.jdl.psi.JdlEnumKey;
-import org.strangeway.jdl.psi.JdlOptionName;
-import org.strangeway.jdl.psi.JdlWithOptionValue;
+import org.strangeway.jdl.psi.*;
 
 public class JdlPropertyNameAnnotator implements Annotator {
   @Override
@@ -22,6 +20,16 @@ public class JdlPropertyNameAnnotator implements Annotator {
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
           .create();
+    } else if (element instanceof JdlId) {
+      PsiElement idParent = element.getParent();
+      if (idParent instanceof JdlEntityBlock || idParent instanceof JdlEnumBlock) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+            .range(element.getTextRange())
+            .textAttributes(JdlSyntaxHighlighter.JDL_IDENTIFIER)
+            .create();
+      }
     }
+
+    // todo resolve optionValue id
   }
 }

@@ -62,9 +62,8 @@ public class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
         JdlTokenTypes.APPLICATION_KEYWORD, JdlTokenTypes.CONFIG_KEYWORD, JdlTokenTypes.ENTITIES_KEYWORD,
         JdlTokenTypes.DTO_KEYWORD, JdlTokenTypes.PAGINATE_KEYWORD, JdlTokenTypes.ENTITY_KEYWORD,
         JdlTokenTypes.SERVICE_KEYWORD, JdlTokenTypes.EXCEPT_KEYWORD, JdlTokenTypes.WITH_KEYWORD,
-        JdlTokenTypes.ENUM_KEYWORD);
+        JdlTokenTypes.ENUM_KEYWORD, JdlTokenTypes.DEPLOYMENT_KEYWORD);
 
-    fillMap(ourMap, JDL_IDENTIFIER, JdlTokenTypes.IDENTIFIER);
     fillMap(ourMap, JDL_BRACKETS,
         JdlTokenTypes.LBRACKET, JdlTokenTypes.RBRACKET);
     fillMap(ourMap, JDL_PARENTHESES,

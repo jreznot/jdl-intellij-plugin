@@ -187,6 +187,32 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // DEPLOYMENT_KEYWORD LBRACE optionNameValue* RBRACE
+  public static boolean deploymentBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deploymentBlock")) return false;
+    if (!nextTokenIs(b, DEPLOYMENT_KEYWORD)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, DEPLOYMENT_BLOCK, null);
+    r = consumeTokens(b, 1, DEPLOYMENT_KEYWORD, LBRACE);
+    p = r; // pin = 1
+    r = r && report_error_(b, deploymentBlock_2(b, l + 1));
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // optionNameValue*
+  private static boolean deploymentBlock_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deploymentBlock_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!optionNameValue(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "deploymentBlock_2", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
   // DTO_KEYWORD WILDCARD withOption?
   public static boolean dtoOption(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "dtoOption")) return false;
@@ -379,15 +405,16 @@ public class JdlParser implements PsiParser, LightPsiParser {
   public static boolean enumBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enumBlock")) return false;
     if (!nextTokenIs(b, ENUM_KEYWORD)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ENUM_BLOCK, null);
     r = consumeToken(b, ENUM_KEYWORD);
-    r = r && id(b, l + 1);
-    r = r && consumeToken(b, LBRACE);
-    r = r && enumContent(b, l + 1);
-    r = r && consumeToken(b, RBRACE);
-    exit_section_(b, m, ENUM_BLOCK, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, id(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, LBRACE)) && r;
+    r = p && report_error_(b, enumContent(b, l + 1)) && r;
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -475,7 +502,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD)
+  // !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD)
   static boolean notBraceOrNextBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "notBraceOrNextBlock")) return false;
     boolean r;
@@ -485,7 +512,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // '}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD
+  // '}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD
   private static boolean notBraceOrNextBlock_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "notBraceOrNextBlock_0")) return false;
     boolean r;
@@ -497,6 +524,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, SERVICE_KEYWORD);
     if (!r) r = consumeToken(b, PAGINATE_KEYWORD);
     if (!r) r = consumeToken(b, ENUM_KEYWORD);
+    if (!r) r = consumeToken(b, DEPLOYMENT_KEYWORD);
     return r;
   }
 
@@ -623,7 +651,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (applicationBlock | entityBlock | enumBlock | paginateOption | dtoOption | serviceOption)*
+  // (applicationBlock | entityBlock | enumBlock | deploymentBlock | paginateOption | dtoOption | serviceOption)*
   static boolean root(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root")) return false;
     while (true) {
@@ -634,7 +662,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // applicationBlock | entityBlock | enumBlock | paginateOption | dtoOption | serviceOption
+  // applicationBlock | entityBlock | enumBlock | deploymentBlock | paginateOption | dtoOption | serviceOption
   private static boolean root_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_0")) return false;
     boolean r;
@@ -642,6 +670,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = applicationBlock(b, l + 1);
     if (!r) r = entityBlock(b, l + 1);
     if (!r) r = enumBlock(b, l + 1);
+    if (!r) r = deploymentBlock(b, l + 1);
     if (!r) r = paginateOption(b, l + 1);
     if (!r) r = dtoOption(b, l + 1);
     if (!r) r = serviceOption(b, l + 1);

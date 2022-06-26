@@ -12,6 +12,7 @@ public interface JdlTokenTypes {
   IElementType ARRAY_LITERAL = new JdlElementType("ARRAY_LITERAL");
   IElementType BOOLEAN_LITERAL = new JdlElementType("BOOLEAN_LITERAL");
   IElementType CONFIG_BLOCK = new JdlElementType("CONFIG_BLOCK");
+  IElementType DEPLOYMENT_BLOCK = new JdlElementType("DEPLOYMENT_BLOCK");
   IElementType DTO_OPTION = new JdlElementType("DTO_OPTION");
   IElementType ENTITIES_LIST = new JdlElementType("ENTITIES_LIST");
   IElementType ENTITIES_OPTION = new JdlElementType("ENTITIES_OPTION");
@@ -43,6 +44,7 @@ public interface JdlTokenTypes {
   IElementType COLON = new JdlTokenType(":");
   IElementType COMMA = new JdlTokenType(",");
   IElementType CONFIG_KEYWORD = new JdlTokenType("config");
+  IElementType DEPLOYMENT_KEYWORD = new JdlTokenType("deployment");
   IElementType DOUBLE_NUMBER = new JdlTokenType("DOUBLE_NUMBER");
   IElementType DOUBLE_QUOTED_STRING = new JdlTokenType("DOUBLE_QUOTED_STRING");
   IElementType DTO_KEYWORD = new JdlTokenType("dto");
@@ -82,6 +84,9 @@ public interface JdlTokenTypes {
       }
       else if (type == CONFIG_BLOCK) {
         return new JdlConfigBlockImpl(node);
+      }
+      else if (type == DEPLOYMENT_BLOCK) {
+        return new JdlDeploymentBlockImpl(node);
       }
       else if (type == DTO_OPTION) {
         return new JdlDtoOptionImpl(node);

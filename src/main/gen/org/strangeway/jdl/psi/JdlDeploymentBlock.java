@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlEnumBlock extends PsiElement {
+public interface JdlDeploymentBlock extends PsiElement {
 
   @NotNull
-  List<JdlEnumValue> getEnumValueList();
-
-  @Nullable
-  JdlId getId();
+  List<JdlOptionNameValue> getOptionNameValueList();
 
 }
