@@ -43,3 +43,11 @@ tasks {
     token.set(System.getenv("PUBLISH_TOKEN"))
   }
 }
+
+tasks {
+  val test by getting(Test::class) {
+    isScanForTestClasses = false
+    // Only run tests from classes that end with "Test"
+    include("**/*Test.class")
+  }
+}
