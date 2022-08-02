@@ -11,14 +11,14 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements JdlEntityFieldMapping {
+public class JdlFieldConstraintParametersImpl extends ASTWrapperPsiElement implements JdlFieldConstraintParameters {
 
-  public JdlEntityFieldMappingImpl(@NotNull ASTNode node) {
+  public JdlFieldConstraintParametersImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitEntityFieldMapping(this);
+    visitor.visitFieldConstraintParameters(this);
   }
 
   @Override
@@ -29,20 +29,8 @@ public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements J
 
   @Override
   @NotNull
-  public List<JdlFieldConstraint> getFieldConstraintList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlFieldConstraint.class);
-  }
-
-  @Override
-  @NotNull
-  public JdlFieldName getFieldName() {
-    return findNotNullChildByClass(JdlFieldName.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlFieldType getFieldType() {
-    return findChildByClass(JdlFieldType.class);
+  public List<JdlValue> getValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlValue.class);
   }
 
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlExceptEntities extends PsiElement {
+public interface JdlFieldConstraintParameters extends PsiElement {
 
-  @Nullable
-  JdlEntitiesList getEntitiesList();
+  @NotNull
+  List<JdlValue> getValueList();
 
 }

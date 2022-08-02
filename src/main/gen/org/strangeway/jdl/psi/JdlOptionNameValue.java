@@ -10,7 +10,7 @@ public interface JdlOptionNameValue extends PsiElement {
   @NotNull
   JdlOptionName getOptionName();
 
-  @NotNull
+  @Nullable
   JdlValue getValue();
 
 }

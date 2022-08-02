@@ -11,7 +11,7 @@
   <depends>com.intellij.modules.platform</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <fileType name="JHipster JDL" language="JDL" implementationClass="org.strangeway.jdl.JdlFileType" extensions="jdl"/>
+    <fileType name="JHipster JDL" language="JDL" implementationClass="org.strangeway.jdl.JdlFileType" extensions="jdl;jh"/>
     <lang.parserDefinition language="JDL" implementationClass="org.strangeway.jdl.psi.JdlParserDefinition"/>
     <lang.braceMatcher language="JDL" implementationClass="org.strangeway.jdl.JdlPairedBraceMatcher"/>
     <lang.quoteHandler language="JDL" implementationClass="org.strangeway.jdl.JdlQuoteHandler"/>

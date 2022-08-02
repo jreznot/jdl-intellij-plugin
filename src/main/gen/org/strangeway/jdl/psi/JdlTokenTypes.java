@@ -25,6 +25,8 @@ public interface JdlTokenTypes {
   IElementType ENUM_VALUE = new JdlElementType("ENUM_VALUE");
   IElementType EXCEPT_ENTITIES = new JdlElementType("EXCEPT_ENTITIES");
   IElementType EXPLICIT_ENUM_MAPPING = new JdlElementType("EXPLICIT_ENUM_MAPPING");
+  IElementType FIELD_CONSTRAINT = new JdlElementType("FIELD_CONSTRAINT");
+  IElementType FIELD_CONSTRAINT_PARAMETERS = new JdlElementType("FIELD_CONSTRAINT_PARAMETERS");
   IElementType FIELD_NAME = new JdlElementType("FIELD_NAME");
   IElementType FIELD_TYPE = new JdlElementType("FIELD_TYPE");
   IElementType ID = new JdlElementType("ID");
@@ -63,6 +65,7 @@ public interface JdlTokenTypes {
   IElementType LBRACKET = new JdlTokenType("[");
   IElementType LINE_COMMENT = new JdlTokenType("LINE_COMMENT");
   IElementType LPARENTH = new JdlTokenType("(");
+  IElementType NEWLINE = new JdlTokenType("NEWLINE");
   IElementType PAGINATE_KEYWORD = new JdlTokenType("paginate");
   IElementType RBRACE = new JdlTokenType("}");
   IElementType RBRACKET = new JdlTokenType("]");
@@ -129,6 +132,12 @@ public interface JdlTokenTypes {
       }
       else if (type == EXPLICIT_ENUM_MAPPING) {
         return new JdlExplicitEnumMappingImpl(node);
+      }
+      else if (type == FIELD_CONSTRAINT) {
+        return new JdlFieldConstraintImpl(node);
+      }
+      else if (type == FIELD_CONSTRAINT_PARAMETERS) {
+        return new JdlFieldConstraintParametersImpl(node);
       }
       else if (type == FIELD_NAME) {
         return new JdlFieldNameImpl(node);

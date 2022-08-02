@@ -45,17 +45,18 @@
 
 root ::= (applicationBlock | entityBlock | enumBlock | relationshipBlock | deploymentBlock | paginateOption | dtoOption | serviceOption)*
 
-applicationBlock ::= APPLICATION_KEYWORD LBRACE applicationContent RBRACE {
+applicationBlock ::= APPLICATION_KEYWORD LBRACE NEWLINE* applicationContent NEWLINE* RBRACE {
     pin = 1
 }
 
 private applicationContent ::= configBlock (entitiesOption| dtoOption | paginateOption | serviceOption)*
 
-configBlock ::= CONFIG_KEYWORD LBRACE optionNameValue* RBRACE {
+configBlock ::= CONFIG_KEYWORD LBRACE NEWLINE* optionNameValue* NEWLINE* RBRACE {
     pin = 1
 }
 
-optionNameValue ::= (optionName value) {
+optionNameValue ::= optionName value COMMA? NEWLINE {
+    pin = 1
     name = "option"
 }
 
@@ -71,6 +72,7 @@ entitiesOption ::= ENTITIES_KEYWORD (wildcardLiteral | entitiesList) exceptEntit
 }
 
 exceptEntities ::= EXCEPT_KEYWORD entitiesList {
+    pin = 1
     recoverWhile = notBraceOrNextBlock
 }
 
@@ -85,7 +87,9 @@ dtoOption ::= DTO_KEYWORD WILDCARD withOption? {
     recoverWhile = notBraceOrNextBlock
 }
 
-private withOption ::= WITH_KEYWORD withOptionValue
+private withOption ::= WITH_KEYWORD withOptionValue {
+    pin = 1
+}
 
 withOptionValue ::= IDENTIFIER
 
@@ -99,9 +103,8 @@ serviceOption ::= SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? e
     recoverWhile = notBraceOrNextBlock
 }
 
-entityBlock ::= ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? (LBRACE entityFieldMapping* RBRACE)? {
+entityBlock ::= ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? entityFields? {
     pin = 1
-    recoverWhile = notBraceOrNextBlock
 }
 
 wildcardLiteral ::= WILDCARD {
@@ -112,8 +115,23 @@ entityTableName ::= IDENTIFIER {
     name = "table name"
 }
 
-entityFieldMapping ::= fieldName fieldType COMMA? {
-    recoverWhile = notBraceOrNextBlock
+private entityFields ::= LBRACE NEWLINE* entityFieldMapping* NEWLINE* RBRACE {
+    pin = 1
+}
+
+entityFieldMapping ::= fieldName fieldType fieldConstraint* COMMA? NEWLINE {
+    pin = 1
+}
+
+fieldConstraint ::= IDENTIFIER fieldConstraintParameters?
+
+fieldConstraintParameters ::= LPARENTH fieldConstraintParameterValue* RPARENTH {
+    pin = 1
+}
+
+private fieldConstraintParameterValue ::= value (COMMA|&RPARENTH) {
+    pin = 1
+    recoverWhile = notRParenthOrNextValue
 }
 
 enumBlock ::= ENUM_KEYWORD id LBRACE enumContent RBRACE {
@@ -167,6 +185,7 @@ private arrayElement ::= value (COMMA|&RBRACKET) {
 }
 
 private notBracketOrNextValue ::= !(RBRACKET|value)
+private notRParenthOrNextValue ::= !(RPARENTH|value)
 private notBraceOrNextBlock ::= !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD|RELATIONSHIP_KEYWORD)
 
 patternCall ::= 'pattern' LPARENTH regexLiteral RPARENTH

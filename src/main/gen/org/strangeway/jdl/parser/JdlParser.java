@@ -36,7 +36,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // APPLICATION_KEYWORD LBRACE applicationContent RBRACE
+  // APPLICATION_KEYWORD LBRACE NEWLINE* applicationContent NEWLINE* RBRACE
   public static boolean applicationBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "applicationBlock")) return false;
     if (!nextTokenIs(b, APPLICATION_KEYWORD)) return false;
@@ -44,10 +44,34 @@ public class JdlParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, APPLICATION_BLOCK, null);
     r = consumeTokens(b, 1, APPLICATION_KEYWORD, LBRACE);
     p = r; // pin = 1
-    r = r && report_error_(b, applicationContent(b, l + 1));
+    r = r && report_error_(b, applicationBlock_2(b, l + 1));
+    r = p && report_error_(b, applicationContent(b, l + 1)) && r;
+    r = p && report_error_(b, applicationBlock_4(b, l + 1)) && r;
     r = p && consumeToken(b, RBRACE) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  // NEWLINE*
+  private static boolean applicationBlock_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "applicationBlock_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NEWLINE)) break;
+      if (!empty_element_parsed_guard_(b, "applicationBlock_2", c)) break;
+    }
+    return true;
+  }
+
+  // NEWLINE*
+  private static boolean applicationBlock_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "applicationBlock_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NEWLINE)) break;
+      if (!empty_element_parsed_guard_(b, "applicationBlock_4", c)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -161,7 +185,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CONFIG_KEYWORD LBRACE optionNameValue* RBRACE
+  // CONFIG_KEYWORD LBRACE NEWLINE* optionNameValue* NEWLINE* RBRACE
   public static boolean configBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "configBlock")) return false;
     if (!nextTokenIs(b, CONFIG_KEYWORD)) return false;
@@ -170,18 +194,42 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 1, CONFIG_KEYWORD, LBRACE);
     p = r; // pin = 1
     r = r && report_error_(b, configBlock_2(b, l + 1));
+    r = p && report_error_(b, configBlock_3(b, l + 1)) && r;
+    r = p && report_error_(b, configBlock_4(b, l + 1)) && r;
     r = p && consumeToken(b, RBRACE) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // optionNameValue*
+  // NEWLINE*
   private static boolean configBlock_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "configBlock_2")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!optionNameValue(b, l + 1)) break;
+      if (!consumeToken(b, NEWLINE)) break;
       if (!empty_element_parsed_guard_(b, "configBlock_2", c)) break;
+    }
+    return true;
+  }
+
+  // optionNameValue*
+  private static boolean configBlock_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "configBlock_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!optionNameValue(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "configBlock_3", c)) break;
+    }
+    return true;
+  }
+
+  // NEWLINE*
+  private static boolean configBlock_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "configBlock_4")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NEWLINE)) break;
+      if (!empty_element_parsed_guard_(b, "configBlock_4", c)) break;
     }
     return true;
   }
@@ -298,17 +346,18 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? (LBRACE entityFieldMapping* RBRACE)?
+  // ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? entityFields?
   public static boolean entityBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entityBlock")) return false;
+    if (!nextTokenIs(b, ENTITY_KEYWORD)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, ENTITY_BLOCK, "<entity block>");
+    Marker m = enter_section_(b, l, _NONE_, ENTITY_BLOCK, null);
     r = consumeToken(b, ENTITY_KEYWORD);
     p = r; // pin = 1
     r = r && report_error_(b, id(b, l + 1));
     r = p && report_error_(b, entityBlock_2(b, l + 1)) && r;
     r = p && entityBlock_3(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, JdlParser::notBraceOrNextBlock);
+    exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
@@ -331,53 +380,95 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (LBRACE entityFieldMapping* RBRACE)?
+  // entityFields?
   private static boolean entityBlock_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entityBlock_3")) return false;
-    entityBlock_3_0(b, l + 1);
-    return true;
-  }
-
-  // LBRACE entityFieldMapping* RBRACE
-  private static boolean entityBlock_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "entityBlock_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LBRACE);
-    r = r && entityBlock_3_0_1(b, l + 1);
-    r = r && consumeToken(b, RBRACE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // entityFieldMapping*
-  private static boolean entityBlock_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "entityBlock_3_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!entityFieldMapping(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "entityBlock_3_0_1", c)) break;
-    }
+    entityFields(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // fieldName fieldType COMMA?
+  // fieldName fieldType fieldConstraint* COMMA? NEWLINE
   public static boolean entityFieldMapping(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entityFieldMapping")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ENTITY_FIELD_MAPPING, "<entity field mapping>");
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ENTITY_FIELD_MAPPING, null);
     r = fieldName(b, l + 1);
-    r = r && fieldType(b, l + 1);
-    r = r && entityFieldMapping_2(b, l + 1);
-    exit_section_(b, l, m, r, false, JdlParser::notBraceOrNextBlock);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, fieldType(b, l + 1));
+    r = p && report_error_(b, entityFieldMapping_2(b, l + 1)) && r;
+    r = p && report_error_(b, entityFieldMapping_3(b, l + 1)) && r;
+    r = p && consumeToken(b, NEWLINE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // fieldConstraint*
+  private static boolean entityFieldMapping_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityFieldMapping_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!fieldConstraint(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "entityFieldMapping_2", c)) break;
+    }
+    return true;
   }
 
   // COMMA?
-  private static boolean entityFieldMapping_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "entityFieldMapping_2")) return false;
+  private static boolean entityFieldMapping_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityFieldMapping_3")) return false;
     consumeToken(b, COMMA);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // LBRACE NEWLINE* entityFieldMapping* NEWLINE* RBRACE
+  static boolean entityFields(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityFields")) return false;
+    if (!nextTokenIs(b, LBRACE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeToken(b, LBRACE);
+    p = r; // pin = 1
+    r = r && report_error_(b, entityFields_1(b, l + 1));
+    r = p && report_error_(b, entityFields_2(b, l + 1)) && r;
+    r = p && report_error_(b, entityFields_3(b, l + 1)) && r;
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // NEWLINE*
+  private static boolean entityFields_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityFields_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NEWLINE)) break;
+      if (!empty_element_parsed_guard_(b, "entityFields_1", c)) break;
+    }
+    return true;
+  }
+
+  // entityFieldMapping*
+  private static boolean entityFields_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityFields_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!entityFieldMapping(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "entityFields_2", c)) break;
+    }
+    return true;
+  }
+
+  // NEWLINE*
+  private static boolean entityFields_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityFields_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NEWLINE)) break;
+      if (!empty_element_parsed_guard_(b, "entityFields_3", c)) break;
+    }
     return true;
   }
 
@@ -493,12 +584,13 @@ public class JdlParser implements PsiParser, LightPsiParser {
   // EXCEPT_KEYWORD entitiesList
   public static boolean exceptEntities(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "exceptEntities")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, EXCEPT_ENTITIES, "<except entities>");
     r = consumeToken(b, EXCEPT_KEYWORD);
+    p = r; // pin = 1
     r = r && entitiesList(b, l + 1);
-    exit_section_(b, l, m, r, false, JdlParser::notBraceOrNextBlock);
-    return r;
+    exit_section_(b, l, m, r, p, JdlParser::notBraceOrNextBlock);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -522,6 +614,86 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, IDENTIFIER);
     if (!r) r = stringLiteral(b, l + 1);
     return r;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER fieldConstraintParameters?
+  public static boolean fieldConstraint(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldConstraint")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    r = r && fieldConstraint_1(b, l + 1);
+    exit_section_(b, m, FIELD_CONSTRAINT, r);
+    return r;
+  }
+
+  // fieldConstraintParameters?
+  private static boolean fieldConstraint_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldConstraint_1")) return false;
+    fieldConstraintParameters(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // value (COMMA|&RPARENTH)
+  static boolean fieldConstraintParameterValue(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldConstraintParameterValue")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = value(b, l + 1);
+    p = r; // pin = 1
+    r = r && fieldConstraintParameterValue_1(b, l + 1);
+    exit_section_(b, l, m, r, p, JdlParser::notRParenthOrNextValue);
+    return r || p;
+  }
+
+  // COMMA|&RPARENTH
+  private static boolean fieldConstraintParameterValue_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldConstraintParameterValue_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    if (!r) r = fieldConstraintParameterValue_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // &RPARENTH
+  private static boolean fieldConstraintParameterValue_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldConstraintParameterValue_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _AND_);
+    r = consumeToken(b, RPARENTH);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // LPARENTH fieldConstraintParameterValue* RPARENTH
+  public static boolean fieldConstraintParameters(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldConstraintParameters")) return false;
+    if (!nextTokenIs(b, LPARENTH)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FIELD_CONSTRAINT_PARAMETERS, null);
+    r = consumeToken(b, LPARENTH);
+    p = r; // pin = 1
+    r = r && report_error_(b, fieldConstraintParameters_1(b, l + 1));
+    r = p && consumeToken(b, RPARENTH) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // fieldConstraintParameterValue*
+  private static boolean fieldConstraintParameters_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldConstraintParameters_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!fieldConstraintParameterValue(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "fieldConstraintParameters_1", c)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -609,6 +781,26 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // !(RPARENTH|value)
+  static boolean notRParenthOrNextValue(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "notRParenthOrNextValue")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !notRParenthOrNextValue_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // RPARENTH|value
+  private static boolean notRParenthOrNextValue_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "notRParenthOrNextValue_0")) return false;
+    boolean r;
+    r = consumeToken(b, RPARENTH);
+    if (!r) r = value(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
   // DOUBLE_NUMBER | INTEGER_NUMBER
   public static boolean numberLiteral(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "numberLiteral")) return false;
@@ -634,16 +826,26 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // optionName value
+  // optionName value COMMA? NEWLINE
   public static boolean optionNameValue(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "optionNameValue")) return false;
     if (!nextTokenIs(b, "<option>", IDENTIFIER)) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, OPTION_NAME_VALUE, "<option>");
     r = optionName(b, l + 1);
-    r = r && value(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, value(b, l + 1));
+    r = p && report_error_(b, optionNameValue_2(b, l + 1)) && r;
+    r = p && consumeToken(b, NEWLINE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // COMMA?
+  private static boolean optionNameValue_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "optionNameValue_2")) return false;
+    consumeToken(b, COMMA);
+    return true;
   }
 
   /* ********************************************************** */
@@ -896,12 +1098,13 @@ public class JdlParser implements PsiParser, LightPsiParser {
   static boolean withOption(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "withOption")) return false;
     if (!nextTokenIs(b, WITH_KEYWORD)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, WITH_KEYWORD);
+    p = r; // pin = 1
     r = r && withOptionValue(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */

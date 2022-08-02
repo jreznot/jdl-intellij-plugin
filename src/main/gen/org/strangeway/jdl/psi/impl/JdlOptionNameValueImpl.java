@@ -34,9 +34,9 @@ public class JdlOptionNameValueImpl extends ASTWrapperPsiElement implements JdlO
   }
 
   @Override
-  @NotNull
+  @Nullable
   public JdlValue getValue() {
-    return findNotNullChildByClass(JdlValue.class);
+    return findChildByClass(JdlValue.class);
   }
 
 }

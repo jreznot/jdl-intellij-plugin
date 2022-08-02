@@ -28,9 +28,9 @@ public class JdlExceptEntitiesImpl extends ASTWrapperPsiElement implements JdlEx
   }
 
   @Override
-  @NotNull
+  @Nullable
   public JdlEntitiesList getEntitiesList() {
-    return findNotNullChildByClass(JdlEntitiesList.class);
+    return findChildByClass(JdlEntitiesList.class);
   }
 
 }

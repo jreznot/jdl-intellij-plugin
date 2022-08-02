@@ -75,6 +75,14 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFieldConstraint(@NotNull JdlFieldConstraint o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFieldConstraintParameters(@NotNull JdlFieldConstraintParameters o) {
+    visitPsiElement(o);
+  }
+
   public void visitFieldName(@NotNull JdlFieldName o) {
     visitPsiElement(o);
   }

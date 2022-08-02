@@ -19,9 +19,6 @@ import org.strangeway.jdl.parser.JdlParser;
 public final class JdlParserDefinition implements ParserDefinition {
   public static final IFileElementType FILE = new IFileElementType(JdlLanguage.INSTANCE);
 
-  public static final TokenSet STRINGS = TokenSet.create(JdlTokenTypes.DOUBLE_QUOTED_STRING);
-  public static final TokenSet COMMENTS = TokenSet.create(JdlTokenTypes.LINE_COMMENT, JdlTokenTypes.BLOCK_COMMENT);
-
   @Override
   public @NotNull Lexer createLexer(Project project) {
     return new JdlLexer();
@@ -43,13 +40,18 @@ public final class JdlParserDefinition implements ParserDefinition {
   }
 
   @Override
+  public @NotNull TokenSet getWhitespaceTokens() {
+    return JdlTokenSets.WHITESPACES;
+  }
+
+  @Override
   public @NotNull TokenSet getCommentTokens() {
-    return COMMENTS;
+    return JdlTokenSets.COMMENTS;
   }
 
   @Override
   public @NotNull TokenSet getStringLiteralElements() {
-    return STRINGS;
+    return JdlTokenSets.STRINGS;
   }
 
   @Override

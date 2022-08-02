@@ -8,9 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface JdlEntityFieldMapping extends PsiElement {
 
   @NotNull
-  JdlFieldName getFieldName();
+  List<JdlFieldConstraint> getFieldConstraintList();
 
   @NotNull
+  JdlFieldName getFieldName();
+
+  @Nullable
   JdlFieldType getFieldType();
 
 }

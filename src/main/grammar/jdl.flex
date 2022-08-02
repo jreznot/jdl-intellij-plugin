@@ -20,8 +20,7 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 %type IElementType
 %unicode
 
-WHITE_SPACE=\s+
-IDENTIFIER=([:letter:]|[_])([:letter:]|[_\-0-9])*
+IDENTIFIER=([:letter:]|[_])([:letter:]|[._\-0-9])*
 
 ESCAPE_SEQUENCE=\\[^\r\n]
 DOUBLE_QUOTED_STRING=\"([^\\\"\r\n]|{ESCAPE_SEQUENCE})*(\"|\\)?
@@ -40,10 +39,19 @@ EXPONENT_PART=[Ee]["+""-"]?({DIGIT})*
 
 LINE_COMMENT="//".*
 BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
+WHITE_SPACE = [\t ]+
+NEWLINE = \r\n|[\r\n\u2028\u2029\u000B\u000C\u0085]
+
+%state INSIDE_BLOCK
 
 %%
 
-<YYINITIAL> {
+<INSIDE_BLOCK> {
+    {NEWLINE}                            { return NEWLINE; }
+    {WHITE_SPACE}                        { return WHITE_SPACE; }
+}
+
+<YYINITIAL, INSIDE_BLOCK> {
     ","                                  { return COMMA; }
     ":"                                  { return COLON; }
     "*"                                  { return WILDCARD; }
@@ -53,8 +61,8 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
     "]"                                  { return RBRACKET; }
     "("                                  { return LPARENTH; }
     ")"                                  { return RPARENTH; }
-    "{"                                  { return LBRACE; }
-    "}"                                  { return RBRACE; }
+    "{"                                  { yybegin(INSIDE_BLOCK); return LBRACE; }
+    "}"                                  { yybegin(YYINITIAL); return RBRACE; }
     "@"                                  { return STRUDEL; }
 
     "application"                        { return APPLICATION_KEYWORD; }
@@ -77,6 +85,7 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
     {DOUBLE_QUOTED_STRING}               { return DOUBLE_QUOTED_STRING; }
     {LINE_COMMENT}                       { return LINE_COMMENT; }
     {BLOCK_COMMENT}                      { return BLOCK_COMMENT; }
+    {NEWLINE}                            { return WHITE_SPACE; }
     {WHITE_SPACE}                        { return WHITE_SPACE; }
     {REGEX_STRING}                       { return REGEX_STRING; }
 }
