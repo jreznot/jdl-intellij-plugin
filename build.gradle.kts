@@ -15,8 +15,8 @@ java.sourceSets["main"].java {
 }
 
 intellij {
-  version.set("2021.3")
-  type.set("IC") // Target IDE Platform
+  version.set("2021.3.3")
+  type.set("IC")
 
   plugins.set(listOf(/* Plugin Dependencies */))
 }
