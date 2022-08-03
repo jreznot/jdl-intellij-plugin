@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.psi.*;
 
-public class JdlPropertyNameAnnotator implements Annotator {
+public class JdlAnnotator implements Annotator {
   @Override
   public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
     if ((element instanceof JdlOptionName) || (element instanceof JdlFieldName)) {
@@ -33,6 +33,13 @@ public class JdlPropertyNameAnnotator implements Annotator {
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
           .create();
+    } else if (element.getNode().getElementType() == JdlTokenTypes.IDENTIFIER) {
+      if (element.getParent() instanceof JdlFieldConstraint) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element.getTextRange())
+                .textAttributes(JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT)
+                .create();
+      }
     }
 
     // todo resolve optionValue id

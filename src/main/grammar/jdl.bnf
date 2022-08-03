@@ -43,19 +43,19 @@
   ]
 }
 
-root ::= (applicationBlock | entityBlock | enumBlock | relationshipBlock | deploymentBlock | paginateOption | dtoOption | serviceOption)*
+root ::= (NEWLINE | applicationBlock | entityBlock | enumBlock | relationshipBlock | deploymentBlock | paginateOption | dtoOption | serviceOption)*
 
 applicationBlock ::= APPLICATION_KEYWORD LBRACE NEWLINE* applicationContent NEWLINE* RBRACE {
     pin = 1
 }
 
-private applicationContent ::= configBlock (entitiesOption| dtoOption | paginateOption | serviceOption)*
+private applicationContent ::= configBlock (NEWLINE | entitiesOption | dtoOption | paginateOption | serviceOption)*
 
-configBlock ::= CONFIG_KEYWORD LBRACE NEWLINE* optionNameValue* NEWLINE* RBRACE {
+configBlock ::= CONFIG_KEYWORD LBRACE (NEWLINE | optionNameValue)* RBRACE {
     pin = 1
 }
 
-optionNameValue ::= optionName value COMMA? NEWLINE {
+optionNameValue ::= optionName value? (COMMA | NEWLINE) {
     pin = 1
     name = "option"
 }
@@ -68,12 +68,10 @@ value ::= id | booleanLiteral | stringLiteral | numberLiteral | arrayLiteral | p
 
 entitiesOption ::= ENTITIES_KEYWORD (wildcardLiteral | entitiesList) exceptEntities? {
     pin = 1
-    recoverWhile = notBraceOrNextBlock
 }
 
 exceptEntities ::= EXCEPT_KEYWORD entitiesList {
     pin = 1
-    recoverWhile = notBraceOrNextBlock
 }
 
 entitiesList ::= entityId (COMMA entityId)*
@@ -84,7 +82,6 @@ entityId ::= IDENTIFIER {
 
 dtoOption ::= DTO_KEYWORD WILDCARD withOption? {
     pin = 1
-    recoverWhile = notBraceOrNextBlock
 }
 
 private withOption ::= WITH_KEYWORD withOptionValue {
@@ -95,12 +92,10 @@ withOptionValue ::= IDENTIFIER
 
 paginateOption ::= PAGINATE_KEYWORD (wildcardLiteral | entitiesList) withOption? exceptEntities? {
     pin = 1
-    recoverWhile = notBraceOrNextBlock
 }
 
 serviceOption ::= SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? exceptEntities? {
     pin = 1
-    recoverWhile = notBraceOrNextBlock
 }
 
 entityBlock ::= ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? entityFields? {
@@ -115,11 +110,11 @@ entityTableName ::= IDENTIFIER {
     name = "table name"
 }
 
-private entityFields ::= LBRACE NEWLINE* entityFieldMapping* NEWLINE* RBRACE {
+private entityFields ::= LBRACE (entityFieldMapping | NEWLINE)* RBRACE {
     pin = 1
 }
 
-entityFieldMapping ::= fieldName fieldType fieldConstraint* COMMA? NEWLINE {
+entityFieldMapping ::= fieldName fieldType fieldConstraint* (COMMA | NEWLINE) {
     pin = 1
 }
 
@@ -134,15 +129,17 @@ private fieldConstraintParameterValue ::= value (COMMA|&RPARENTH) {
     recoverWhile = notRParenthOrNextValue
 }
 
-enumBlock ::= ENUM_KEYWORD id LBRACE enumContent RBRACE {
+enumBlock ::= ENUM_KEYWORD id LBRACE (enumValue | NEWLINE)* RBRACE {
     pin = 1
 }
 
-private enumContent ::= enumValue (COMMA enumValue)*
+enumValue ::= enumKey explicitEnumMapping? (COMMA | NEWLINE) {
+    pin = 1
+}
 
-enumValue ::= enumKey explicitEnumMapping?
-
-explicitEnumMapping ::= LPARENTH (IDENTIFIER | stringLiteral) RPARENTH
+explicitEnumMapping ::= LPARENTH (IDENTIFIER | stringLiteral) RPARENTH {
+    pin = 1
+}
 
 enumKey ::= IDENTIFIER {
     name = "enum key"
@@ -160,13 +157,13 @@ id ::= IDENTIFIER {
     name = "identifier"
 }
 
-relationshipBlock ::= RELATIONSHIP_KEYWORD relationshipType LBRACE relationshipMapping (COMMA relationshipMapping)* RBRACE {
+relationshipBlock ::= RELATIONSHIP_KEYWORD relationshipType LBRACE (NEWLINE | relationshipMapping)* RBRACE {
     pin = 1
 }
 
 relationshipType ::= IDENTIFIER
 
-relationshipMapping ::= entityId TO_KEYWORD entityId withOption?
+relationshipMapping ::= entityId TO_KEYWORD entityId withOption? (COMMA | NEWLINE)
 
 deploymentBlock ::= DEPLOYMENT_KEYWORD LBRACE optionNameValue* RBRACE {
     pin = 1
@@ -186,7 +183,7 @@ private arrayElement ::= value (COMMA|&RBRACKET) {
 
 private notBracketOrNextValue ::= !(RBRACKET|value)
 private notRParenthOrNextValue ::= !(RPARENTH|value)
-private notBraceOrNextBlock ::= !('}'|APPLICATION_KEYWORD|ENTITY_KEYWORD|DTO_KEYWORD|ENTITIES_KEYWORD|SERVICE_KEYWORD|PAGINATE_KEYWORD|ENUM_KEYWORD|DEPLOYMENT_KEYWORD|RELATIONSHIP_KEYWORD)
+private notNewlineOrNextValue ::= !(NEWLINE|value)
 
 patternCall ::= 'pattern' LPARENTH regexLiteral RPARENTH
 

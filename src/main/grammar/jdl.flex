@@ -39,17 +39,13 @@ EXPONENT_PART=[Ee]["+""-"]?({DIGIT})*
 
 LINE_COMMENT="//".*
 BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
+
 WHITE_SPACE = [\t ]+
-NEWLINE = \r\n|[\r\n\u2028\u2029\u000B\u000C\u0085]
+NEWLINE = \r\n|[\r\n]
 
 %state INSIDE_BLOCK
 
 %%
-
-<INSIDE_BLOCK> {
-    {NEWLINE}                            { return NEWLINE; }
-    {WHITE_SPACE}                        { return WHITE_SPACE; }
-}
 
 <YYINITIAL, INSIDE_BLOCK> {
     ","                                  { return COMMA; }
@@ -61,8 +57,8 @@ NEWLINE = \r\n|[\r\n\u2028\u2029\u000B\u000C\u0085]
     "]"                                  { return RBRACKET; }
     "("                                  { return LPARENTH; }
     ")"                                  { return RPARENTH; }
-    "{"                                  { yybegin(INSIDE_BLOCK); return LBRACE; }
-    "}"                                  { yybegin(YYINITIAL); return RBRACE; }
+    "{"                                  { return LBRACE; }
+    "}"                                  { return RBRACE; }
     "@"                                  { return STRUDEL; }
 
     "application"                        { return APPLICATION_KEYWORD; }
@@ -85,7 +81,7 @@ NEWLINE = \r\n|[\r\n\u2028\u2029\u000B\u000C\u0085]
     {DOUBLE_QUOTED_STRING}               { return DOUBLE_QUOTED_STRING; }
     {LINE_COMMENT}                       { return LINE_COMMENT; }
     {BLOCK_COMMENT}                      { return BLOCK_COMMENT; }
-    {NEWLINE}                            { return WHITE_SPACE; }
+    {NEWLINE}                            { return NEWLINE; }
     {WHITE_SPACE}                        { return WHITE_SPACE; }
     {REGEX_STRING}                       { return REGEX_STRING; }
 }

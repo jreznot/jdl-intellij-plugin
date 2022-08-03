@@ -17,7 +17,7 @@
     <lang.quoteHandler language="JDL" implementationClass="org.strangeway.jdl.JdlQuoteHandler"/>
     <lang.syntaxHighlighterFactory language="JDL" implementationClass="org.strangeway.jdl.JdlSyntaxHighlighterFactory"/>
     <lang.commenter language="JDL" implementationClass="org.strangeway.jdl.JdlCommenter"/>
-    <annotator language="JDL" implementationClass="org.strangeway.jdl.JdlPropertyNameAnnotator"/>
+    <annotator language="JDL" implementationClass="org.strangeway.jdl.JdlAnnotator"/>
     <colorSettingsPage implementation="org.strangeway.jdl.JdlColorSettingsPage"/>
   </extensions>
 </idea-plugin>
