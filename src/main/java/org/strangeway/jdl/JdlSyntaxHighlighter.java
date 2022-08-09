@@ -48,16 +48,19 @@ public class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
       createTextAttributesKey("JDL.BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT);
 
   public static final TextAttributesKey JDL_OPTION_NAME =
-      createTextAttributesKey("JDL.OPTION_NAME", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
+      createTextAttributesKey("JDL.OPTION_NAME", DefaultLanguageHighlighterColors.INSTANCE_METHOD);
 
   public static final TextAttributesKey JDL_OPTION_ENUM_VALUE =
       createTextAttributesKey("JDL.OPTION_ENUM_VALUE", DefaultLanguageHighlighterColors.CONSTANT);
 
+  public static final TextAttributesKey JDL_FIELD_NAME =
+      createTextAttributesKey("JDL.FIELD_NAME", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
+
   public static final TextAttributesKey JDL_CONSTANT =
-          createTextAttributesKey("JDL.CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
+      createTextAttributesKey("JDL.CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
 
   public static final TextAttributesKey JDL_FIELD_CONSTRAINT =
-          createTextAttributesKey("JDL.FIELD_CONSTRAINT", DefaultLanguageHighlighterColors.METADATA);
+      createTextAttributesKey("JDL.FIELD_CONSTRAINT", DefaultLanguageHighlighterColors.METADATA);
 
   private static final Map<IElementType, TextAttributesKey> ourMap;
 
