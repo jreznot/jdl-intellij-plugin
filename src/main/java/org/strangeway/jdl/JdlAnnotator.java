@@ -27,6 +27,11 @@ public class JdlAnnotator implements Annotator {
             .range(element.getTextRange())
             .textAttributes(JdlSyntaxHighlighter.JDL_IDENTIFIER)
             .create();
+      } else if (idParent instanceof JdlValue && idParent.getParent() instanceof JdlFieldConstraintParameters) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element.getTextRange())
+                .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)
+                .create();
       }
     } else if (element instanceof JdlRelationshipType) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
@@ -39,7 +44,17 @@ public class JdlAnnotator implements Annotator {
                 .range(element.getTextRange())
                 .textAttributes(JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT)
                 .create();
+      } else if (element.getParent() instanceof JdlConstantOption) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element.getTextRange())
+                .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)
+                .create();
       }
+    } else if (element instanceof JdlConfigurationOptionName) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+              .range(element.getTextRange())
+              .textAttributes(JdlSyntaxHighlighter.JDL_KEYWORD)
+              .create();
     }
 
     // todo resolve optionValue id

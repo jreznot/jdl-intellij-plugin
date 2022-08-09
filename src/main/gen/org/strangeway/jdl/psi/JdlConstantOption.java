@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlPatternCall extends PsiElement {
+public interface JdlConstantOption extends PsiElement {
 
-  @NotNull
-  JdlRegexLiteral getRegexLiteral();
+  @Nullable
+  JdlValue getValue();
 
 }

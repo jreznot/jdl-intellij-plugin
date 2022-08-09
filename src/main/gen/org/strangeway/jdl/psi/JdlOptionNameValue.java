@@ -13,4 +13,7 @@ public interface JdlOptionNameValue extends PsiElement {
   @Nullable
   JdlValue getValue();
 
+  @Nullable
+  PsiElement getNewline();
+
 }

@@ -11,14 +11,14 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlEntitiesOptionImpl extends ASTWrapperPsiElement implements JdlEntitiesOption {
+public class JdlRelationshipDetailsImpl extends ASTWrapperPsiElement implements JdlRelationshipDetails {
 
-  public JdlEntitiesOptionImpl(@NotNull ASTNode node) {
+  public JdlRelationshipDetailsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitEntitiesOption(this);
+    visitor.visitRelationshipDetails(this);
   }
 
   @Override
@@ -29,20 +29,14 @@ public class JdlEntitiesOptionImpl extends ASTWrapperPsiElement implements JdlEn
 
   @Override
   @Nullable
-  public JdlEntitiesList getEntitiesList() {
-    return findChildByClass(JdlEntitiesList.class);
+  public JdlFieldConstraint getFieldConstraint() {
+    return findChildByClass(JdlFieldConstraint.class);
   }
 
   @Override
-  @Nullable
-  public JdlExceptEntities getExceptEntities() {
-    return findChildByClass(JdlExceptEntities.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlWildcardLiteral getWildcardLiteral() {
-    return findChildByClass(JdlWildcardLiteral.class);
+  @NotNull
+  public List<JdlFieldName> getFieldNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlFieldName.class);
   }
 
 }

@@ -39,4 +39,10 @@ public class JdlEnumValueImpl extends ASTWrapperPsiElement implements JdlEnumVal
     return findChildByClass(JdlExplicitEnumMapping.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getNewline() {
+    return findChildByType(NEWLINE);
+  }
+
 }

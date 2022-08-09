@@ -11,14 +11,14 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlPaginateOptionImpl extends ASTWrapperPsiElement implements JdlPaginateOption {
+public class JdlRelationshipEntityImpl extends ASTWrapperPsiElement implements JdlRelationshipEntity {
 
-  public JdlPaginateOptionImpl(@NotNull ASTNode node) {
+  public JdlRelationshipEntityImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitPaginateOption(this);
+    visitor.visitRelationshipEntity(this);
   }
 
   @Override
@@ -28,27 +28,15 @@ public class JdlPaginateOptionImpl extends ASTWrapperPsiElement implements JdlPa
   }
 
   @Override
-  @Nullable
-  public JdlEntitiesList getEntitiesList() {
-    return findChildByClass(JdlEntitiesList.class);
+  @NotNull
+  public JdlEntityId getEntityId() {
+    return findNotNullChildByClass(JdlEntityId.class);
   }
 
   @Override
   @Nullable
-  public JdlExceptEntities getExceptEntities() {
-    return findChildByClass(JdlExceptEntities.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlWildcardLiteral getWildcardLiteral() {
-    return findChildByClass(JdlWildcardLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlWithOptionValue getWithOptionValue() {
-    return findChildByClass(JdlWithOptionValue.class);
+  public JdlRelationshipDetails getRelationshipDetails() {
+    return findChildByClass(JdlRelationshipDetails.class);
   }
 
 }

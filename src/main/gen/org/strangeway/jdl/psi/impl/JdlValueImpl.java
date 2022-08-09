@@ -53,8 +53,8 @@ public class JdlValueImpl extends ASTWrapperPsiElement implements JdlValue {
 
   @Override
   @Nullable
-  public JdlPatternCall getPatternCall() {
-    return findChildByClass(JdlPatternCall.class);
+  public JdlRegexLiteral getRegexLiteral() {
+    return findChildByClass(JdlRegexLiteral.class);
   }
 
   @Override

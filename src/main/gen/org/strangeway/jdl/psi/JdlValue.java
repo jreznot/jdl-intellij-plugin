@@ -20,7 +20,7 @@ public interface JdlValue extends PsiElement {
   JdlNumberLiteral getNumberLiteral();
 
   @Nullable
-  JdlPatternCall getPatternCall();
+  JdlRegexLiteral getRegexLiteral();
 
   @Nullable
   JdlStringLiteral getStringLiteral();

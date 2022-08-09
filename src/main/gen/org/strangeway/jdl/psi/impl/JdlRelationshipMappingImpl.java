@@ -29,14 +29,20 @@ public class JdlRelationshipMappingImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public List<JdlEntityId> getEntityIdList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEntityId.class);
+  public List<JdlRelationshipEntity> getRelationshipEntityList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlRelationshipEntity.class);
   }
 
   @Override
   @Nullable
   public JdlWithOptionValue getWithOptionValue() {
     return findChildByClass(JdlWithOptionValue.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNewline() {
+    return findChildByType(NEWLINE);
   }
 
 }

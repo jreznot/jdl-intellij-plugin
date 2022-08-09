@@ -23,19 +23,23 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitConfigurationOption(@NotNull JdlConfigurationOption o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConfigurationOptionName(@NotNull JdlConfigurationOptionName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConstantOption(@NotNull JdlConstantOption o) {
+    visitPsiElement(o);
+  }
+
   public void visitDeploymentBlock(@NotNull JdlDeploymentBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitDtoOption(@NotNull JdlDtoOption o) {
-    visitPsiElement(o);
-  }
-
   public void visitEntitiesList(@NotNull JdlEntitiesList o) {
-    visitPsiElement(o);
-  }
-
-  public void visitEntitiesOption(@NotNull JdlEntitiesOption o) {
     visitPsiElement(o);
   }
 
@@ -107,14 +111,6 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPaginateOption(@NotNull JdlPaginateOption o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPatternCall(@NotNull JdlPatternCall o) {
-    visitPsiElement(o);
-  }
-
   public void visitRegexLiteral(@NotNull JdlRegexLiteral o) {
     visitPsiElement(o);
   }
@@ -123,15 +119,19 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRelationshipDetails(@NotNull JdlRelationshipDetails o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRelationshipEntity(@NotNull JdlRelationshipEntity o) {
+    visitPsiElement(o);
+  }
+
   public void visitRelationshipMapping(@NotNull JdlRelationshipMapping o) {
     visitPsiElement(o);
   }
 
   public void visitRelationshipType(@NotNull JdlRelationshipType o) {
-    visitPsiElement(o);
-  }
-
-  public void visitServiceOption(@NotNull JdlServiceOption o) {
     visitPsiElement(o);
   }
 

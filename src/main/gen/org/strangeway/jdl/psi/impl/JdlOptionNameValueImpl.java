@@ -39,4 +39,10 @@ public class JdlOptionNameValueImpl extends ASTWrapperPsiElement implements JdlO
     return findChildByClass(JdlValue.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getNewline() {
+    return findChildByType(NEWLINE);
+  }
+
 }

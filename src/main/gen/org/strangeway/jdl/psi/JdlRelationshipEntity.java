@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlRelationshipMapping extends PsiElement {
+public interface JdlRelationshipEntity extends PsiElement {
 
   @NotNull
-  List<JdlRelationshipEntity> getRelationshipEntityList();
+  JdlEntityId getEntityId();
 
   @Nullable
-  JdlWithOptionValue getWithOptionValue();
-
-  @Nullable
-  PsiElement getNewline();
+  JdlRelationshipDetails getRelationshipDetails();
 
 }

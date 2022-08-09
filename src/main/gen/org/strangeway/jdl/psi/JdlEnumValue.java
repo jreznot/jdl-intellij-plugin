@@ -13,4 +13,7 @@ public interface JdlEnumValue extends PsiElement {
   @Nullable
   JdlExplicitEnumMapping getExplicitEnumMapping();
 
+  @Nullable
+  PsiElement getNewline();
+
 }

@@ -11,15 +11,6 @@ public interface JdlApplicationBlock extends PsiElement {
   JdlConfigBlock getConfigBlock();
 
   @NotNull
-  List<JdlDtoOption> getDtoOptionList();
-
-  @NotNull
-  List<JdlEntitiesOption> getEntitiesOptionList();
-
-  @NotNull
-  List<JdlPaginateOption> getPaginateOptionList();
-
-  @NotNull
-  List<JdlServiceOption> getServiceOptionList();
+  List<JdlConfigurationOption> getConfigurationOptionList();
 
 }

@@ -26,6 +26,8 @@
     FALSE='false'
     WILDCARD='*'
     STRUDEL='@'
+    ASSIGN='='
+    NEWLINE='regexp:/\r\n|[\r\n]'
 
     APPLICATION_KEYWORD='application'
     CONFIG_KEYWORD='config'
@@ -40,18 +42,20 @@
     DEPLOYMENT_KEYWORD='deployment'
     RELATIONSHIP_KEYWORD='relationship'
     TO_KEYWORD='to'
+    MICROSERVICE_KEYWORD='microservice'
   ]
 }
 
-root ::= (NEWLINE | applicationBlock | entityBlock | enumBlock | relationshipBlock | deploymentBlock | paginateOption | dtoOption | serviceOption)*
+root ::= (NEWLINE | applicationBlock | entityBlock | enumBlock | relationshipBlock
+          | deploymentBlock | constantOption | configurationOption)*
 
-applicationBlock ::= APPLICATION_KEYWORD LBRACE NEWLINE* applicationContent NEWLINE* RBRACE {
+applicationBlock ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationContent NEWLINE* RBRACE {
     pin = 1
 }
 
-private applicationContent ::= configBlock (NEWLINE | entitiesOption | dtoOption | paginateOption | serviceOption)*
+private applicationContent ::= configBlock (NEWLINE | configurationOption)*
 
-configBlock ::= CONFIG_KEYWORD LBRACE (NEWLINE | optionNameValue)* RBRACE {
+configBlock ::= CONFIG_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValue)* RBRACE {
     pin = 1
 }
 
@@ -64,11 +68,7 @@ optionName ::= IDENTIFIER {
     name="option name"
 }
 
-value ::= id | booleanLiteral | stringLiteral | numberLiteral | arrayLiteral | patternCall
-
-entitiesOption ::= ENTITIES_KEYWORD (wildcardLiteral | entitiesList) exceptEntities? {
-    pin = 1
-}
+value ::= id | booleanLiteral | stringLiteral | numberLiteral | arrayLiteral | regexLiteral
 
 exceptEntities ::= EXCEPT_KEYWORD entitiesList {
     pin = 1
@@ -80,25 +80,25 @@ entityId ::= IDENTIFIER {
     name = "entity identifier"
 }
 
-dtoOption ::= DTO_KEYWORD WILDCARD withOption? {
-    pin = 1
-}
-
 private withOption ::= WITH_KEYWORD withOptionValue {
     pin = 1
 }
 
 withOptionValue ::= IDENTIFIER
 
-paginateOption ::= PAGINATE_KEYWORD (wildcardLiteral | entitiesList) withOption? exceptEntities? {
+constantOption ::= IDENTIFIER ASSIGN value {
+    pin = 2
+}
+
+configurationOption ::= configurationOptionName (wildcardLiteral | entitiesList) withOption? exceptEntities? {
     pin = 1
 }
 
-serviceOption ::= SERVICE_KEYWORD (wildcardLiteral | entitiesList) withOption? exceptEntities? {
-    pin = 1
+configurationOptionName ::= IDENTIFIER {
+    name = "configuration option"
 }
 
-entityBlock ::= ENTITY_KEYWORD id (LPARENTH entityTableName RPARENTH)? entityFields? {
+entityBlock ::= ENTITY_KEYWORD NEWLINE* id NEWLINE* (LPARENTH NEWLINE* entityTableName NEWLINE* RPARENTH)? entityFields? {
     pin = 1
 }
 
@@ -129,7 +129,7 @@ private fieldConstraintParameterValue ::= value (COMMA|&RPARENTH) {
     recoverWhile = notRParenthOrNextValue
 }
 
-enumBlock ::= ENUM_KEYWORD id LBRACE (enumValue | NEWLINE)* RBRACE {
+enumBlock ::= ENUM_KEYWORD NEWLINE* id NEWLINE* LBRACE (enumValue | NEWLINE)* RBRACE {
     pin = 1
 }
 
@@ -157,22 +157,26 @@ id ::= IDENTIFIER {
     name = "identifier"
 }
 
-relationshipBlock ::= RELATIONSHIP_KEYWORD relationshipType LBRACE (NEWLINE | relationshipMapping)* RBRACE {
+relationshipBlock ::= RELATIONSHIP_KEYWORD relationshipType NEWLINE* LBRACE (NEWLINE | relationshipMapping)* RBRACE {
     pin = 1
 }
 
 relationshipType ::= IDENTIFIER
 
-relationshipMapping ::= entityId TO_KEYWORD entityId withOption? (COMMA | NEWLINE)
+relationshipMapping ::= relationshipEntity TO_KEYWORD relationshipEntity withOption? (COMMA | NEWLINE)
 
-deploymentBlock ::= DEPLOYMENT_KEYWORD LBRACE optionNameValue* RBRACE {
+relationshipEntity ::= entityId relationshipDetails?
+
+relationshipDetails ::= LBRACE fieldName (LPARENTH fieldName RPARENTH)? fieldConstraint? RBRACE
+
+deploymentBlock ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (optionNameValue | NEWLINE)* RBRACE {
     pin = 1
 }
 
 booleanLiteral ::= TRUE | FALSE
 numberLiteral ::= DOUBLE_NUMBER | INTEGER_NUMBER
 stringLiteral ::= DOUBLE_QUOTED_STRING
-arrayLiteral ::= LBRACKET arrayElement* RBRACKET {
+arrayLiteral ::= LBRACKET (arrayElement | NEWLINE)* RBRACKET {
     pin = 1
 }
 
@@ -183,9 +187,6 @@ private arrayElement ::= value (COMMA|&RBRACKET) {
 
 private notBracketOrNextValue ::= !(RBRACKET|value)
 private notRParenthOrNextValue ::= !(RPARENTH|value)
-private notNewlineOrNextValue ::= !(NEWLINE|value)
-
-patternCall ::= 'pattern' LPARENTH regexLiteral RPARENTH
 
 regexLiteral ::= REGEX_STRING {
     name = "regex literal"

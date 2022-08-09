@@ -5,9 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlDtoOption extends PsiElement {
-
-  @Nullable
-  JdlWithOptionValue getWithOptionValue();
+public interface JdlConfigurationOptionName extends PsiElement {
 
 }

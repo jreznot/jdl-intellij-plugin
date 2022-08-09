@@ -11,26 +11,20 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlPatternCallImpl extends ASTWrapperPsiElement implements JdlPatternCall {
+public class JdlConfigurationOptionNameImpl extends ASTWrapperPsiElement implements JdlConfigurationOptionName {
 
-  public JdlPatternCallImpl(@NotNull ASTNode node) {
+  public JdlConfigurationOptionNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitPatternCall(this);
+    visitor.visitConfigurationOptionName(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof JdlVisitor) accept((JdlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public JdlRegexLiteral getRegexLiteral() {
-    return findNotNullChildByClass(JdlRegexLiteral.class);
   }
 
 }

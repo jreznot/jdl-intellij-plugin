@@ -11,20 +11,44 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlDtoOptionImpl extends ASTWrapperPsiElement implements JdlDtoOption {
+public class JdlConfigurationOptionImpl extends ASTWrapperPsiElement implements JdlConfigurationOption {
 
-  public JdlDtoOptionImpl(@NotNull ASTNode node) {
+  public JdlConfigurationOptionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitDtoOption(this);
+    visitor.visitConfigurationOption(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof JdlVisitor) accept((JdlVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public JdlConfigurationOptionName getConfigurationOptionName() {
+    return findNotNullChildByClass(JdlConfigurationOptionName.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlEntitiesList getEntitiesList() {
+    return findChildByClass(JdlEntitiesList.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlExceptEntities getExceptEntities() {
+    return findChildByClass(JdlExceptEntities.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlWildcardLiteral getWildcardLiteral() {
+    return findChildByClass(JdlWildcardLiteral.class);
   }
 
   @Override

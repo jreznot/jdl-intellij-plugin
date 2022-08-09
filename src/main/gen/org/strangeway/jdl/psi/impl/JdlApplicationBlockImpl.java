@@ -35,26 +35,8 @@ public class JdlApplicationBlockImpl extends ASTWrapperPsiElement implements Jdl
 
   @Override
   @NotNull
-  public List<JdlDtoOption> getDtoOptionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlDtoOption.class);
-  }
-
-  @Override
-  @NotNull
-  public List<JdlEntitiesOption> getEntitiesOptionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEntitiesOption.class);
-  }
-
-  @Override
-  @NotNull
-  public List<JdlPaginateOption> getPaginateOptionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlPaginateOption.class);
-  }
-
-  @Override
-  @NotNull
-  public List<JdlServiceOption> getServiceOptionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlServiceOption.class);
+  public List<JdlConfigurationOption> getConfigurationOptionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlConfigurationOption.class);
   }
 
 }

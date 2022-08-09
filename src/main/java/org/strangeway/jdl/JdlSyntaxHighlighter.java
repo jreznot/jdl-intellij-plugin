@@ -53,6 +53,9 @@ public class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
   public static final TextAttributesKey JDL_OPTION_ENUM_VALUE =
       createTextAttributesKey("JDL.OPTION_ENUM_VALUE", DefaultLanguageHighlighterColors.CONSTANT);
 
+  public static final TextAttributesKey JDL_CONSTANT =
+          createTextAttributesKey("JDL.CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
+
   public static final TextAttributesKey JDL_FIELD_CONSTRAINT =
           createTextAttributesKey("JDL.FIELD_CONSTRAINT", DefaultLanguageHighlighterColors.METADATA);
 
@@ -77,7 +80,7 @@ public class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
     fillMap(ourMap, JDL_COMMA, JdlTokenTypes.COMMA);
 
     fillMap(ourMap, JDL_NUMBER, JdlTokenTypes.INTEGER_NUMBER, JdlTokenTypes.DOUBLE_NUMBER);
-    fillMap(ourMap, JDL_STRING, JdlTokenTypes.DOUBLE_QUOTED_STRING);
+    fillMap(ourMap, JDL_STRING, JdlTokenTypes.DOUBLE_QUOTED_STRING, JdlTokenTypes.REGEX_STRING);
     fillMap(ourMap, JDL_BOOLEAN, JdlTokenTypes.TRUE, JdlTokenTypes.FALSE);
 
     fillMap(ourMap, JDL_LINE_COMMENT, JdlTokenTypes.LINE_COMMENT);

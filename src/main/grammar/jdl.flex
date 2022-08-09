@@ -60,15 +60,12 @@ NEWLINE = \r\n|[\r\n]
     "{"                                  { return LBRACE; }
     "}"                                  { return RBRACE; }
     "@"                                  { return STRUDEL; }
+    "="                                  { return ASSIGN; }
 
     "application"                        { return APPLICATION_KEYWORD; }
     "config"                             { return CONFIG_KEYWORD; }
-    "entities"                           { return ENTITIES_KEYWORD; }
-    "dto"                                { return DTO_KEYWORD; }
     "entity"                             { return ENTITY_KEYWORD; }
     "enum"                               { return ENUM_KEYWORD; }
-    "paginate"                           { return PAGINATE_KEYWORD; }
-    "service"                            { return SERVICE_KEYWORD; }
     "with"                               { return WITH_KEYWORD; }
     "except"                             { return EXCEPT_KEYWORD; }
     "deployment"                         { return DEPLOYMENT_KEYWORD; }
