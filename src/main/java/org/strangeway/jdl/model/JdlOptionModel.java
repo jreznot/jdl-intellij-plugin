@@ -16,7 +16,7 @@ public final class JdlOptionModel {
     );
 
     this.applicationConfigOptions = applicationConfigOptions.stream()
-            .collect(Collectors.toMap(JdlOptionMapping::getName, Function.identity()));
+        .collect(Collectors.toMap(JdlOptionMapping::getName, Function.identity()));
   }
 
   public Map<String, JdlOptionMapping> getApplicationConfigOptions() {
