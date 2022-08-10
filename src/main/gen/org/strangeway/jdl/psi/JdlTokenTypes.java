@@ -15,6 +15,7 @@ public interface JdlTokenTypes {
   IElementType CONFIGURATION_OPTION_NAME = new JdlElementType("CONFIGURATION_OPTION_NAME");
   IElementType CONFIG_BLOCK = new JdlElementType("CONFIG_BLOCK");
   IElementType CONSTANT_OPTION = new JdlElementType("CONSTANT_OPTION");
+  IElementType CONSTANT_VALUE = new JdlElementType("CONSTANT_VALUE");
   IElementType DEPLOYMENT_BLOCK = new JdlElementType("DEPLOYMENT_BLOCK");
   IElementType ENTITIES_LIST = new JdlElementType("ENTITIES_LIST");
   IElementType ENTITY_BLOCK = new JdlElementType("ENTITY_BLOCK");
@@ -22,6 +23,7 @@ public interface JdlTokenTypes {
   IElementType ENTITY_ID = new JdlElementType("ENTITY_ID");
   IElementType ENTITY_TABLE_NAME = new JdlElementType("ENTITY_TABLE_NAME");
   IElementType ENUM_BLOCK = new JdlElementType("ENUM_BLOCK");
+  IElementType ENUM_ID = new JdlElementType("ENUM_ID");
   IElementType ENUM_KEY = new JdlElementType("ENUM_KEY");
   IElementType ENUM_VALUE = new JdlElementType("ENUM_VALUE");
   IElementType EXCEPT_ENTITIES = new JdlElementType("EXCEPT_ENTITIES");
@@ -105,6 +107,9 @@ public interface JdlTokenTypes {
       else if (type == CONSTANT_OPTION) {
         return new JdlConstantOptionImpl(node);
       }
+      else if (type == CONSTANT_VALUE) {
+        return new JdlConstantValueImpl(node);
+      }
       else if (type == DEPLOYMENT_BLOCK) {
         return new JdlDeploymentBlockImpl(node);
       }
@@ -125,6 +130,9 @@ public interface JdlTokenTypes {
       }
       else if (type == ENUM_BLOCK) {
         return new JdlEnumBlockImpl(node);
+      }
+      else if (type == ENUM_ID) {
+        return new JdlEnumIdImpl(node);
       }
       else if (type == ENUM_KEY) {
         return new JdlEnumKeyImpl(node);

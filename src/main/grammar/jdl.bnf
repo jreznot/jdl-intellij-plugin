@@ -55,11 +55,16 @@ applicationBlock ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationCon
 
 private applicationContent ::= configBlock (NEWLINE | configurationOption)*
 
-configBlock ::= CONFIG_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValue)* RBRACE {
+configBlock ::= CONFIG_KEYWORD NEWLINE* LBRACE (NEWLINE | configElement)* RBRACE {
     pin = 1
 }
 
-optionNameValue ::= optionName value? (COMMA | NEWLINE) {
+private configElement ::= optionNameValue (COMMA|&NEWLINE) {
+    pin = 1
+    recoverWhile = notRBraceOrNextOption
+}
+
+optionNameValue ::= optionName value? {
     pin = 1
     name = "option"
 }
@@ -74,7 +79,7 @@ exceptEntities ::= EXCEPT_KEYWORD entitiesList {
     pin = 1
 }
 
-entitiesList ::= entityId (COMMA entityId)*
+entitiesList ::= id (COMMA id)*
 
 entityId ::= IDENTIFIER {
     name = "entity identifier"
@@ -86,9 +91,11 @@ private withOption ::= WITH_KEYWORD withOptionValue {
 
 withOptionValue ::= IDENTIFIER
 
-constantOption ::= IDENTIFIER ASSIGN value {
+constantOption ::= IDENTIFIER ASSIGN constantValue {
     pin = 2
 }
+
+constantValue ::= booleanLiteral | stringLiteral | numberLiteral
 
 configurationOption ::= configurationOptionName (wildcardLiteral | entitiesList) withOption? exceptEntities? {
     pin = 1
@@ -98,23 +105,28 @@ configurationOptionName ::= IDENTIFIER {
     name = "configuration option"
 }
 
-entityBlock ::= ENTITY_KEYWORD NEWLINE* id NEWLINE* (LPARENTH NEWLINE* entityTableName NEWLINE* RPARENTH)? entityFields? {
+wildcardLiteral ::= WILDCARD {
+    name = "*"
+}
+
+entityBlock ::= ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE {
     pin = 1
 }
 
-wildcardLiteral ::= WILDCARD {
-    name = "*"
+private entityTableDeclaration ::= LPARENTH NEWLINE* entityTableName NEWLINE* RPARENTH {
+    pin = 1
 }
 
 entityTableName ::= IDENTIFIER {
     name = "table name"
 }
 
-private entityFields ::= LBRACE (entityFieldMapping | NEWLINE)* RBRACE {
+private entityElement ::= entityFieldMapping (COMMA|&NEWLINE) {
     pin = 1
+    recoverWhile = notRBraceOrNextOption
 }
 
-entityFieldMapping ::= fieldName fieldType fieldConstraint* (COMMA | NEWLINE) {
+entityFieldMapping ::= fieldName fieldType fieldConstraint* {
     pin = 1
 }
 
@@ -129,11 +141,20 @@ private fieldConstraintParameterValue ::= value (COMMA|&RPARENTH) {
     recoverWhile = notRParenthOrNextValue
 }
 
-enumBlock ::= ENUM_KEYWORD NEWLINE* id NEWLINE* LBRACE (enumValue | NEWLINE)* RBRACE {
+enumBlock ::= ENUM_KEYWORD NEWLINE* enumId NEWLINE* LBRACE (NEWLINE | enumElement)* RBRACE {
     pin = 1
 }
 
-enumValue ::= enumKey explicitEnumMapping? (COMMA | NEWLINE) {
+enumId ::= IDENTIFIER {
+    name = "enum name"
+}
+
+private enumElement ::= enumValue (COMMA|&NEWLINE) {
+    pin = 1
+    recoverWhile = notRBraceOrNextOption
+}
+
+enumValue ::= enumKey explicitEnumMapping? {
     pin = 1
 }
 
@@ -157,19 +178,26 @@ id ::= IDENTIFIER {
     name = "identifier"
 }
 
-relationshipBlock ::= RELATIONSHIP_KEYWORD relationshipType NEWLINE* LBRACE (NEWLINE | relationshipMapping)* RBRACE {
+relationshipBlock ::= RELATIONSHIP_KEYWORD relationshipType NEWLINE* LBRACE (NEWLINE | relationshipElement)* RBRACE {
     pin = 1
 }
 
 relationshipType ::= IDENTIFIER
 
-relationshipMapping ::= relationshipEntity TO_KEYWORD relationshipEntity withOption? (COMMA | NEWLINE)
+private relationshipElement ::= relationshipMapping (COMMA|&NEWLINE) {
+    pin = 1
+    recoverWhile = notRBraceOrNextOption
+}
 
-relationshipEntity ::= entityId relationshipDetails?
+relationshipMapping ::= relationshipEntity NEWLINE* TO_KEYWORD NEWLINE* relationshipEntity withOption?
+
+relationshipEntity ::= id relationshipDetails? {
+    pin = 1
+}
 
 relationshipDetails ::= LBRACE fieldName (LPARENTH fieldName RPARENTH)? fieldConstraint? RBRACE
 
-deploymentBlock ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (optionNameValue | NEWLINE)* RBRACE {
+deploymentBlock ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValue)* RBRACE {
     pin = 1
 }
 
@@ -187,6 +215,7 @@ private arrayElement ::= value (COMMA|&RBRACKET) {
 
 private notBracketOrNextValue ::= !(RBRACKET|value)
 private notRParenthOrNextValue ::= !(RPARENTH|value)
+private notRBraceOrNextOption ::= !(RBRACE|NEWLINE|IDENTIFIER)
 
 regexLiteral ::= REGEX_STRING {
     name = "regex literal"

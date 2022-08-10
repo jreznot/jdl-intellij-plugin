@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface JdlConstantOption extends PsiElement {
 
   @Nullable
-  JdlValue getValue();
+  JdlConstantValue getConstantValue();
 
 }

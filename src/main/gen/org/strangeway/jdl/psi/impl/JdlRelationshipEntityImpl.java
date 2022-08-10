@@ -29,8 +29,8 @@ public class JdlRelationshipEntityImpl extends ASTWrapperPsiElement implements J
 
   @Override
   @NotNull
-  public JdlEntityId getEntityId() {
-    return findNotNullChildByClass(JdlEntityId.class);
+  public JdlId getId() {
+    return findNotNullChildByClass(JdlId.class);
   }
 
   @Override

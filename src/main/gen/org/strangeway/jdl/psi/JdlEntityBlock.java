@@ -11,9 +11,9 @@ public interface JdlEntityBlock extends PsiElement {
   List<JdlEntityFieldMapping> getEntityFieldMappingList();
 
   @Nullable
-  JdlEntityTableName getEntityTableName();
+  JdlEntityId getEntityId();
 
   @Nullable
-  JdlId getId();
+  JdlEntityTableName getEntityTableName();
 
 }

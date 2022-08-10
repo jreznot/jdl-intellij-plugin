@@ -35,6 +35,10 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitConstantValue(@NotNull JdlConstantValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitDeploymentBlock(@NotNull JdlDeploymentBlock o) {
     visitPsiElement(o);
   }
@@ -60,6 +64,10 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitEnumBlock(@NotNull JdlEnumBlock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnumId(@NotNull JdlEnumId o) {
     visitPsiElement(o);
   }
 

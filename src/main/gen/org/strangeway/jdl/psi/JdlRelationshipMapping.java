@@ -13,7 +13,4 @@ public interface JdlRelationshipMapping extends PsiElement {
   @Nullable
   JdlWithOptionValue getWithOptionValue();
 
-  @Nullable
-  PsiElement getNewline();
-
 }

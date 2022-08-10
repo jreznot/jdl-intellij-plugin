@@ -16,7 +16,4 @@ public interface JdlEntityFieldMapping extends PsiElement {
   @Nullable
   JdlFieldType getFieldType();
 
-  @Nullable
-  PsiElement getNewline();
-
 }

@@ -35,14 +35,14 @@ public class JdlEntityBlockImpl extends ASTWrapperPsiElement implements JdlEntit
 
   @Override
   @Nullable
-  public JdlEntityTableName getEntityTableName() {
-    return findChildByClass(JdlEntityTableName.class);
+  public JdlEntityId getEntityId() {
+    return findChildByClass(JdlEntityId.class);
   }
 
   @Override
   @Nullable
-  public JdlId getId() {
-    return findChildByClass(JdlId.class);
+  public JdlEntityTableName getEntityTableName() {
+    return findChildByClass(JdlEntityTableName.class);
   }
 
 }

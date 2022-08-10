@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface JdlEnumBlock extends PsiElement {
 
+  @Nullable
+  JdlEnumId getEnumId();
+
   @NotNull
   List<JdlEnumValue> getEnumValueList();
-
-  @Nullable
-  JdlId getId();
 
 }

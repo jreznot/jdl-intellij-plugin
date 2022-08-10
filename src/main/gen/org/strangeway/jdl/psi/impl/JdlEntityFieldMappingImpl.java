@@ -45,10 +45,4 @@ public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements J
     return findChildByClass(JdlFieldType.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getNewline() {
-    return findChildByType(NEWLINE);
-  }
-
 }

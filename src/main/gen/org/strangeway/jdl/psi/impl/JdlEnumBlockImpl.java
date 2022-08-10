@@ -28,15 +28,15 @@ public class JdlEnumBlockImpl extends ASTWrapperPsiElement implements JdlEnumBlo
   }
 
   @Override
-  @NotNull
-  public List<JdlEnumValue> getEnumValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEnumValue.class);
+  @Nullable
+  public JdlEnumId getEnumId() {
+    return findChildByClass(JdlEnumId.class);
   }
 
   @Override
-  @Nullable
-  public JdlId getId() {
-    return findChildByClass(JdlId.class);
+  @NotNull
+  public List<JdlEnumValue> getEnumValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEnumValue.class);
   }
 
 }

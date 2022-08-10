@@ -29,8 +29,8 @@ public class JdlEntitiesListImpl extends ASTWrapperPsiElement implements JdlEnti
 
   @Override
   @NotNull
-  public List<JdlEntityId> getEntityIdList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEntityId.class);
+  public List<JdlId> getIdList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlId.class);
   }
 
 }

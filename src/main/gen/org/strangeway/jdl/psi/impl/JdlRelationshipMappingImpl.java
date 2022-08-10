@@ -39,10 +39,4 @@ public class JdlRelationshipMappingImpl extends ASTWrapperPsiElement implements 
     return findChildByClass(JdlWithOptionValue.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getNewline() {
-    return findChildByType(NEWLINE);
-  }
-
 }

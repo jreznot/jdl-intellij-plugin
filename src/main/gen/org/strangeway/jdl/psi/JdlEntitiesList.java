@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface JdlEntitiesList extends PsiElement {
 
   @NotNull
-  List<JdlEntityId> getEntityIdList();
+  List<JdlId> getIdList();
 
 }

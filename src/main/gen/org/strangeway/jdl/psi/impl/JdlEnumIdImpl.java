@@ -11,26 +11,20 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlConstantOptionImpl extends ASTWrapperPsiElement implements JdlConstantOption {
+public class JdlEnumIdImpl extends ASTWrapperPsiElement implements JdlEnumId {
 
-  public JdlConstantOptionImpl(@NotNull ASTNode node) {
+  public JdlEnumIdImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitConstantOption(this);
+    visitor.visitEnumId(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof JdlVisitor) accept((JdlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public JdlConstantValue getConstantValue() {
-    return findChildByClass(JdlConstantValue.class);
   }
 
 }

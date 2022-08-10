@@ -28,14 +28,14 @@ public class JdlAnnotator implements Annotator {
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
           .create();
+    } else if (element instanceof JdlEntityId || element instanceof JdlEnumId) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(element.getTextRange())
+          .textAttributes(JdlSyntaxHighlighter.JDL_IDENTIFIER)
+          .create();
     } else if (element instanceof JdlId) {
       PsiElement idParent = element.getParent();
-      if (idParent instanceof JdlEntityBlock || idParent instanceof JdlEnumBlock) {
-        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-            .range(element.getTextRange())
-            .textAttributes(JdlSyntaxHighlighter.JDL_IDENTIFIER)
-            .create();
-      } else if (idParent instanceof JdlValue)
+      if (idParent instanceof JdlValue)
         if (idParent.getParent() instanceof JdlFieldConstraintParameters) {
           holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
               .range(element.getTextRange())
