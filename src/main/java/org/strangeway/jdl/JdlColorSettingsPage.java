@@ -20,6 +20,9 @@ public final class JdlColorSettingsPage implements ColorSettingsPage {
       new AttributesDescriptor("Boolean", JdlSyntaxHighlighter.JDL_BOOLEAN),
       new AttributesDescriptor("Enum value", JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE),
       new AttributesDescriptor("Option name", JdlSyntaxHighlighter.JDL_OPTION_NAME),
+      new AttributesDescriptor("Field name", JdlSyntaxHighlighter.JDL_FIELD_NAME),
+      new AttributesDescriptor("Field constraint", JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT),
+      new AttributesDescriptor("Constant", JdlSyntaxHighlighter.JDL_CONSTANT),
       new AttributesDescriptor("Comments//Line comment", JdlSyntaxHighlighter.JDL_LINE_COMMENT),
       new AttributesDescriptor("Comments//Block comment", JdlSyntaxHighlighter.JDL_BLOCK_COMMENT),
       new AttributesDescriptor("Braces and Operators//Brackets", JdlSyntaxHighlighter.JDL_BRACKETS),
@@ -51,24 +54,28 @@ public final class JdlColorSettingsPage implements ColorSettingsPage {
         "    <optionName>serverPort</optionName> 8080\n" +
         "    <optionName>languages</optionName> [<enumValue>en</enumValue>, <enumValue>fr</enumValue>]\n" +
         "  }\n" +
-        "  entities A, B, C\n" +
-        "  dto * with mapstruct\n" +
+        "  <keyword>entities</keyword> A, B, C\n" +
+        "  <keyword>dto</keyword> * with <enumValue>mapstruct</enumValue>\n" +
         "}\n" +
+        "\n" +
+        "<const>DEFAULT_TIMEOUT</const> = 100\n" +
         "\n" +
         "application {\n" +
         "  config {\n" +
         "    <optionName>baseName</optionName> app2\n" +
         "    <optionName>enableTranslation</optionName> true\n" +
         "  }\n" +
-        "  entities A, C\n" +
-        "  paginate * with pagination except D \n" +
+        "  <keyword>entities</keyword> A, C\n" +
+        "  <keyword>paginate</keyword> * with <enumValue>pagination</enumValue> except D \n" +
         "}\n" +
         "\n" +
         "entity <id>A</id>\n" +
         "/** This comment will be taken into account */\n" +
         "entity <id>B</id>\n" +
         "// This comment will be ignored\n" +
-        "entity <id>C</id>\n" +
+        "entity <id>C</id> {\n" +
+        "  <fieldName>departmentName</fieldName> String <fieldConstraint>required</fieldConstraint>\n" +
+        "}\n" +
         "\n" +
         "deployment {\n" +
         "  <optionName>deploymentType</optionName> <enumValue>docker-compose</enumValue>\n" +
@@ -81,6 +88,10 @@ public final class JdlColorSettingsPage implements ColorSettingsPage {
     return Map.of(
         "optionName", JdlSyntaxHighlighter.JDL_OPTION_NAME,
         "enumValue", JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE,
+        "keyword", JdlSyntaxHighlighter.JDL_KEYWORD,
+        "fieldName", JdlSyntaxHighlighter.JDL_FIELD_NAME,
+        "fieldConstraint", JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT,
+        "const", JdlSyntaxHighlighter.JDL_CONSTANT,
         "id", JdlSyntaxHighlighter.JDL_IDENTIFIER
     );
   }

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class JdlFileType extends LanguageFileType {
+public final class JdlFileType extends LanguageFileType {
   public final static JdlFileType INSTANCE = new JdlFileType();
 
   protected JdlFileType() {

@@ -3,7 +3,7 @@ package org.strangeway.jdl;
 import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 
-public class JdlLanguage extends Language {
+public final class JdlLanguage extends Language {
 
   public final static JdlLanguage INSTANCE = new JdlLanguage();
 

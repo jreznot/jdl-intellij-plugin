@@ -3,7 +3,7 @@ package org.strangeway.jdl;
 import com.intellij.lang.Commenter;
 import org.jetbrains.annotations.Nullable;
 
-public class JdlCommenter implements Commenter {
+public final class JdlCommenter implements Commenter {
   @Nullable
   @Override
   public String getLineCommentPrefix() {
