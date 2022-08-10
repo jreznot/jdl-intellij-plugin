@@ -4,7 +4,7 @@ package org.strangeway.jdl;
 import com.intellij.codeInsight.editorActions.SimpleTokenSetQuoteHandler;
 import org.strangeway.jdl.psi.JdlTokenTypes;
 
-public final class JdlQuoteHandler extends SimpleTokenSetQuoteHandler {
+final class JdlQuoteHandler extends SimpleTokenSetQuoteHandler {
   public JdlQuoteHandler() {
     super(JdlTokenTypes.DOUBLE_QUOTED_STRING);
   }

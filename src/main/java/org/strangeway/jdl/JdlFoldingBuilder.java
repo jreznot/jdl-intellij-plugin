@@ -13,7 +13,7 @@ import org.strangeway.jdl.psi.JdlTokenTypes;
 
 import java.util.List;
 
-public final class JdlFoldingBuilder extends CustomFoldingBuilder implements DumbAware {
+final class JdlFoldingBuilder extends CustomFoldingBuilder implements DumbAware {
   @Override
   protected boolean isRegionCollapsedByDefault(@NotNull ASTNode node) {
     return false;

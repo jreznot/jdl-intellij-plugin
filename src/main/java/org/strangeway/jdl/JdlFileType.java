@@ -10,7 +10,7 @@ import javax.swing.*;
 public final class JdlFileType extends LanguageFileType {
   public final static JdlFileType INSTANCE = new JdlFileType();
 
-  protected JdlFileType() {
+  public JdlFileType() {
     super(JdlLanguage.INSTANCE);
   }
 
@@ -30,7 +30,7 @@ public final class JdlFileType extends LanguageFileType {
   }
 
   @Override
-  public @Nullable Icon getIcon() {
+  public @NotNull Icon getIcon() {
     return JhipsterIcons.FILE_ICON;
   }
 }

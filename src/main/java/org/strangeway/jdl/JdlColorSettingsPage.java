@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.util.Map;
 
-public final class JdlColorSettingsPage implements ColorSettingsPage {
+final class JdlColorSettingsPage implements ColorSettingsPage {
   private final AttributesDescriptor[] myAttributesDescriptors = new AttributesDescriptor[]{
       new AttributesDescriptor("Keyword", JdlSyntaxHighlighter.JDL_KEYWORD),
       new AttributesDescriptor("Identifier", JdlSyntaxHighlighter.JDL_IDENTIFIER),

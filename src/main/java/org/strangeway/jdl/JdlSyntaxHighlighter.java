@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
-public final class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
+final class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
   public static final TextAttributesKey JDL_KEYWORD =
       createTextAttributesKey("JDL.KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
 
