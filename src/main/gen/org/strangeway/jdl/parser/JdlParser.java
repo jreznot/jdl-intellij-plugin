@@ -88,34 +88,23 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // configBlock (NEWLINE | configurationOption)*
+  // (NEWLINE | configBlock | configurationOption)*
   static boolean applicationContent(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "applicationContent")) return false;
-    if (!nextTokenIs(b, CONFIG_KEYWORD)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = configBlock(b, l + 1);
-    r = r && applicationContent_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (NEWLINE | configurationOption)*
-  private static boolean applicationContent_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "applicationContent_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!applicationContent_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "applicationContent_1", c)) break;
+      if (!applicationContent_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "applicationContent", c)) break;
     }
     return true;
   }
 
-  // NEWLINE | configurationOption
-  private static boolean applicationContent_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "applicationContent_1_0")) return false;
+  // NEWLINE | configBlock | configurationOption
+  private static boolean applicationContent_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "applicationContent_0")) return false;
     boolean r;
     r = consumeToken(b, NEWLINE);
+    if (!r) r = configBlock(b, l + 1);
     if (!r) r = configurationOption(b, l + 1);
     return r;
   }
@@ -1223,16 +1212,17 @@ public class JdlParser implements PsiParser, LightPsiParser {
   public static boolean relationshipMapping(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "relationshipMapping")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, RELATIONSHIP_MAPPING, null);
     r = relationshipEntity(b, l + 1);
-    r = r && relationshipMapping_1(b, l + 1);
-    r = r && consumeToken(b, TO_KEYWORD);
-    r = r && relationshipMapping_3(b, l + 1);
-    r = r && relationshipEntity(b, l + 1);
-    r = r && relationshipMapping_5(b, l + 1);
-    exit_section_(b, m, RELATIONSHIP_MAPPING, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, relationshipMapping_1(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, TO_KEYWORD)) && r;
+    r = p && report_error_(b, relationshipMapping_3(b, l + 1)) && r;
+    r = p && report_error_(b, relationshipEntity(b, l + 1)) && r;
+    r = p && relationshipMapping_5(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // NEWLINE*

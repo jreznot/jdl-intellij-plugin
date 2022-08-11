@@ -28,9 +28,9 @@ public class JdlApplicationBlockImpl extends ASTWrapperPsiElement implements Jdl
   }
 
   @Override
-  @Nullable
-  public JdlConfigBlock getConfigBlock() {
-    return findChildByClass(JdlConfigBlock.class);
+  @NotNull
+  public List<JdlConfigBlock> getConfigBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlConfigBlock.class);
   }
 
   @Override

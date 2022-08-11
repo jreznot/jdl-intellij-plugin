@@ -10,6 +10,8 @@ import org.strangeway.jdl.model.JdlOptionMapping;
 import org.strangeway.jdl.model.JdlOptionModel;
 import org.strangeway.jdl.psi.*;
 
+import static org.strangeway.jdl.model.JdlOptionModel.BASE_NAME_ATTRIBUTE_NAME;
+
 final class JdlAnnotator implements Annotator {
   @Override
   public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
@@ -35,7 +37,7 @@ final class JdlAnnotator implements Annotator {
           .create();
     } else if (element instanceof JdlId) {
       PsiElement idParent = element.getParent();
-      if (idParent instanceof JdlValue)
+      if (idParent instanceof JdlValue) {
         if (idParent.getParent() instanceof JdlFieldConstraintParameters) {
           holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
               .range(element.getTextRange())
@@ -43,17 +45,13 @@ final class JdlAnnotator implements Annotator {
               .create();
         } else if (idParent.getParent() instanceof JdlOptionNameValue) {
           JdlOptionNameValue optionNameValue = (JdlOptionNameValue) idParent.getParent();
-          JdlOptionName optionName = optionNameValue.getOptionName();
-          String optionKey = optionName.getText();
-
-          JdlOptionMapping optionMapping = JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(optionKey);
-          if (optionMapping != null && optionMapping.getPropertyType() instanceof JdlEnumType) {
-            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                .range(element.getTextRange())
-                .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
-                .create();
-          }
+          annotateOptionNameEnumValue(element, holder, optionNameValue);
+        } else if (idParent.getParent() instanceof JdlArrayLiteral
+            && idParent.getParent().getParent() instanceof JdlOptionNameValue) {
+          JdlOptionNameValue optionNameValue = (JdlOptionNameValue) idParent.getParent().getParent();
+          annotateOptionNameEnumValue(element, holder, optionNameValue);
         }
+      }
     } else if (element instanceof JdlRelationshipType) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(element.getTextRange())
@@ -77,7 +75,28 @@ final class JdlAnnotator implements Annotator {
           .textAttributes(JdlSyntaxHighlighter.JDL_KEYWORD)
           .create();
     }
+  }
 
-    // todo resolve optionValue id
+  private static void annotateOptionNameEnumValue(@NotNull PsiElement element, @NotNull AnnotationHolder holder,
+                                                  JdlOptionNameValue optionNameValue) {
+    JdlOptionName optionName = optionNameValue.getOptionName();
+    String optionKey = optionName.getText();
+
+    if (optionNameValue.getParent() instanceof JdlConfigBlock) {
+      if (BASE_NAME_ATTRIBUTE_NAME.equals(optionKey)) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+            .range(element.getTextRange())
+            .textAttributes(JdlSyntaxHighlighter.JDL_BASE_NAME)
+            .create();
+      } else {
+        JdlOptionMapping optionMapping = JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(optionKey);
+        if (optionMapping != null && optionMapping.getPropertyType() instanceof JdlEnumType) {
+          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+              .range(element.getTextRange())
+              .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
+              .create();
+        }
+      }
+    }
   }
 }

@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface JdlApplicationBlock extends PsiElement {
 
-  @Nullable
-  JdlConfigBlock getConfigBlock();
+  @NotNull
+  List<JdlConfigBlock> getConfigBlockList();
 
   @NotNull
   List<JdlConfigurationOption> getConfigurationOptionList();

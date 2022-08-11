@@ -20,5 +20,7 @@
     <lang.foldingBuilder language="JDL" implementationClass="org.strangeway.jdl.JdlFoldingBuilder"/>
     <annotator language="JDL" implementationClass="org.strangeway.jdl.JdlAnnotator"/>
     <colorSettingsPage implementation="org.strangeway.jdl.JdlColorSettingsPage"/>
+
+    <completion.contributor language="JDL" implementationClass="org.strangeway.jdl.JdlCompletionContributor"/>
   </extensions>
 </idea-plugin>

@@ -20,6 +20,9 @@ final class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
   public static final TextAttributesKey JDL_IDENTIFIER =
       createTextAttributesKey("JDL.IDENTIFIER", DefaultLanguageHighlighterColors.CLASS_NAME);
 
+  public static final TextAttributesKey JDL_BASE_NAME =
+      createTextAttributesKey("JDL.BASE_NAME", DefaultLanguageHighlighterColors.LABEL);
+
   public static final TextAttributesKey JDL_NUMBER =
       createTextAttributesKey("JDL.NUMBER", DefaultLanguageHighlighterColors.NUMBER);
 

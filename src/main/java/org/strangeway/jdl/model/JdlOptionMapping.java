@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public final class JdlOptionMapping {
+public class JdlOptionMapping {
   private final String name;
   private final JdlOptionType propertyType;
 

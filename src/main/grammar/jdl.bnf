@@ -53,7 +53,7 @@ applicationBlock ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationCon
     pin = 1
 }
 
-private applicationContent ::= configBlock (NEWLINE | configurationOption)*
+private applicationContent ::= (NEWLINE | configBlock | configurationOption)*
 
 configBlock ::= CONFIG_KEYWORD NEWLINE* LBRACE (NEWLINE | configElement)* RBRACE {
     pin = 1
@@ -189,7 +189,9 @@ private relationshipElement ::= relationshipMapping (COMMA|&NEWLINE) {
     recoverWhile = notRBraceOrNextOption
 }
 
-relationshipMapping ::= relationshipEntity NEWLINE* TO_KEYWORD NEWLINE* relationshipEntity withOption?
+relationshipMapping ::= relationshipEntity NEWLINE* TO_KEYWORD NEWLINE* relationshipEntity withOption? {
+    pin = 1
+}
 
 relationshipEntity ::= id relationshipDetails? {
     pin = 1

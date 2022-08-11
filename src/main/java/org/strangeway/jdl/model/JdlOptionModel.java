@@ -8,11 +8,17 @@ import java.util.stream.Collectors;
 public final class JdlOptionModel {
   public static final JdlOptionModel INSTANCE = new JdlOptionModel();
 
+  public static final String BASE_NAME_ATTRIBUTE_NAME = "baseName";
+
   private final Map<String, JdlOptionMapping> applicationConfigOptions;
 
   private JdlOptionModel() {
     List<JdlOptionMapping> applicationConfigOptions = List.of(
-        new JdlOptionMapping("applicationType", new JdlEnumType<>("applicationTypes", JdlApplicationType.class))
+        new JdlEnumMapping("applicationType", JdlApplicationType.class),
+        new JdlEnumMapping("buildTool", JdlBuildTool.class),
+        new JdlEnumMapping("authenticationType", JdlAuthenticationType.class),
+        new JdlEnumMapping("cacheProvider", JdlCacheProvider.class),
+        new JdlEnumMapping("clientFramework", JdlClientFramework.class)
     );
 
     this.applicationConfigOptions = applicationConfigOptions.stream()
