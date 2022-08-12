@@ -22,5 +22,9 @@
     <colorSettingsPage implementation="org.strangeway.jdl.JdlColorSettingsPage"/>
 
     <completion.contributor language="JDL" implementationClass="org.strangeway.jdl.JdlCompletionContributor"/>
+
+    <liveTemplateContext implementation="org.strangeway.jdl.JdlLiveTemplateContextType"/>
+
+    <defaultLiveTemplates file="/org/strangeway/jdl/liveTemplates.xml"/>
   </extensions>
 </idea-plugin>

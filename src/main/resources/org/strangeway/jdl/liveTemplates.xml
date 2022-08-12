@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templateSet group="JHipster">
+    <template description="JDL application" name="jh-app" toReformat="true"
+              value="application {&#10;    config {&#10;        baseName $NAME$&#10;        $END$&#10;    }&#10;}" shortcut="TAB">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JDL" value="true" />
+        </context>
+    </template>
+
+    <template description="JDL entity" name="jh-entity" toReformat="true"
+              value="entity $NAME$ {&#10;    $END$&#10;}" shortcut="TAB">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JDL" value="true" />
+        </context>
+    </template>
+
+    <template description="JDL enum" name="jh-enum" toReformat="true"
+              value="enum $NAME$ {&#10;    $END$&#10;}" shortcut="TAB">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JDL" value="true" />
+        </context>
+    </template>
+</templateSet>

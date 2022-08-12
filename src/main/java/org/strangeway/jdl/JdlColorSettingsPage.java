@@ -15,6 +15,7 @@ final class JdlColorSettingsPage implements ColorSettingsPage {
   private final AttributesDescriptor[] myAttributesDescriptors = new AttributesDescriptor[]{
       new AttributesDescriptor("Keyword", JdlSyntaxHighlighter.JDL_KEYWORD),
       new AttributesDescriptor("Identifier", JdlSyntaxHighlighter.JDL_IDENTIFIER),
+      new AttributesDescriptor("Application base name", JdlSyntaxHighlighter.JDL_BASE_NAME),
       new AttributesDescriptor("String", JdlSyntaxHighlighter.JDL_STRING),
       new AttributesDescriptor("Number", JdlSyntaxHighlighter.JDL_NUMBER),
       new AttributesDescriptor("Boolean", JdlSyntaxHighlighter.JDL_BOOLEAN),
@@ -50,7 +51,7 @@ final class JdlColorSettingsPage implements ColorSettingsPage {
   public @NonNls @NotNull String getDemoText() {
     return "application {\n" +
         "  config {\n" +
-        "    <optionName>baseName</optionName> app1\n" +
+        "    <optionName>baseName</optionName> <baseName>app1</baseName>\n" +
         "    <optionName>serverPort</optionName> 8080\n" +
         "    <optionName>languages</optionName> [<enumValue>en</enumValue>, <enumValue>fr</enumValue>]\n" +
         "  }\n" +
@@ -62,7 +63,7 @@ final class JdlColorSettingsPage implements ColorSettingsPage {
         "\n" +
         "application {\n" +
         "  config {\n" +
-        "    <optionName>baseName</optionName> app2\n" +
+        "    <optionName>baseName</optionName> <baseName>app2</baseName>\n" +
         "    <optionName>enableTranslation</optionName> true\n" +
         "  }\n" +
         "  <keyword>entities</keyword> A, C\n" +
@@ -92,6 +93,7 @@ final class JdlColorSettingsPage implements ColorSettingsPage {
         "fieldName", JdlSyntaxHighlighter.JDL_FIELD_NAME,
         "fieldConstraint", JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT,
         "const", JdlSyntaxHighlighter.JDL_CONSTANT,
+        "baseName", JdlSyntaxHighlighter.JDL_BASE_NAME,
         "id", JdlSyntaxHighlighter.JDL_IDENTIFIER
     );
   }
