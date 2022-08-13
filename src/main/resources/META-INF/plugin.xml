@@ -5,7 +5,24 @@
   <vendor email="github@strangeway.org" url="https://www.strangeway.org">Yuriy Artamonov</vendor>
 
   <description><![CDATA[
-    Provides JHipster-specific domain language (JDL) editor support.
+    <p>Provides JHipster-specific domain language (JDL) editor support.</p>
+    <br/>
+    Features:
+    <ul>
+      <li>Syntax highlighting</li>
+      <li>Options completion</li>
+      <li>Live templates</li>
+    </ul>
+
+    Use live templates to speed-up JDL editing:
+    <ul>
+      <li><b>jh-app</b> - Adds a new application declaration</li>
+      <li><b>jh-entity</b> - Adds a new entity declarations</li>
+      <li><b>jh-enum</b> - Adds a new enum declarations</li>
+      <li><b>jh-rel</b> - Adds a new relationship declarations</li>
+    </ul>
+
+    Follow author in Twitter: <a href="https://twitter.com/Yuriy_Artamonov">&#64;Yuriy Artamonov</a>
   ]]></description>
 
   <depends>com.intellij.modules.platform</depends>
