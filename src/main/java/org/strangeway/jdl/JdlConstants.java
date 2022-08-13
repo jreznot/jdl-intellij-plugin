@@ -30,4 +30,11 @@ public final class JdlConstants {
   public static final List<String> RELATIONSHIP_NESTED_KEYWORDS = List.of(
       "to"
   );
+
+  public static final List<String> RELATIONSHIP_TYPES = List.of(
+      "OneToMany",
+      "ManyToOne",
+      "OneToOne",
+      "ManyToMany"
+  );
 }
