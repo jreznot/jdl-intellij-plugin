@@ -1,12 +1,14 @@
 package org.strangeway.jdl.model;
 
-public enum JdlSearchEngine implements JdlEnum {
+public enum JdlServiceDiscoveryType implements JdlEnum {
   FALSE("false"),
-  ELASTICSEARCH("elasticsearch");
+  NO("no"),
+  EUREKA("eureka"),
+  CONSUL("consul");
 
   private final String id;
 
-  JdlSearchEngine(String id) {
+  JdlServiceDiscoveryType(String id) {
     this.id = id;
   }
 

@@ -1,12 +1,12 @@
 package org.strangeway.jdl.model;
 
-public enum JdlSearchEngine implements JdlEnum {
+public enum JdlWebsocket implements JdlEnum {
   FALSE("false"),
-  ELASTICSEARCH("elasticsearch");
+  SPRINGWEBSOCKET("spring-websocket");
 
   private final String id;
 
-  JdlSearchEngine(String id) {
+  JdlWebsocket(String id) {
     this.id = id;
   }
 

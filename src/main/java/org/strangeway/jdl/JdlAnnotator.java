@@ -5,6 +5,7 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.strangeway.jdl.model.JdlEnumListType;
 import org.strangeway.jdl.model.JdlEnumType;
 import org.strangeway.jdl.model.JdlOptionMapping;
 import org.strangeway.jdl.model.JdlOptionModel;
@@ -90,13 +91,20 @@ final class JdlAnnotator implements Annotator {
             .create();
       } else {
         JdlOptionMapping optionMapping = JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(optionKey);
-        if (optionMapping != null && optionMapping.getPropertyType() instanceof JdlEnumType) {
-          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-              .range(element.getTextRange())
-              .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
-              .create();
+        if (optionMapping != null && isEnumType(optionMapping)) {
+          if (!"false".equals(element.getText())) { // false is highlighted as boolean instead
+            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element.getTextRange())
+                .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
+                .create();
+          }
         }
       }
     }
+  }
+
+  private static boolean isEnumType(JdlOptionMapping optionMapping) {
+    return optionMapping.getPropertyType() instanceof JdlEnumType
+        || optionMapping.getPropertyType() instanceof JdlEnumListType;
   }
 }

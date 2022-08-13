@@ -37,7 +37,15 @@ public final class JdlOptionModel {
         new JdlEnumMapping("nativeLanguage", JdlLanguage.class, JdlLanguage.ENGLISH),
         new JdlOptionMapping("packageName", JdlPrimitiveType.STRING_TYPE),
         new JdlEnumMapping("prodDatabaseType", JdlProdDatabaseType.class, JdlProdDatabaseType.MSSQL),
-        new JdlOptionMapping("reactive", JdlPrimitiveType.BOOLEAN_TYPE)
+        new JdlOptionMapping("reactive", JdlPrimitiveType.BOOLEAN_TYPE),
+        new JdlEnumMapping("searchEngine", JdlSearchEngine.class, JdlSearchEngine.FALSE),
+        new JdlOptionMapping("serverPort", JdlPrimitiveType.INTEGER_TYPE, "8080, 8081 or 9999"),
+        new JdlEnumMapping("serviceDiscoveryType", JdlServiceDiscoveryType.class, JdlServiceDiscoveryType.FALSE),
+        new JdlOptionMapping("skipClient", JdlPrimitiveType.BOOLEAN_TYPE, "false"),
+        new JdlOptionMapping("skipServer", JdlPrimitiveType.BOOLEAN_TYPE, "false"),
+        new JdlOptionMapping("skipUserManagement", JdlPrimitiveType.BOOLEAN_TYPE, "false"),
+        new JdlEnumListMapping("testFrameworks", JdlTestFramework.class),
+        new JdlEnumMapping("websocket", JdlWebsocket.class)
     ));
 
     applicationConfigOptions.sort(Comparator.comparing(JdlOptionMapping::getName));

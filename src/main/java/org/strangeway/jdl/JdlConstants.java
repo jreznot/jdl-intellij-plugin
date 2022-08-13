@@ -6,6 +6,9 @@ public final class JdlConstants {
   private JdlConstants() {
   }
 
+  public static final String TRUE = "true";
+  public static final String FALSE = "false";
+
   public static final List<String> TOP_LEVEL_KEYWORDS = List.of(
       "application",
       "entity",
@@ -55,5 +58,17 @@ public final class JdlConstants {
       "AnyBlob",
       "ImageBlob",
       "TextBlob"
+  );
+
+  public static final List<String> FIELD_VALIDATIONS = List.of(
+      "required",
+      "unique",
+      "minlength()",
+      "maxlength()",
+      "pattern()",
+      "min()",
+      "max()",
+      "minbytes()",
+      "maxbytes()"
   );
 }
