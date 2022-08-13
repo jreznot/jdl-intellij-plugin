@@ -1,5 +1,7 @@
 package org.strangeway.jdl.model;
 
-public interface JdlOptionType {
+import org.jetbrains.annotations.NotNull;
 
+public interface JdlOptionType {
+  @NotNull String getName();
 }

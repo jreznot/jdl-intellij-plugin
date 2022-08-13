@@ -11,6 +11,7 @@
   elementTypeHolderClass="org.strangeway.jdl.psi.JdlTokenTypes"
   elementTypeClass="org.strangeway.jdl.psi.JdlElementType"
   tokenTypeClass="org.strangeway.jdl.psi.JdlTokenType"
+  psiImplUtilClass="org.strangeway.jdl.psi.JdlPsiUtils"
   tokens = [
     LINE_COMMENT='regexp://.*'
     BLOCK_COMMENT='regexp:/\*([^*]|\*+[^*/])*(\*+/)?'
@@ -81,10 +82,6 @@ exceptEntities ::= EXCEPT_KEYWORD entitiesList {
 
 entitiesList ::= id (COMMA id)*
 
-entityId ::= IDENTIFIER {
-    name = "entity identifier"
-}
-
 private withOption ::= WITH_KEYWORD withOptionValue {
     pin = 1
 }
@@ -111,6 +108,10 @@ wildcardLiteral ::= WILDCARD {
 
 entityBlock ::= ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE {
     pin = 1
+}
+
+entityId ::= IDENTIFIER {
+    name = "entity identifier"
 }
 
 private entityTableDeclaration ::= LPARENTH NEWLINE* entityTableName NEWLINE* RPARENTH {

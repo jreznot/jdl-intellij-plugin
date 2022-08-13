@@ -37,4 +37,23 @@ public final class JdlConstants {
       "OneToOne",
       "ManyToMany"
   );
+
+  public static final List<String> FIELD_TYPES = List.of(
+      "String",
+      "Integer",
+      "Long",
+      "Boolean",
+      "LocalDate",
+      "ZonedDateTime",
+      "BigDecimal",
+      "Float",
+      "Double",
+      "Instant",
+      "Duration",
+      "UUID",
+      "Blob",
+      "AnyBlob",
+      "ImageBlob",
+      "TextBlob"
+  );
 }

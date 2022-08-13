@@ -2,6 +2,7 @@ package org.strangeway.jdl.model;
 
 public enum JdlAuthenticationType implements JdlEnum {
   NO("no"),
+  JWT("jwt"),
   SESSION("session"),
   OAUTH2("oauth2");
 
