@@ -177,6 +177,7 @@ fieldType ::= IDENTIFIER {
 
 id ::= IDENTIFIER {
     name = "identifier"
+    extends = value
 }
 
 relationshipBlock ::= RELATIONSHIP_KEYWORD relationshipType NEWLINE* LBRACE (NEWLINE | relationshipElement)* RBRACE {
@@ -204,11 +205,18 @@ deploymentBlock ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValu
     pin = 1
 }
 
-booleanLiteral ::= TRUE | FALSE
-numberLiteral ::= DOUBLE_NUMBER | INTEGER_NUMBER
-stringLiteral ::= DOUBLE_QUOTED_STRING
+booleanLiteral ::= TRUE | FALSE {
+    extends = value
+}
+numberLiteral ::= DOUBLE_NUMBER | INTEGER_NUMBER {
+    extends = value
+}
+stringLiteral ::= DOUBLE_QUOTED_STRING {
+    extends = value
+}
 arrayLiteral ::= LBRACKET (arrayElement | NEWLINE)* RBRACKET {
     pin = 1
+    extends = value
 }
 
 private arrayElement ::= value (COMMA|&RBRACKET) {
@@ -222,4 +230,5 @@ private notRBraceOrNextOption ::= !(RBRACE|NEWLINE|IDENTIFIER)
 
 regexLiteral ::= REGEX_STRING {
     name = "regex literal"
+    extends = value
 }

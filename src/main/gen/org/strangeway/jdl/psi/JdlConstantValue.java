@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface JdlConstantValue extends PsiElement {
 
-  @Nullable
-  JdlBooleanLiteral getBooleanLiteral();
-
-  @Nullable
-  JdlNumberLiteral getNumberLiteral();
-
-  @Nullable
-  JdlStringLiteral getStringLiteral();
+  @NotNull
+  JdlValue getValue();
 
 }

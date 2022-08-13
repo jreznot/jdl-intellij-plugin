@@ -191,9 +191,6 @@ public interface JdlTokenTypes {
       else if (type == STRING_LITERAL) {
         return new JdlStringLiteralImpl(node);
       }
-      else if (type == VALUE) {
-        return new JdlValueImpl(node);
-      }
       else if (type == WILDCARD_LITERAL) {
         return new JdlWildcardLiteralImpl(node);
       }

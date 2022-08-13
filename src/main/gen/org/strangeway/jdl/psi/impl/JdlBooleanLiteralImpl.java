@@ -8,15 +8,15 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlBooleanLiteralImpl extends ASTWrapperPsiElement implements JdlBooleanLiteral {
+public class JdlBooleanLiteralImpl extends JdlValueImpl implements JdlBooleanLiteral {
 
   public JdlBooleanLiteralImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull JdlVisitor visitor) {
     visitor.visitBooleanLiteral(this);
   }

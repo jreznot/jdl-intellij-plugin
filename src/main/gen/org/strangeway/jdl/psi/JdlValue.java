@@ -7,22 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface JdlValue extends PsiElement {
 
-  @Nullable
-  JdlArrayLiteral getArrayLiteral();
-
-  @Nullable
-  JdlBooleanLiteral getBooleanLiteral();
-
-  @Nullable
-  JdlId getId();
-
-  @Nullable
-  JdlNumberLiteral getNumberLiteral();
-
-  @Nullable
-  JdlRegexLiteral getRegexLiteral();
-
-  @Nullable
-  JdlStringLiteral getStringLiteral();
-
 }

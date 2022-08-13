@@ -21,7 +21,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
 
   public void parseLight(IElementType t, PsiBuilder b) {
     boolean r;
-    b = adapt_builder_(t, b, this, null);
+    b = adapt_builder_(t, b, this, EXTENDS_SETS_);
     Marker m = enter_section_(b, 0, _COLLAPSE_, null);
     r = parse_root_(t, b);
     exit_section_(b, 0, m, t, r, true, TRUE_CONDITION);
@@ -34,6 +34,11 @@ public class JdlParser implements PsiParser, LightPsiParser {
   static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
     return root(b, l + 1);
   }
+
+  public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
+    create_token_set_(ARRAY_LITERAL, BOOLEAN_LITERAL, ID, NUMBER_LITERAL,
+      REGEX_LITERAL, STRING_LITERAL, VALUE),
+  };
 
   /* ********************************************************** */
   // APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationContent NEWLINE* RBRACE
@@ -1312,7 +1317,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   public static boolean value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, VALUE, "<value>");
+    Marker m = enter_section_(b, l, _COLLAPSE_, VALUE, "<value>");
     r = id(b, l + 1);
     if (!r) r = booleanLiteral(b, l + 1);
     if (!r) r = stringLiteral(b, l + 1);

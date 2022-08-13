@@ -28,21 +28,9 @@ public class JdlConstantValueImpl extends ASTWrapperPsiElement implements JdlCon
   }
 
   @Override
-  @Nullable
-  public JdlBooleanLiteral getBooleanLiteral() {
-    return findChildByClass(JdlBooleanLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlNumberLiteral getNumberLiteral() {
-    return findChildByClass(JdlNumberLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlStringLiteral getStringLiteral() {
-    return findChildByClass(JdlStringLiteral.class);
+  @NotNull
+  public JdlValue getValue() {
+    return findNotNullChildByClass(JdlValue.class);
   }
 
 }

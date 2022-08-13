@@ -12,11 +12,11 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitArrayLiteral(@NotNull JdlArrayLiteral o) {
-    visitPsiElement(o);
+    visitValue(o);
   }
 
   public void visitBooleanLiteral(@NotNull JdlBooleanLiteral o) {
-    visitPsiElement(o);
+    visitValue(o);
   }
 
   public void visitConfigBlock(@NotNull JdlConfigBlock o) {
@@ -104,11 +104,11 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitId(@NotNull JdlId o) {
-    visitPsiElement(o);
+    visitValue(o);
   }
 
   public void visitNumberLiteral(@NotNull JdlNumberLiteral o) {
-    visitPsiElement(o);
+    visitValue(o);
   }
 
   public void visitOptionName(@NotNull JdlOptionName o) {
@@ -120,7 +120,7 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitRegexLiteral(@NotNull JdlRegexLiteral o) {
-    visitPsiElement(o);
+    visitValue(o);
   }
 
   public void visitRelationshipBlock(@NotNull JdlRelationshipBlock o) {
@@ -144,7 +144,7 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitStringLiteral(@NotNull JdlStringLiteral o) {
-    visitPsiElement(o);
+    visitValue(o);
   }
 
   public void visitValue(@NotNull JdlValue o) {

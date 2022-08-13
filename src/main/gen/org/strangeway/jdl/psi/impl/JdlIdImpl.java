@@ -8,15 +8,15 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlIdImpl extends ASTWrapperPsiElement implements JdlId {
+public class JdlIdImpl extends JdlValueImpl implements JdlId {
 
   public JdlIdImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull JdlVisitor visitor) {
     visitor.visitId(this);
   }

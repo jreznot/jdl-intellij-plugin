@@ -39,17 +39,15 @@ final class JdlAnnotator implements Annotator {
           .create();
     } else if (element instanceof JdlId) {
       PsiElement idParent = element.getParent();
-      if (idParent instanceof JdlValue) {
-        if (idParent.getParent() instanceof JdlFieldConstraintParameters) {
-          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-              .range(element.getTextRange())
-              .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)
-              .create();
-        } else {
-          PsiElement optionNameValue = PsiTreeUtil.findFirstParent(idParent, p -> p instanceof JdlOptionNameValue);
-          if (optionNameValue instanceof JdlOptionNameValue) {
-            annotateOptionNameEnumValue(element, holder, (JdlOptionNameValue) optionNameValue);
-          }
+      if (idParent.getParent() instanceof JdlFieldConstraintParameters) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+            .range(element.getTextRange())
+            .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)
+            .create();
+      } else {
+        PsiElement optionNameValue = PsiTreeUtil.findFirstParent(idParent, p -> p instanceof JdlOptionNameValue);
+        if (optionNameValue instanceof JdlOptionNameValue) {
+          annotateOptionNameEnumValue(element, holder, (JdlOptionNameValue) optionNameValue);
         }
       }
     } else if (element instanceof JdlRelationshipType) {

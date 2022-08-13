@@ -11,7 +11,7 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlValueImpl extends ASTWrapperPsiElement implements JdlValue {
+public abstract class JdlValueImpl extends ASTWrapperPsiElement implements JdlValue {
 
   public JdlValueImpl(@NotNull ASTNode node) {
     super(node);
@@ -25,42 +25,6 @@ public class JdlValueImpl extends ASTWrapperPsiElement implements JdlValue {
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof JdlVisitor) accept((JdlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public JdlArrayLiteral getArrayLiteral() {
-    return findChildByClass(JdlArrayLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlBooleanLiteral getBooleanLiteral() {
-    return findChildByClass(JdlBooleanLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlId getId() {
-    return findChildByClass(JdlId.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlNumberLiteral getNumberLiteral() {
-    return findChildByClass(JdlNumberLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlRegexLiteral getRegexLiteral() {
-    return findChildByClass(JdlRegexLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlStringLiteral getStringLiteral() {
-    return findChildByClass(JdlStringLiteral.class);
   }
 
 }

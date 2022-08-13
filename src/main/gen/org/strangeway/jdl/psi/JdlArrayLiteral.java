@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlArrayLiteral extends PsiElement {
+public interface JdlArrayLiteral extends JdlValue {
 
   @NotNull
   List<JdlValue> getValueList();
