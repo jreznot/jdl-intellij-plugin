@@ -56,7 +56,7 @@ final class JdlCompletionContributor extends CompletionContributor {
           if (enumId != null) {
             result.addElement(LookupElementBuilder.create(enumId.getText())
                 .withPsiElement(enumBlock)
-                .withIcon(AllIcons.Nodes.Type));
+                .withIcon(AllIcons.Nodes.Enum));
           }
         }
       }

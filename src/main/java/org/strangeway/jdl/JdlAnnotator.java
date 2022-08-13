@@ -39,7 +39,7 @@ final class JdlAnnotator implements Annotator {
           .create();
     } else if (element instanceof JdlId) {
       PsiElement idParent = element.getParent();
-      if (idParent.getParent() instanceof JdlFieldConstraintParameters) {
+      if (idParent instanceof JdlFieldConstraintParameters) {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
             .range(element.getTextRange())
             .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)
