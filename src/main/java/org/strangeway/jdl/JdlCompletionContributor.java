@@ -9,10 +9,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.model.*;
 import org.strangeway.jdl.psi.*;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 import static org.strangeway.jdl.JdlConstants.*;
@@ -67,18 +69,16 @@ final class JdlCompletionContributor extends CompletionContributor {
           @Override
           protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context,
                                         @NotNull CompletionResultSet result) {
-            var options = JdlOptionModel.INSTANCE.getApplicationConfigOptions();
+            addOptions(result, JdlOptionModel.INSTANCE.getApplicationConfigOptions());
+          }
+        });
 
-            for (var optionMapping : options.values()) {
-              var element = LookupElementBuilder.create(optionMapping.getName());
-              if (optionMapping.getDefaultValue() != null) {
-                element = element.withTailText("=" + optionMapping.getDefaultValue(), true);
-              }
-
-              result.addElement(element
-                  .withTypeText(optionMapping.getPropertyType().getName())
-                  .withIcon(AllIcons.Nodes.Property));
-            }
+    extend(CompletionType.BASIC, jdlIdentifier().withParent(JdlOptionName.class).inside(JdlDeploymentBlock.class),
+        new CompletionProvider<>() {
+          @Override
+          protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context,
+                                        @NotNull CompletionResultSet result) {
+            addOptions(result, JdlOptionModel.INSTANCE.getDeploymentOptions());
           }
         });
 
@@ -94,27 +94,24 @@ final class JdlCompletionContributor extends CompletionContributor {
               JdlOptionName optionName = ((JdlOptionNameValue) optionNameValue).getOptionName();
               String key = optionName.getText();// todo mixin
 
-              JdlOptionMapping optionMapping = JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(key);
-              if (optionMapping != null) {
-                if (optionMapping.getPropertyType() instanceof JdlEnumType) {
-                  @SuppressWarnings({"unchecked", "rawtypes"})
-                  List<JdlEnum> values = ((JdlEnumType) optionMapping.getPropertyType()).getValues();
+              addOptionValues(result, JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(key));
+            }
+          }
+        });
 
-                  for (JdlEnum value : values) {
-                    result.addElement(LookupElementBuilder.create(value.getId()).withIcon(AllIcons.Nodes.Enum));
-                  }
-                } else if (optionMapping.getPropertyType() instanceof JdlEnumListType) {
-                  @SuppressWarnings({"unchecked", "rawtypes"})
-                  List<JdlEnum> values = ((JdlEnumListType) optionMapping.getPropertyType()).getValues();
+    extend(CompletionType.BASIC, jdlIdentifier().inside(JdlValue.class).inside(JdlOptionNameValue.class).inside(JdlDeploymentBlock.class),
+        new CompletionProvider<>() {
+          @Override
+          protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context,
+                                        @NotNull CompletionResultSet result) {
+            PsiElement position = parameters.getPosition();
+            PsiElement optionNameValue = PsiTreeUtil.findFirstParent(position, p -> p instanceof JdlOptionNameValue);
 
-                  for (JdlEnum value : values) {
-                    result.addElement(LookupElementBuilder.create(value.getId()).withIcon(AllIcons.Nodes.Enum));
-                  }
-                } else if (optionMapping.getPropertyType() == JdlPrimitiveType.BOOLEAN_TYPE) {
-                  result.addElement(LookupElementBuilder.create(JdlConstants.TRUE).withBoldness(true));
-                  result.addElement(LookupElementBuilder.create(JdlConstants.FALSE).withBoldness(true));
-                }
-              }
+            if (optionNameValue instanceof JdlOptionNameValue) {
+              JdlOptionName optionName = ((JdlOptionNameValue) optionNameValue).getOptionName();
+              String key = optionName.getText();// todo mixin
+
+              addOptionValues(result, JdlOptionModel.INSTANCE.getDeploymentOptions().get(key));
             }
           }
         });
@@ -133,6 +130,42 @@ final class JdlCompletionContributor extends CompletionContributor {
     });
   }
 
+  private static void addOptionValues(@NotNull CompletionResultSet result, @Nullable JdlOptionMapping optionMapping) {
+    if (optionMapping != null) {
+      if (optionMapping.getPropertyType() instanceof JdlEnumType) {
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        List<JdlEnum> values = ((JdlEnumType) optionMapping.getPropertyType()).getValues();
+
+        for (JdlEnum value : values) {
+          result.addElement(LookupElementBuilder.create(value.getId()).withIcon(AllIcons.Nodes.Enum));
+        }
+      } else if (optionMapping.getPropertyType() instanceof JdlEnumListType) {
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        List<JdlEnum> values = ((JdlEnumListType) optionMapping.getPropertyType()).getValues();
+
+        for (JdlEnum value : values) {
+          result.addElement(LookupElementBuilder.create(value.getId()).withIcon(AllIcons.Nodes.Enum));
+        }
+      } else if (optionMapping.getPropertyType() == JdlPrimitiveType.BOOLEAN_TYPE) {
+        result.addElement(LookupElementBuilder.create(JdlConstants.TRUE).withBoldness(true));
+        result.addElement(LookupElementBuilder.create(JdlConstants.FALSE).withBoldness(true));
+      }
+    }
+  }
+
+  private static void addOptions(@NotNull CompletionResultSet result, Map<String, JdlOptionMapping> options) {
+    for (var optionMapping : options.values()) {
+      var element = LookupElementBuilder.create(optionMapping.getName());
+      if (optionMapping.getDefaultValue() != null) {
+        element = element.withTailText("=" + optionMapping.getDefaultValue(), true);
+      }
+
+      result.addElement(element
+          .withTypeText(optionMapping.getPropertyType().getName())
+          .withIcon(AllIcons.Nodes.Property));
+    }
+  }
+
   private static final class KeywordsCompletionProvider extends CompletionProvider<CompletionParameters> {
     private final List<String> keywords;
 
@@ -145,12 +178,12 @@ final class JdlCompletionContributor extends CompletionContributor {
                                   @NotNull CompletionResultSet result) {
       addKeywords(result, keywords);
     }
-  }
 
-  private static void addKeywords(@NotNull CompletionResultSet result, List<String> applicationNestedKeywords) {
-    for (var topLevelKeyword : applicationNestedKeywords) {
-      var element = LookupElementBuilder.create(topLevelKeyword).withBoldness(true);
-      result.addElement(TailTypeDecorator.withTail(element, TailType.INSERT_SPACE));
+    private static void addKeywords(@NotNull CompletionResultSet result, List<String> applicationNestedKeywords) {
+      for (var topLevelKeyword : applicationNestedKeywords) {
+        var element = LookupElementBuilder.create(topLevelKeyword).withBoldness(true);
+        result.addElement(TailTypeDecorator.withTail(element, TailType.INSERT_SPACE));
+      }
     }
   }
 }

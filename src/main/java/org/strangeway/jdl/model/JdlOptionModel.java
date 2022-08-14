@@ -2,6 +2,8 @@ package org.strangeway.jdl.model;
 
 import java.util.*;
 
+import static org.strangeway.jdl.model.JdlPrimitiveType.*;
+
 public final class JdlOptionModel {
   public static final JdlOptionModel INSTANCE = new JdlOptionModel();
 
@@ -11,52 +13,64 @@ public final class JdlOptionModel {
   private final Map<String, JdlOptionMapping> deploymentOptions;
 
   private JdlOptionModel() {
-    List<JdlOptionMapping> applicationConfigOptions = new ArrayList<>(List.of(
+    this.applicationConfigOptions = getSortedOptions(List.of(
         new JdlEnumMapping("applicationType", JdlApplicationType.class, JdlApplicationType.MONOLITH),
         new JdlEnumMapping("authenticationType", JdlAuthenticationType.class, JdlAuthenticationType.JWT),
-        new JdlOptionMapping("baseName", JdlPrimitiveType.STRING_TYPE, "jhipster"),
-        new JdlOptionMapping("blueprint", JdlPrimitiveType.STRING_TYPE),
-        new JdlOptionMapping("blueprints", JdlPrimitiveType.STRING_ARRAY_TYPE),
+        new JdlOptionMapping("baseName", STRING_TYPE, "jhipster"),
+        new JdlOptionMapping("blueprint", STRING_TYPE),
+        new JdlOptionMapping("blueprints", STRING_ARRAY_TYPE),
         new JdlEnumMapping("buildTool", JdlBuildTool.class, JdlBuildTool.MAVEN),
         new JdlEnumMapping("cacheProvider", JdlCacheProvider.class),
-        new JdlOptionMapping("enableHibernateCache", JdlPrimitiveType.BOOLEAN_TYPE, "true"),
+        new JdlOptionMapping("enableHibernateCache", BOOLEAN_TYPE, "true"),
         new JdlEnumMapping("clientFramework", JdlClientFramework.class, JdlClientFramework.ANGULARX),
         new JdlEnumMapping("clientPackageManager", JdlClientPackageManager.class, JdlClientPackageManager.NPM),
-        new JdlOptionMapping("clientTheme", JdlPrimitiveType.STRING_TYPE),
-        new JdlOptionMapping("clientThemeVariant", JdlPrimitiveType.STRING_TYPE),
+        new JdlOptionMapping("clientTheme", STRING_TYPE),
+        new JdlOptionMapping("clientThemeVariant", STRING_TYPE),
         new JdlEnumMapping("databaseType", JdlDatabaseType.class, JdlDatabaseType.SQL),
         new JdlEnumMapping("devDatabaseType", JdlDevDatabaseType.class, JdlDevDatabaseType.H2DISK),
-        new JdlOptionMapping("dtoSuffix", JdlPrimitiveType.STRING_TYPE, "DTO"),
-        new JdlOptionMapping("enableHibernateCache", JdlPrimitiveType.BOOLEAN_TYPE, "true"),
-        new JdlOptionMapping("enableSwaggerCodegen", JdlPrimitiveType.BOOLEAN_TYPE, "false"),
-        new JdlOptionMapping("enableTranslation", JdlPrimitiveType.BOOLEAN_TYPE, "true"),
-        new JdlOptionMapping("entitySuffix", JdlPrimitiveType.STRING_TYPE),
-        new JdlOptionMapping("jhiPrefix", JdlPrimitiveType.STRING_TYPE, "jhi"),
+        new JdlOptionMapping("dtoSuffix", STRING_TYPE, "DTO"),
+        new JdlOptionMapping("enableHibernateCache", BOOLEAN_TYPE, "true"),
+        new JdlOptionMapping("enableSwaggerCodegen", BOOLEAN_TYPE, "false"),
+        new JdlOptionMapping("enableTranslation", BOOLEAN_TYPE, "true"),
+        new JdlOptionMapping("entitySuffix", STRING_TYPE),
+        new JdlOptionMapping("jhiPrefix", STRING_TYPE, "jhi"),
         new JdlEnumListMapping("languages", JdlLanguage.class),
         new JdlEnumMapping("messageBroker", JdlMessageBroker.class, JdlMessageBroker.FALSE),
         new JdlEnumMapping("nativeLanguage", JdlLanguage.class, JdlLanguage.ENGLISH),
-        new JdlOptionMapping("packageName", JdlPrimitiveType.STRING_TYPE),
+        new JdlOptionMapping("packageName", STRING_TYPE),
         new JdlEnumMapping("prodDatabaseType", JdlProdDatabaseType.class, JdlProdDatabaseType.MSSQL),
-        new JdlOptionMapping("reactive", JdlPrimitiveType.BOOLEAN_TYPE),
+        new JdlOptionMapping("reactive", BOOLEAN_TYPE),
         new JdlEnumMapping("searchEngine", JdlSearchEngine.class, JdlSearchEngine.FALSE),
-        new JdlOptionMapping("serverPort", JdlPrimitiveType.INTEGER_TYPE, "8080, 8081 or 9999"),
-        new JdlEnumMapping("serviceDiscoveryType", JdlServiceDiscoveryType.class, JdlServiceDiscoveryType.FALSE),
-        new JdlOptionMapping("skipClient", JdlPrimitiveType.BOOLEAN_TYPE, "false"),
-        new JdlOptionMapping("skipServer", JdlPrimitiveType.BOOLEAN_TYPE, "false"),
-        new JdlOptionMapping("skipUserManagement", JdlPrimitiveType.BOOLEAN_TYPE, "false"),
+        new JdlOptionMapping("serverPort", INTEGER_TYPE, "8080, 8081 or 9999"),
+        new JdlEnumMapping("serviceDiscoveryType", JdlServiceDiscoveryType.class, JdlServiceDiscoveryType.NO),
+        new JdlOptionMapping("skipClient", BOOLEAN_TYPE, "false"),
+        new JdlOptionMapping("skipServer", BOOLEAN_TYPE, "false"),
+        new JdlOptionMapping("skipUserManagement", BOOLEAN_TYPE, "false"),
         new JdlEnumListMapping("testFrameworks", JdlTestFramework.class),
         new JdlEnumMapping("websocket", JdlWebsocket.class)
     ));
 
-    applicationConfigOptions.sort(Comparator.comparing(JdlOptionMapping::getName));
-
-    Map<String, JdlOptionMapping> orderedOptions = new LinkedHashMap<>();
-    for (JdlOptionMapping option : applicationConfigOptions) {
-      orderedOptions.put(option.getName(), option);
-    }
-
-    this.applicationConfigOptions = orderedOptions;
-    this.deploymentOptions = Map.of();
+    this.deploymentOptions = getSortedOptions(List.of(
+        new JdlEnumMapping("deploymentType", JdlDeploymentType.class, JdlDeploymentType.DOCKER_COMPOSE),
+        new JdlOptionMapping("directoryPath", STRING_TYPE, "../"),
+        new JdlOptionMapping("appsFolders", STRING_ARRAY_TYPE, "[]"),
+        new JdlOptionMapping("clusteredDbApps", STRING_ARRAY_TYPE, "[]"),
+        new JdlOptionMapping("gatewayType", STRING_TYPE, "SpringCloudGateway"),
+        new JdlEnumMapping("monitoring", JdlMonitoringType.class, JdlMonitoringType.NO),
+        new JdlEnumMapping("serviceDiscoveryType", JdlServiceDiscoveryType.class, JdlServiceDiscoveryType.EUREKA),
+        new JdlOptionMapping("dockerRepositoryName", STRING_TYPE),
+        new JdlOptionMapping("dockerPushCommand", STRING_TYPE, "docker push"),
+        new JdlOptionMapping("kubernetesNamespace", STRING_TYPE, "default"),
+        new JdlOptionMapping("kubernetesUseDynamicStorage", BOOLEAN_TYPE, "false"),
+        new JdlOptionMapping("kubernetesStorageClassName", STRING_TYPE),
+        new JdlEnumMapping("kubernetesServiceType", JdlKubernetesServiceType.class, JdlKubernetesServiceType.LOAD_BALANCER),
+        new JdlOptionMapping("ingressDomain", STRING_TYPE),
+        new JdlEnumMapping("ingressType", JdlIngressType.class, JdlIngressType.NGINX),
+        new JdlOptionMapping("istio", BOOLEAN_TYPE, "false"),
+        new JdlOptionMapping("openshiftNamespace", STRING_TYPE, "default"),
+        new JdlEnumMapping("storageType", JdlStorageType.class, JdlStorageType.EPHEMERAL),
+        new JdlOptionMapping("registryReplicas", INTEGER_TYPE, "2")
+    ));
   }
 
   public Map<String, JdlOptionMapping> getApplicationConfigOptions() {
@@ -65,5 +79,18 @@ public final class JdlOptionModel {
 
   public Map<String, JdlOptionMapping> getDeploymentOptions() {
     return deploymentOptions;
+  }
+
+  public static Map<String, JdlOptionMapping> getSortedOptions(List<JdlOptionMapping> options) {
+    List<JdlOptionMapping> mutableOptions = new ArrayList<>(options);
+
+    mutableOptions.sort(Comparator.comparing(JdlOptionMapping::getName));
+
+    Map<String, JdlOptionMapping> orderedOptions = new LinkedHashMap<>();
+    for (JdlOptionMapping option : mutableOptions) {
+      orderedOptions.put(option.getName(), option);
+    }
+
+    return orderedOptions;
   }
 }

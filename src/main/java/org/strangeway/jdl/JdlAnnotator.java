@@ -4,7 +4,6 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.model.JdlEnumListType;
 import org.strangeway.jdl.model.JdlEnumType;
@@ -12,6 +11,7 @@ import org.strangeway.jdl.model.JdlOptionMapping;
 import org.strangeway.jdl.model.JdlOptionModel;
 import org.strangeway.jdl.psi.*;
 
+import static com.intellij.psi.util.PsiTreeUtil.findFirstParent;
 import static org.strangeway.jdl.model.JdlOptionModel.BASE_NAME_ATTRIBUTE_NAME;
 
 final class JdlAnnotator implements Annotator {
@@ -45,7 +45,7 @@ final class JdlAnnotator implements Annotator {
             .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)
             .create();
       } else {
-        PsiElement optionNameValue = PsiTreeUtil.findFirstParent(idParent, p -> p instanceof JdlOptionNameValue);
+        PsiElement optionNameValue = findFirstParent(idParent, p -> p instanceof JdlOptionNameValue);
         if (optionNameValue instanceof JdlOptionNameValue) {
           annotateOptionNameEnumValue(element, holder, (JdlOptionNameValue) optionNameValue);
         }
@@ -80,21 +80,27 @@ final class JdlAnnotator implements Annotator {
     JdlOptionName optionName = optionNameValue.getOptionName();
     String optionKey = optionName.getText();
 
-    if (optionNameValue.getParent() instanceof JdlConfigBlock) {
-      if (BASE_NAME_ATTRIBUTE_NAME.equals(optionKey)) {
-        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-            .range(element.getTextRange())
-            .textAttributes(JdlSyntaxHighlighter.JDL_BASE_NAME)
-            .create();
+    if (BASE_NAME_ATTRIBUTE_NAME.equals(optionKey) && optionNameValue.getParent() instanceof JdlConfigBlock) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(element.getTextRange())
+          .textAttributes(JdlSyntaxHighlighter.JDL_BASE_NAME)
+          .create();
+    } else {
+      JdlOptionMapping optionMapping;
+      if (findFirstParent(element, p -> p instanceof JdlConfigBlock) != null) {
+        optionMapping = JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(optionKey);
+      } else if (findFirstParent(element, p -> p instanceof JdlDeploymentBlock) != null) {
+        optionMapping = JdlOptionModel.INSTANCE.getDeploymentOptions().get(optionKey);
       } else {
-        JdlOptionMapping optionMapping = JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(optionKey);
-        if (optionMapping != null && isEnumType(optionMapping)) {
-          if (!"false".equals(element.getText())) { // false is highlighted as boolean instead
-            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                .range(element.getTextRange())
-                .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
-                .create();
-          }
+        optionMapping = null;
+      }
+
+      if (optionMapping != null && isEnumType(optionMapping)) {
+        if (!"false".equals(element.getText())) { // false is highlighted as boolean instead
+          holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+              .range(element.getTextRange())
+              .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
+              .create();
         }
       }
     }

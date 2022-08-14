@@ -1,13 +1,12 @@
 package org.strangeway.jdl.model;
 
-public enum JdlServiceDiscoveryType implements JdlEnum {
+public enum JdlMonitoringType implements JdlEnum {
   NO("no"),
-  EUREKA("eureka"),
-  CONSUL("consul");
+  PROMETHEUS("prometheus");
 
   private final String id;
 
-  JdlServiceDiscoveryType(String id) {
+  JdlMonitoringType(String id) {
     this.id = id;
   }
 
