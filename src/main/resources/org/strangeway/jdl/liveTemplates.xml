@@ -32,4 +32,11 @@
             <option name="JDL" value="true"/>
         </context>
     </template>
+
+    <template description="JHipster JDL deployment" name="jh-deploy" toReformat="true"
+              value="deployment {&#10;    $END$&#10;}" shortcut="TAB">
+        <context>
+            <option name="JDL" value="true"/>
+        </context>
+    </template>
 </templateSet>

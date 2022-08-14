@@ -17,9 +17,10 @@
     Use live templates to speed-up JDL editing:
     <ul>
       <li><b>jh-app</b> - Adds a new application declaration</li>
-      <li><b>jh-entity</b> - Adds a new entity declarations</li>
-      <li><b>jh-enum</b> - Adds a new enum declarations</li>
-      <li><b>jh-rel</b> - Adds a new relationship declarations</li>
+      <li><b>jh-entity</b> - Adds a new entity declaration</li>
+      <li><b>jh-enum</b> - Adds a new enum declaration</li>
+      <li><b>jh-rel</b> - Adds a new relationship declaration</li>
+      <li><b>jh-deploy</b> - Adds a new deployment declaration</li>
     </ul>
 
     Follow author in Twitter: <a href="https://twitter.com/Yuriy_Artamonov">&#64;Yuriy Artamonov</a>
