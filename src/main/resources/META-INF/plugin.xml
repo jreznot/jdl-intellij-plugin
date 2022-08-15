@@ -5,7 +5,7 @@
   <vendor email="github@strangeway.org" url="https://www.strangeway.org">Yuriy Artamonov</vendor>
 
   <description><![CDATA[
-    <p>Provides JHipster-specific domain language (JDL) editor support.</p>
+    <p>Provides <a href="https://www.jhipster.tech/jdl/intro">JHipster-specific domain language (JDL)</a> editor support.</p>
     <br/>
     Features:
     <ul>
