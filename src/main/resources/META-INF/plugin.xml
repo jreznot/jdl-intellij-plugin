@@ -12,6 +12,7 @@
       <li>Syntax highlighting</li>
       <li>Options completion</li>
       <li>Live templates</li>
+      <li>Spelling check</li>
     </ul>
 
     Use live templates to speed-up JDL editing:
@@ -44,5 +45,7 @@
     <liveTemplateContext implementation="org.strangeway.jdl.JdlLiveTemplateContextType"/>
 
     <defaultLiveTemplates file="/org/strangeway/jdl/liveTemplates.xml"/>
+
+    <spellchecker.support language="JDL" implementationClass="org.strangeway.jdl.JdlSpellcheckingStrategy"/>
   </extensions>
 </idea-plugin>

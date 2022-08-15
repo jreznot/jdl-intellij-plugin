@@ -213,6 +213,10 @@ numberLiteral ::= DOUBLE_NUMBER | INTEGER_NUMBER {
 }
 stringLiteral ::= DOUBLE_QUOTED_STRING {
     extends = value
+    methods=[
+        getTextFragments
+    ]
+    mixin="org.strangeway.jdl.psi.JdlStringLiteralMixin"
 }
 arrayLiteral ::= LBRACKET (arrayElement | NEWLINE)* RBRACKET {
     pin = 1
