@@ -314,7 +314,7 @@ public final class JdlPsiUtils {
         JdlExplicitEnumMapping enumMapping = enumValue.getExplicitEnumMapping();
         if (enumMapping == null) return null;
 
-        JdlStringLiteral enumMappingValue = enumMapping.getStringLiteral();
+        JdlValue enumMappingValue = enumMapping.getValue();
         if (enumMappingValue == null) return null;
 
         return enumMappingValue.getText();

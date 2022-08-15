@@ -29,8 +29,8 @@ public class JdlExplicitEnumMappingImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
-  public JdlStringLiteral getStringLiteral() {
-    return findChildByClass(JdlStringLiteral.class);
+  public JdlValue getValue() {
+    return findChildByClass(JdlValue.class);
   }
 
 }

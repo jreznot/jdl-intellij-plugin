@@ -206,7 +206,7 @@ enumValue ::= enumKey explicitEnumMapping? {
     ]
 }
 
-explicitEnumMapping ::= LPARENTH (IDENTIFIER | stringLiteral) RPARENTH {
+explicitEnumMapping ::= LPARENTH (id | stringLiteral) RPARENTH {
     pin = 1
 }
 

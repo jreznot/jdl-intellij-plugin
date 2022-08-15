@@ -806,7 +806,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LPARENTH (IDENTIFIER | stringLiteral) RPARENTH
+  // LPARENTH (id | stringLiteral) RPARENTH
   public static boolean explicitEnumMapping(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "explicitEnumMapping")) return false;
     if (!nextTokenIs(b, LPARENTH)) return false;
@@ -820,11 +820,11 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // IDENTIFIER | stringLiteral
+  // id | stringLiteral
   private static boolean explicitEnumMapping_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "explicitEnumMapping_1")) return false;
     boolean r;
-    r = consumeToken(b, IDENTIFIER);
+    r = id(b, l + 1);
     if (!r) r = stringLiteral(b, l + 1);
     return r;
   }

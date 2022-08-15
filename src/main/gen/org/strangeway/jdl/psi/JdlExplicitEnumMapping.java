@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface JdlExplicitEnumMapping extends PsiElement {
 
   @Nullable
-  JdlStringLiteral getStringLiteral();
+  JdlValue getValue();
 
 }
