@@ -12,7 +12,7 @@ import org.strangeway.jdl.model.JdlOptionModel;
 import org.strangeway.jdl.psi.*;
 
 import static com.intellij.psi.util.PsiTreeUtil.findFirstParent;
-import static org.strangeway.jdl.model.JdlOptionModel.BASE_NAME_ATTRIBUTE_NAME;
+import static org.strangeway.jdl.JdlConstants.APPLICATION_BASE_NAME;
 
 final class JdlAnnotator implements Annotator {
   @Override
@@ -80,7 +80,7 @@ final class JdlAnnotator implements Annotator {
     JdlOptionName optionName = optionNameValue.getOptionName();
     String optionKey = optionName.getText();
 
-    if (BASE_NAME_ATTRIBUTE_NAME.equals(optionKey) && optionNameValue.getParent() instanceof JdlConfigBlock) {
+    if (APPLICATION_BASE_NAME.equals(optionKey) && optionNameValue.getParent() instanceof JdlConfigBlock) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_BASE_NAME)

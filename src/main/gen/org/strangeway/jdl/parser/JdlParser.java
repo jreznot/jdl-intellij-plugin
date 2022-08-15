@@ -334,30 +334,30 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER ASSIGN constantValue
+  // IDENTIFIER
+  public static boolean constantName(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "constantName")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, CONSTANT_NAME, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // constantName ASSIGN value
   public static boolean constantOption(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constantOption")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, CONSTANT_OPTION, null);
-    r = consumeTokens(b, 2, IDENTIFIER, ASSIGN);
+    r = constantName(b, l + 1);
+    r = r && consumeToken(b, ASSIGN);
     p = r; // pin = 2
-    r = r && constantValue(b, l + 1);
+    r = r && value(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
-  }
-
-  /* ********************************************************** */
-  // booleanLiteral | stringLiteral | numberLiteral
-  public static boolean constantValue(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "constantValue")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CONSTANT_VALUE, "<constant value>");
-    r = booleanLiteral(b, l + 1);
-    if (!r) r = stringLiteral(b, l + 1);
-    if (!r) r = numberLiteral(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
   }
 
   /* ********************************************************** */

@@ -7,8 +7,6 @@ import static org.strangeway.jdl.model.JdlPrimitiveType.*;
 public final class JdlOptionModel {
   public static final JdlOptionModel INSTANCE = new JdlOptionModel();
 
-  public static final String BASE_NAME_ATTRIBUTE_NAME = "baseName";
-
   private final Map<String, JdlOptionMapping> applicationConfigOptions;
   private final Map<String, JdlOptionMapping> deploymentOptions;
 

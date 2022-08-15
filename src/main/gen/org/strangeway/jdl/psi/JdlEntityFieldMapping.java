@@ -4,6 +4,7 @@ package org.strangeway.jdl.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
 public interface JdlEntityFieldMapping extends PsiElement {
 
@@ -15,5 +16,13 @@ public interface JdlEntityFieldMapping extends PsiElement {
 
   @Nullable
   JdlFieldType getFieldType();
+
+  @NotNull String getName();
+
+  @Nullable String getType();
+
+  @NotNull JdlFieldName getNameElement();
+
+  @NotNull ItemPresentation getPresentation();
 
 }

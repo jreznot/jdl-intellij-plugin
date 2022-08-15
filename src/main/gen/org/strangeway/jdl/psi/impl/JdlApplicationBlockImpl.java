@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
 public class JdlApplicationBlockImpl extends ASTWrapperPsiElement implements JdlApplicationBlock {
 
@@ -37,6 +38,11 @@ public class JdlApplicationBlockImpl extends ASTWrapperPsiElement implements Jdl
   @NotNull
   public List<JdlConfigurationOption> getConfigurationOptionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlConfigurationOption.class);
+  }
+
+  @Override
+  public @NotNull ItemPresentation getPresentation() {
+    return JdlPsiUtils.getPresentation(this);
   }
 
 }

@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
 public class JdlEnumValueImpl extends ASTWrapperPsiElement implements JdlEnumValue {
 
@@ -37,6 +38,21 @@ public class JdlEnumValueImpl extends ASTWrapperPsiElement implements JdlEnumVal
   @Nullable
   public JdlExplicitEnumMapping getExplicitEnumMapping() {
     return findChildByClass(JdlExplicitEnumMapping.class);
+  }
+
+  @Override
+  public @NotNull String getName() {
+    return JdlPsiUtils.getName(this);
+  }
+
+  @Override
+  public @NotNull JdlEnumKey getNameElement() {
+    return JdlPsiUtils.getNameElement(this);
+  }
+
+  @Override
+  public @NotNull ItemPresentation getPresentation() {
+    return JdlPsiUtils.getPresentation(this);
   }
 
 }

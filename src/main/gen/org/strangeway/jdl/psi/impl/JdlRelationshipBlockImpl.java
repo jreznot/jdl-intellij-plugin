@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
 public class JdlRelationshipBlockImpl extends ASTWrapperPsiElement implements JdlRelationshipBlock {
 
@@ -37,6 +38,11 @@ public class JdlRelationshipBlockImpl extends ASTWrapperPsiElement implements Jd
   @Nullable
   public JdlRelationshipType getRelationshipType() {
     return findChildByClass(JdlRelationshipType.class);
+  }
+
+  @Override
+  public @NotNull ItemPresentation getPresentation() {
+    return JdlPsiUtils.getPresentation(this);
   }
 
 }

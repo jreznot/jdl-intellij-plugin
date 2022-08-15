@@ -6,6 +6,9 @@ public final class JdlConstants {
   private JdlConstants() {
   }
 
+  public static final String APPLICATION_BASE_NAME = "baseName";
+  public static final String APPLICATION_UNNAMED = "<unnamed application>";
+
   public static final String TRUE = "true";
   public static final String FALSE = "false";
 

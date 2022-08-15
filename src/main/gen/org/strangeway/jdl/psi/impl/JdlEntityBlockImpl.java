@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
 public class JdlEntityBlockImpl extends ASTWrapperPsiElement implements JdlEntityBlock {
 
@@ -43,6 +44,21 @@ public class JdlEntityBlockImpl extends ASTWrapperPsiElement implements JdlEntit
   @Nullable
   public JdlEntityTableName getEntityTableName() {
     return findChildByClass(JdlEntityTableName.class);
+  }
+
+  @Override
+  public @NotNull String getName() {
+    return JdlPsiUtils.getName(this);
+  }
+
+  @Override
+  public @Nullable JdlEntityId getNameElement() {
+    return JdlPsiUtils.getNameElement(this);
+  }
+
+  @Override
+  public @NotNull ItemPresentation getPresentation() {
+    return JdlPsiUtils.getPresentation(this);
   }
 
 }

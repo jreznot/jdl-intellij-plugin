@@ -4,6 +4,7 @@ package org.strangeway.jdl.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
 public interface JdlEnumValue extends PsiElement {
 
@@ -12,5 +13,11 @@ public interface JdlEnumValue extends PsiElement {
 
   @Nullable
   JdlExplicitEnumMapping getExplicitEnumMapping();
+
+  @NotNull String getName();
+
+  @NotNull JdlEnumKey getNameElement();
+
+  @NotNull ItemPresentation getPresentation();
 
 }

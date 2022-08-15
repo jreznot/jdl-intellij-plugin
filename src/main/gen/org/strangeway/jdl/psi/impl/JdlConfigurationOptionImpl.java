@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
 public class JdlConfigurationOptionImpl extends ASTWrapperPsiElement implements JdlConfigurationOption {
 
@@ -55,6 +56,21 @@ public class JdlConfigurationOptionImpl extends ASTWrapperPsiElement implements 
   @Nullable
   public JdlWithOptionValue getWithOptionValue() {
     return findChildByClass(JdlWithOptionValue.class);
+  }
+
+  @Override
+  public @NotNull String getName() {
+    return JdlPsiUtils.getName(this);
+  }
+
+  @Override
+  public @NotNull JdlConfigurationOptionName getNameElement() {
+    return JdlPsiUtils.getNameElement(this);
+  }
+
+  @Override
+  public @NotNull ItemPresentation getPresentation() {
+    return JdlPsiUtils.getPresentation(this);
   }
 
 }

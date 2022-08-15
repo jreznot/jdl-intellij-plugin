@@ -14,8 +14,8 @@ public interface JdlTokenTypes {
   IElementType CONFIGURATION_OPTION = new JdlElementType("CONFIGURATION_OPTION");
   IElementType CONFIGURATION_OPTION_NAME = new JdlElementType("CONFIGURATION_OPTION_NAME");
   IElementType CONFIG_BLOCK = new JdlElementType("CONFIG_BLOCK");
+  IElementType CONSTANT_NAME = new JdlElementType("CONSTANT_NAME");
   IElementType CONSTANT_OPTION = new JdlElementType("CONSTANT_OPTION");
-  IElementType CONSTANT_VALUE = new JdlElementType("CONSTANT_VALUE");
   IElementType DEPLOYMENT_BLOCK = new JdlElementType("DEPLOYMENT_BLOCK");
   IElementType ENTITIES_LIST = new JdlElementType("ENTITIES_LIST");
   IElementType ENTITY_BLOCK = new JdlElementType("ENTITY_BLOCK");
@@ -104,11 +104,11 @@ public interface JdlTokenTypes {
       else if (type == CONFIG_BLOCK) {
         return new JdlConfigBlockImpl(node);
       }
+      else if (type == CONSTANT_NAME) {
+        return new JdlConstantNameImpl(node);
+      }
       else if (type == CONSTANT_OPTION) {
         return new JdlConstantOptionImpl(node);
-      }
-      else if (type == CONSTANT_VALUE) {
-        return new JdlConstantValueImpl(node);
       }
       else if (type == DEPLOYMENT_BLOCK) {
         return new JdlDeploymentBlockImpl(node);

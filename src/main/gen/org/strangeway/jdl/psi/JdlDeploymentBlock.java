@@ -4,10 +4,13 @@ package org.strangeway.jdl.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
 public interface JdlDeploymentBlock extends PsiElement {
 
   @NotNull
   List<JdlOptionNameValue> getOptionNameValueList();
+
+  @NotNull ItemPresentation getPresentation();
 
 }

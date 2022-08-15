@@ -8,10 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.strangeway.jdl.psi.JdlOptionNameValueMixin;
 import org.strangeway.jdl.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
-public class JdlOptionNameValueImpl extends ASTWrapperPsiElement implements JdlOptionNameValue {
+public class JdlOptionNameValueImpl extends JdlOptionNameValueMixin implements JdlOptionNameValue {
 
   public JdlOptionNameValueImpl(@NotNull ASTNode node) {
     super(node);
@@ -37,6 +38,21 @@ public class JdlOptionNameValueImpl extends ASTWrapperPsiElement implements JdlO
   @Nullable
   public JdlValue getValue() {
     return findChildByClass(JdlValue.class);
+  }
+
+  @Override
+  public @NotNull String getName() {
+    return JdlPsiUtils.getName(this);
+  }
+
+  @Override
+  public @NotNull JdlOptionName getNameElement() {
+    return JdlPsiUtils.getNameElement(this);
+  }
+
+  @Override
+  public @NotNull ItemPresentation getPresentation() {
+    return JdlPsiUtils.getPresentation(this);
   }
 
 }

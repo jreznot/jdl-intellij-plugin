@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
 public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements JdlEntityFieldMapping {
 
@@ -43,6 +44,26 @@ public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements J
   @Nullable
   public JdlFieldType getFieldType() {
     return findChildByClass(JdlFieldType.class);
+  }
+
+  @Override
+  public @NotNull String getName() {
+    return JdlPsiUtils.getName(this);
+  }
+
+  @Override
+  public @Nullable String getType() {
+    return JdlPsiUtils.getType(this);
+  }
+
+  @Override
+  public @NotNull JdlFieldName getNameElement() {
+    return JdlPsiUtils.getNameElement(this);
+  }
+
+  @Override
+  public @NotNull ItemPresentation getPresentation() {
+    return JdlPsiUtils.getPresentation(this);
   }
 
 }
