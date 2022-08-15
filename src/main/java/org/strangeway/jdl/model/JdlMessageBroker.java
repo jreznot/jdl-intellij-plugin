@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlMessageBroker implements JdlEnum {
+public enum JdlMessageBroker implements JdlModelEnum {
   FALSE("false"),
   KAFKA("kafka");
 

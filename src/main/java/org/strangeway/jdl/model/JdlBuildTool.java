@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlBuildTool implements JdlEnum {
+public enum JdlBuildTool implements JdlModelEnum {
   MAVEN("maven"),
   GRADLE("gradle");
 

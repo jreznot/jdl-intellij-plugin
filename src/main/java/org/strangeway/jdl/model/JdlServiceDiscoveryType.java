@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlServiceDiscoveryType implements JdlEnum {
+public enum JdlServiceDiscoveryType implements JdlModelEnum {
   NO("no"),
   EUREKA("eureka"),
   CONSUL("consul");

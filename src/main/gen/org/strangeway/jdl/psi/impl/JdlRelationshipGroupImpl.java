@@ -12,14 +12,14 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 import com.intellij.navigation.ItemPresentation;
 
-public class JdlApplicationBlockImpl extends ASTWrapperPsiElement implements JdlApplicationBlock {
+public class JdlRelationshipGroupImpl extends ASTWrapperPsiElement implements JdlRelationshipGroup {
 
-  public JdlApplicationBlockImpl(@NotNull ASTNode node) {
+  public JdlRelationshipGroupImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitApplicationBlock(this);
+    visitor.visitRelationshipGroup(this);
   }
 
   @Override
@@ -30,14 +30,14 @@ public class JdlApplicationBlockImpl extends ASTWrapperPsiElement implements Jdl
 
   @Override
   @NotNull
-  public List<JdlConfigBlock> getConfigBlockList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlConfigBlock.class);
+  public List<JdlRelationshipMapping> getRelationshipMappingList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlRelationshipMapping.class);
   }
 
   @Override
-  @NotNull
-  public List<JdlConfigurationOption> getConfigurationOptionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlConfigurationOption.class);
+  @Nullable
+  public JdlRelationshipType getRelationshipType() {
+    return findChildByClass(JdlRelationshipType.class);
   }
 
   @Override

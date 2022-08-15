@@ -60,10 +60,10 @@ final class JdlFoldingBuilder extends CustomFoldingBuilder implements DumbAware 
   }
 
   private static boolean isBracesFoldingParent(IElementType elementType) {
-    return elementType == JdlTokenTypes.APPLICATION_BLOCK
+    return elementType == JdlTokenTypes.APPLICATION
         || elementType == JdlTokenTypes.CONFIG_BLOCK
-        || elementType == JdlTokenTypes.ENTITY_BLOCK
-        || elementType == JdlTokenTypes.RELATIONSHIP_BLOCK
-        || elementType == JdlTokenTypes.ENUM_BLOCK;
+        || elementType == JdlTokenTypes.ENTITY
+        || elementType == JdlTokenTypes.RELATIONSHIP_GROUP
+        || elementType == JdlTokenTypes.ENUM;
   }
 }

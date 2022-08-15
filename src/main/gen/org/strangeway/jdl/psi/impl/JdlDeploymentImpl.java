@@ -12,14 +12,14 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 import com.intellij.navigation.ItemPresentation;
 
-public class JdlEntityBlockImpl extends ASTWrapperPsiElement implements JdlEntityBlock {
+public class JdlDeploymentImpl extends ASTWrapperPsiElement implements JdlDeployment {
 
-  public JdlEntityBlockImpl(@NotNull ASTNode node) {
+  public JdlDeploymentImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitEntityBlock(this);
+    visitor.visitDeployment(this);
   }
 
   @Override
@@ -30,30 +30,8 @@ public class JdlEntityBlockImpl extends ASTWrapperPsiElement implements JdlEntit
 
   @Override
   @NotNull
-  public List<JdlEntityFieldMapping> getEntityFieldMappingList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEntityFieldMapping.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlEntityId getEntityId() {
-    return findChildByClass(JdlEntityId.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlEntityTableName getEntityTableName() {
-    return findChildByClass(JdlEntityTableName.class);
-  }
-
-  @Override
-  public @NotNull String getName() {
-    return JdlPsiUtils.getName(this);
-  }
-
-  @Override
-  public @Nullable JdlEntityId getNameElement() {
-    return JdlPsiUtils.getNameElement(this);
+  public List<JdlOptionNameValue> getOptionNameValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlOptionNameValue.class);
   }
 
   @Override

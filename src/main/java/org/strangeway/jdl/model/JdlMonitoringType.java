@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlMonitoringType implements JdlEnum {
+public enum JdlMonitoringType implements JdlModelEnum {
   NO("no"),
   PROMETHEUS("prometheus");
 

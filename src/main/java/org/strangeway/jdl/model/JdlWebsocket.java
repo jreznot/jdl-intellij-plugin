@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlWebsocket implements JdlEnum {
+public enum JdlWebsocket implements JdlModelEnum {
   FALSE("false"),
   SPRINGWEBSOCKET("spring-websocket");
 

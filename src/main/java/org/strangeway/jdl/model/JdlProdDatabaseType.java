@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlProdDatabaseType implements JdlEnum {
+public enum JdlProdDatabaseType implements JdlModelEnum {
   MYSQL("mysql"),
   MARIADB("mariadb"),
   MSSQL("mssql"),

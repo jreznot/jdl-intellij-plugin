@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlCacheProvider implements JdlEnum {
+public enum JdlCacheProvider implements JdlModelEnum {
   NO("no"),
   CAFFEINE("caffeine"),
   EHCACHE("ehcache"),

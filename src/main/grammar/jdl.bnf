@@ -51,10 +51,10 @@
   ]
 }
 
-root ::= (NEWLINE | applicationBlock | entityBlock | enumBlock | relationshipBlock
-          | deploymentBlock | constantOption | configurationOption)*
+root ::= (NEWLINE | application | entity | enum | relationshipGroup
+          | deployment | constant | configurationOption)*
 
-applicationBlock ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationContent NEWLINE* RBRACE {
+application ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationContent NEWLINE* RBRACE {
     pin = 1
     methods = [
         getPresentation
@@ -104,7 +104,7 @@ private withOption ::= WITH_KEYWORD withOptionValue {
 
 withOptionValue ::= IDENTIFIER
 
-constantOption ::= constantName ASSIGN value {
+constant ::= constantName ASSIGN value {
     pin = 2
     methods = [
         getName
@@ -132,7 +132,7 @@ wildcardLiteral ::= WILDCARD {
     name = "*"
 }
 
-entityBlock ::= ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE {
+entity ::= ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE {
     pin = 1
     methods = [
         getName
@@ -179,7 +179,7 @@ private fieldConstraintParameterValue ::= value (COMMA|&RPARENTH) {
     recoverWhile = notRParenthOrNextValue
 }
 
-enumBlock ::= ENUM_KEYWORD NEWLINE* enumId NEWLINE* LBRACE (NEWLINE | enumElement)* RBRACE {
+enum ::= ENUM_KEYWORD NEWLINE* enumId NEWLINE* LBRACE (NEWLINE | enumElement)* RBRACE {
     pin = 1
     methods = [
         getName
@@ -227,7 +227,7 @@ id ::= IDENTIFIER {
     extends = value
 }
 
-relationshipBlock ::= RELATIONSHIP_KEYWORD relationshipType NEWLINE* LBRACE (NEWLINE | relationshipElement)* RBRACE {
+relationshipGroup ::= RELATIONSHIP_KEYWORD relationshipType NEWLINE* LBRACE (NEWLINE | relationshipElement)* RBRACE {
     pin = 1
     methods = [
         getPresentation
@@ -251,7 +251,7 @@ relationshipEntity ::= id relationshipDetails? {
 
 relationshipDetails ::= LBRACE fieldName (LPARENTH fieldName RPARENTH)? fieldConstraint? RBRACE
 
-deploymentBlock ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValue)* RBRACE {
+deployment ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValue)* RBRACE {
     pin = 1
     methods = [
         getPresentation

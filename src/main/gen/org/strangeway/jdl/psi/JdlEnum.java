@@ -6,10 +6,17 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.navigation.ItemPresentation;
 
-public interface JdlDeploymentBlock extends PsiElement {
+public interface JdlEnum extends PsiElement {
+
+  @Nullable
+  JdlEnumId getEnumId();
 
   @NotNull
-  List<JdlOptionNameValue> getOptionNameValueList();
+  List<JdlEnumValue> getEnumValueList();
+
+  @NotNull String getName();
+
+  @Nullable JdlEnumId getNameElement();
 
   @NotNull ItemPresentation getPresentation();
 

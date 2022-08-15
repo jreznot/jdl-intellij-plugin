@@ -2,8 +2,8 @@ package org.strangeway.jdl.model;
 
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
-import org.strangeway.jdl.psi.JdlEntityBlock;
-import org.strangeway.jdl.psi.JdlEnumBlock;
+import org.strangeway.jdl.psi.JdlEntity;
+import org.strangeway.jdl.psi.JdlEnum;
 import org.strangeway.jdl.psi.JdlVisitor;
 
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ public final class JdlDeclarationsModel {
   private JdlDeclarationsModel() {
   }
 
-  public static Collection<JdlEnumBlock> getAllEnums(PsiFile file) {
-    List<JdlEnumBlock> enums = new ArrayList<>();
+  public static Collection<JdlEnum> getAllEnums(PsiFile file) {
+    List<JdlEnum> enums = new ArrayList<>();
 
     file.acceptChildren(new JdlVisitor() {
       @Override
-      public void visitEnumBlock(@NotNull JdlEnumBlock o) {
-        super.visitEnumBlock(o);
+      public void visitEnum(@NotNull JdlEnum o) {
+        super.visitEnum(o);
 
         enums.add(o);
       }
@@ -29,13 +29,13 @@ public final class JdlDeclarationsModel {
     return enums;
   }
 
-  public static Collection<JdlEntityBlock> getAllEntities(PsiFile file) {
-    List<JdlEntityBlock> entities = new ArrayList<>();
+  public static Collection<JdlEntity> getAllEntities(PsiFile file) {
+    List<JdlEntity> entities = new ArrayList<>();
 
     file.acceptChildren(new JdlVisitor() {
       @Override
-      public void visitEntityBlock(@NotNull JdlEntityBlock o) {
-        super.visitEntityBlock(o);
+      public void visitEntity(@NotNull JdlEntity o) {
+        super.visitEntity(o);
 
         entities.add(o);
       }

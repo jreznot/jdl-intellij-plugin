@@ -52,7 +52,7 @@ final class JdlCompletionContributor extends CompletionContributor {
         }
 
         var allEnums = JdlDeclarationsModel.getAllEnums(parameters.getOriginalFile());
-        for (JdlEnumBlock enumBlock : allEnums) {
+        for (JdlEnum enumBlock : allEnums) {
           JdlEnumId enumId = enumBlock.getEnumId(); // todo move to PSI mixin
 
           if (enumId != null) {
@@ -73,7 +73,7 @@ final class JdlCompletionContributor extends CompletionContributor {
           }
         });
 
-    extend(CompletionType.BASIC, jdlIdentifier().withParent(JdlOptionName.class).inside(JdlDeploymentBlock.class),
+    extend(CompletionType.BASIC, jdlIdentifier().withParent(JdlOptionName.class).inside(JdlDeployment.class),
         new CompletionProvider<>() {
           @Override
           protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context,
@@ -91,15 +91,14 @@ final class JdlCompletionContributor extends CompletionContributor {
             PsiElement optionNameValue = PsiTreeUtil.findFirstParent(position, p -> p instanceof JdlOptionNameValue);
 
             if (optionNameValue instanceof JdlOptionNameValue) {
-              JdlOptionName optionName = ((JdlOptionNameValue) optionNameValue).getOptionName();
-              String key = optionName.getText();// todo mixin
+              String key = ((JdlOptionNameValue) optionNameValue).getName();
 
               addOptionValues(result, JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(key));
             }
           }
         });
 
-    extend(CompletionType.BASIC, jdlIdentifier().inside(JdlValue.class).inside(JdlOptionNameValue.class).inside(JdlDeploymentBlock.class),
+    extend(CompletionType.BASIC, jdlIdentifier().inside(JdlValue.class).inside(JdlOptionNameValue.class).inside(JdlDeployment.class),
         new CompletionProvider<>() {
           @Override
           protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context,
@@ -108,8 +107,7 @@ final class JdlCompletionContributor extends CompletionContributor {
             PsiElement optionNameValue = PsiTreeUtil.findFirstParent(position, p -> p instanceof JdlOptionNameValue);
 
             if (optionNameValue instanceof JdlOptionNameValue) {
-              JdlOptionName optionName = ((JdlOptionNameValue) optionNameValue).getOptionName();
-              String key = optionName.getText();// todo mixin
+              String key = ((JdlOptionNameValue) optionNameValue).getName();
 
               addOptionValues(result, JdlOptionModel.INSTANCE.getDeploymentOptions().get(key));
             }
@@ -134,16 +132,16 @@ final class JdlCompletionContributor extends CompletionContributor {
     if (optionMapping != null) {
       if (optionMapping.getPropertyType() instanceof JdlEnumType) {
         @SuppressWarnings({"unchecked", "rawtypes"})
-        List<JdlEnum> values = ((JdlEnumType) optionMapping.getPropertyType()).getValues();
+        List<JdlModelEnum> values = ((JdlEnumType) optionMapping.getPropertyType()).getValues();
 
-        for (JdlEnum value : values) {
+        for (JdlModelEnum value : values) {
           result.addElement(LookupElementBuilder.create(value.getId()).withIcon(AllIcons.Nodes.Enum));
         }
       } else if (optionMapping.getPropertyType() instanceof JdlEnumListType) {
         @SuppressWarnings({"unchecked", "rawtypes"})
-        List<JdlEnum> values = ((JdlEnumListType) optionMapping.getPropertyType()).getValues();
+        List<JdlModelEnum> values = ((JdlEnumListType) optionMapping.getPropertyType()).getValues();
 
-        for (JdlEnum value : values) {
+        for (JdlModelEnum value : values) {
           result.addElement(LookupElementBuilder.create(value.getId()).withIcon(AllIcons.Nodes.Enum));
         }
       } else if (optionMapping.getPropertyType() == JdlPrimitiveType.BOOLEAN_TYPE) {

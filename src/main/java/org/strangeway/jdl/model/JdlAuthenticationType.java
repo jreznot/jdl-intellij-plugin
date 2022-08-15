@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlAuthenticationType implements JdlEnum {
+public enum JdlAuthenticationType implements JdlModelEnum {
   NO("no"),
   JWT("jwt"),
   SESSION("session"),

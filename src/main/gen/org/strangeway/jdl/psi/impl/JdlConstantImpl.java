@@ -12,14 +12,14 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 import com.intellij.navigation.ItemPresentation;
 
-public class JdlEnumBlockImpl extends ASTWrapperPsiElement implements JdlEnumBlock {
+public class JdlConstantImpl extends ASTWrapperPsiElement implements JdlConstant {
 
-  public JdlEnumBlockImpl(@NotNull ASTNode node) {
+  public JdlConstantImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitEnumBlock(this);
+    visitor.visitConstant(this);
   }
 
   @Override
@@ -29,15 +29,15 @@ public class JdlEnumBlockImpl extends ASTWrapperPsiElement implements JdlEnumBlo
   }
 
   @Override
-  @Nullable
-  public JdlEnumId getEnumId() {
-    return findChildByClass(JdlEnumId.class);
+  @NotNull
+  public JdlConstantName getConstantName() {
+    return findNotNullChildByClass(JdlConstantName.class);
   }
 
   @Override
-  @NotNull
-  public List<JdlEnumValue> getEnumValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEnumValue.class);
+  @Nullable
+  public JdlValue getValue() {
+    return findChildByClass(JdlValue.class);
   }
 
   @Override
@@ -46,7 +46,7 @@ public class JdlEnumBlockImpl extends ASTWrapperPsiElement implements JdlEnumBlo
   }
 
   @Override
-  public @Nullable JdlEnumId getNameElement() {
+  public @NotNull JdlConstantName getNameElement() {
     return JdlPsiUtils.getNameElement(this);
   }
 

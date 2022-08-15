@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlKubernetesServiceType implements JdlEnum {
+public enum JdlKubernetesServiceType implements JdlModelEnum {
   LOAD_BALANCER("LoadBalancer"),
   NODE_PORT("NodePort"),
   INGRESS("Ingress");

@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlLanguage implements JdlEnum {
+public enum JdlLanguage implements JdlModelEnum {
   ALBANIAN("al"),
   ARABIC("ar-ly"),
   ARMENIAN("hy"),

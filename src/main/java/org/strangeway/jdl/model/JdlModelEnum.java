@@ -1,5 +1,5 @@
 package org.strangeway.jdl.model;
 
-public interface JdlEnum {
+public interface JdlModelEnum {
   String getId();
 }

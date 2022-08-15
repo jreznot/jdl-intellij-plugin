@@ -12,14 +12,14 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 import com.intellij.navigation.ItemPresentation;
 
-public class JdlRelationshipBlockImpl extends ASTWrapperPsiElement implements JdlRelationshipBlock {
+public class JdlEntityImpl extends ASTWrapperPsiElement implements JdlEntity {
 
-  public JdlRelationshipBlockImpl(@NotNull ASTNode node) {
+  public JdlEntityImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitRelationshipBlock(this);
+    visitor.visitEntity(this);
   }
 
   @Override
@@ -30,14 +30,30 @@ public class JdlRelationshipBlockImpl extends ASTWrapperPsiElement implements Jd
 
   @Override
   @NotNull
-  public List<JdlRelationshipMapping> getRelationshipMappingList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlRelationshipMapping.class);
+  public List<JdlEntityFieldMapping> getEntityFieldMappingList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEntityFieldMapping.class);
   }
 
   @Override
   @Nullable
-  public JdlRelationshipType getRelationshipType() {
-    return findChildByClass(JdlRelationshipType.class);
+  public JdlEntityId getEntityId() {
+    return findChildByClass(JdlEntityId.class);
+  }
+
+  @Override
+  @Nullable
+  public JdlEntityTableName getEntityTableName() {
+    return findChildByClass(JdlEntityTableName.class);
+  }
+
+  @Override
+  public @NotNull String getName() {
+    return JdlPsiUtils.getName(this);
+  }
+
+  @Override
+  public @Nullable JdlEntityId getNameElement() {
+    return JdlPsiUtils.getNameElement(this);
   }
 
   @Override

@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlClientPackageManager implements JdlEnum {
+public enum JdlClientPackageManager implements JdlModelEnum {
   NPM("npm"),
   YARN("yarn");
 

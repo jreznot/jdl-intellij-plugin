@@ -6,17 +6,13 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.navigation.ItemPresentation;
 
-public interface JdlConstantOption extends PsiElement {
+public interface JdlRelationshipGroup extends PsiElement {
 
   @NotNull
-  JdlConstantName getConstantName();
+  List<JdlRelationshipMapping> getRelationshipMappingList();
 
   @Nullable
-  JdlValue getValue();
-
-  @NotNull String getName();
-
-  @NotNull JdlConstantName getNameElement();
+  JdlRelationshipType getRelationshipType();
 
   @NotNull ItemPresentation getPresentation();
 

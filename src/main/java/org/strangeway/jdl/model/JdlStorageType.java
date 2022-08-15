@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlStorageType implements JdlEnum {
+public enum JdlStorageType implements JdlModelEnum {
   EPHEMERAL("ephemeral"),
   PERSISTENT("persistent");
 

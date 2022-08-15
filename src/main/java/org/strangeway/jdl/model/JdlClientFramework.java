@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlClientFramework implements JdlEnum {
+public enum JdlClientFramework implements JdlModelEnum {
   ANGULARX("angularX"),
   ANGULAR("angular"),
   REACT("react"),

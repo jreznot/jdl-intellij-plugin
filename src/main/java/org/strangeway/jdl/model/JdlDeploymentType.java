@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlDeploymentType implements JdlEnum {
+public enum JdlDeploymentType implements JdlModelEnum {
   DOCKER_COMPOSE("docker-compose"),
   OPENSHIFT("openshift"),
   KUBERNETES("kubernetes");

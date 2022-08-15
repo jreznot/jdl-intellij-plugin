@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlIngressType implements JdlEnum {
+public enum JdlIngressType implements JdlModelEnum {
   NGINX("nginx"),
   GKE("gke");
 

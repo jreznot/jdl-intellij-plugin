@@ -6,20 +6,13 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.navigation.ItemPresentation;
 
-public interface JdlEntityBlock extends PsiElement {
+public interface JdlApplication extends PsiElement {
 
   @NotNull
-  List<JdlEntityFieldMapping> getEntityFieldMappingList();
+  List<JdlConfigBlock> getConfigBlockList();
 
-  @Nullable
-  JdlEntityId getEntityId();
-
-  @Nullable
-  JdlEntityTableName getEntityTableName();
-
-  @NotNull String getName();
-
-  @Nullable JdlEntityId getNameElement();
+  @NotNull
+  List<JdlConfigurationOption> getConfigurationOptionList();
 
   @NotNull ItemPresentation getPresentation();
 

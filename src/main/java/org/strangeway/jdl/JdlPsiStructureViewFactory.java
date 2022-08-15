@@ -34,12 +34,12 @@ class JdlStructureViewModel extends StructureViewModelBase implements StructureV
     super(psiFile, editor, new JdlStructureViewElement(psiFile));
     withSuitableClasses(
         JdlFile.class,
-        JdlApplicationBlock.class, JdlConfigBlock.class, JdlOptionNameValue.class,
+        JdlApplication.class, JdlConfigBlock.class, JdlOptionNameValue.class,
         JdlConfigurationOption.class,
-        JdlEntityBlock.class, JdlEntityFieldMapping.class,
-        JdlEnumBlock.class, JdlEnumValue.class,
-        JdlConstantOption.class,
-        JdlRelationshipBlock.class, JdlDeploymentBlock.class
+        JdlEntity.class, JdlEntityFieldMapping.class,
+        JdlEnum.class, JdlEnumValue.class,
+        JdlConstant.class,
+        JdlRelationshipGroup.class, JdlDeployment.class
     );
     withSorters(Sorter.ALPHA_SORTER);
   }
@@ -94,19 +94,19 @@ class JdlStructureViewElement implements StructureViewTreeElement {
   public TreeElement @NotNull [] getChildren() {
     if (element instanceof JdlFile) {
       Class<?>[] topLevelElements = {
-          JdlApplicationBlock.class,
+          JdlApplication.class,
           JdlConfigurationOption.class,
-          JdlEntityBlock.class,
-          JdlEnumBlock.class,
-          JdlConstantOption.class,
-          JdlRelationshipBlock.class, JdlDeploymentBlock.class
+          JdlEntity.class,
+          JdlEnum.class,
+          JdlConstant.class,
+          JdlRelationshipGroup.class, JdlDeployment.class
       };
       @SuppressWarnings("unchecked")
       var elements = PsiTreeUtil.getChildrenOfAnyType(element, (Class<PsiElement>[]) topLevelElements);
       return ContainerUtil.map2Array(elements, TreeElement.class, JdlStructureViewElement::new);
     }
 
-    if (element instanceof JdlApplicationBlock) {
+    if (element instanceof JdlApplication) {
       Class<?>[] appElements = {
           JdlConfigBlock.class,
           JdlConfigurationOption.class
@@ -117,17 +117,17 @@ class JdlStructureViewElement implements StructureViewTreeElement {
     }
 
     if (element instanceof JdlConfigBlock
-        || element instanceof JdlDeploymentBlock) {
+        || element instanceof JdlDeployment) {
       var elements = PsiTreeUtil.getChildrenOfAnyType(element, JdlOptionNameValue.class);
       return ContainerUtil.map2Array(elements, TreeElement.class, JdlStructureViewElement::new);
     }
 
-    if (element instanceof JdlEntityBlock) {
+    if (element instanceof JdlEntity) {
       var elements = PsiTreeUtil.getChildrenOfAnyType(element, JdlEntityFieldMapping.class);
       return ContainerUtil.map2Array(elements, TreeElement.class, JdlStructureViewElement::new);
     }
 
-    if (element instanceof JdlEnumBlock) {
+    if (element instanceof JdlEnum) {
       var elements = PsiTreeUtil.getChildrenOfAnyType(element, JdlEnumValue.class);
       return ContainerUtil.map2Array(elements, TreeElement.class, JdlStructureViewElement::new);
     }

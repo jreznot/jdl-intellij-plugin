@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public final class JdlEnumListType<E extends Enum<E> & JdlEnum> implements JdlOptionType {
+public final class JdlEnumListType<E extends Enum<E> & JdlModelEnum> implements JdlOptionType {
   private final List<E> values;
 
   public JdlEnumListType(Class<E> enumClass) {

@@ -2,7 +2,7 @@ package org.strangeway.jdl;
 
 import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiElement;
-import org.strangeway.jdl.psi.JdlApplicationBlock;
+import org.strangeway.jdl.psi.JdlApplication;
 import org.strangeway.jdl.psi.JdlTokenTypes;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
@@ -16,8 +16,8 @@ public final class JdlPatterns {
     return psiElement(JdlTokenTypes.IDENTIFIER);
   }
 
-  public static PsiElementPattern.Capture<JdlApplicationBlock> jdlApplicationBlock() {
-    return psiElement(JdlApplicationBlock.class);
+  public static PsiElementPattern.Capture<JdlApplication> jdlApplicationBlock() {
+    return psiElement(JdlApplication.class);
   }
 
   public static PsiElementPattern.Capture<PsiElement> jdlTopLevelBlock() {

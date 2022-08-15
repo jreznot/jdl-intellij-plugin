@@ -8,7 +8,7 @@ import com.intellij.psi.PsiNamedElement;
 
 public class JdlVisitor extends PsiElementVisitor {
 
-  public void visitApplicationBlock(@NotNull JdlApplicationBlock o) {
+  public void visitApplication(@NotNull JdlApplication o) {
     visitPsiElement(o);
   }
 
@@ -32,15 +32,15 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitConstant(@NotNull JdlConstant o) {
+    visitPsiElement(o);
+  }
+
   public void visitConstantName(@NotNull JdlConstantName o) {
     visitPsiElement(o);
   }
 
-  public void visitConstantOption(@NotNull JdlConstantOption o) {
-    visitPsiElement(o);
-  }
-
-  public void visitDeploymentBlock(@NotNull JdlDeploymentBlock o) {
+  public void visitDeployment(@NotNull JdlDeployment o) {
     visitPsiElement(o);
   }
 
@@ -48,7 +48,7 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitEntityBlock(@NotNull JdlEntityBlock o) {
+  public void visitEntity(@NotNull JdlEntity o) {
     visitPsiElement(o);
   }
 
@@ -64,7 +64,7 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitEnumBlock(@NotNull JdlEnumBlock o) {
+  public void visitEnum(@NotNull JdlEnum o) {
     visitPsiElement(o);
   }
 
@@ -124,15 +124,15 @@ public class JdlVisitor extends PsiElementVisitor {
     visitValue(o);
   }
 
-  public void visitRelationshipBlock(@NotNull JdlRelationshipBlock o) {
-    visitPsiElement(o);
-  }
-
   public void visitRelationshipDetails(@NotNull JdlRelationshipDetails o) {
     visitPsiElement(o);
   }
 
   public void visitRelationshipEntity(@NotNull JdlRelationshipEntity o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRelationshipGroup(@NotNull JdlRelationshipGroup o) {
     visitPsiElement(o);
   }
 

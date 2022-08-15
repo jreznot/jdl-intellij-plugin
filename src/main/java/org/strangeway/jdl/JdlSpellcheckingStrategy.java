@@ -47,7 +47,7 @@ final class JdlSpellcheckingStrategy extends SpellcheckingStrategy {
     }
 
     if (element instanceof JdlOptionName) {
-      String key = element.getText();  // todo mixin
+      String key = element.getText();
       if (JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(key) != null
           || JdlOptionModel.INSTANCE.getDeploymentOptions().get(key) != null) {
         return EMPTY_TOKENIZER;

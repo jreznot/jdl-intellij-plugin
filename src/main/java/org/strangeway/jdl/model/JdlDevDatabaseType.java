@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlDevDatabaseType implements JdlEnum {
+public enum JdlDevDatabaseType implements JdlModelEnum {
   H2DISK("h2Disk"),
   H2MEMORY("h2Memory"),
   MYSQL("mysql"),

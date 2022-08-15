@@ -8,21 +8,21 @@ import org.strangeway.jdl.psi.impl.*;
 
 public interface JdlTokenTypes {
 
-  IElementType APPLICATION_BLOCK = new JdlElementType("APPLICATION_BLOCK");
+  IElementType APPLICATION = new JdlElementType("APPLICATION");
   IElementType ARRAY_LITERAL = new JdlElementType("ARRAY_LITERAL");
   IElementType BOOLEAN_LITERAL = new JdlElementType("BOOLEAN_LITERAL");
   IElementType CONFIGURATION_OPTION = new JdlElementType("CONFIGURATION_OPTION");
   IElementType CONFIGURATION_OPTION_NAME = new JdlElementType("CONFIGURATION_OPTION_NAME");
   IElementType CONFIG_BLOCK = new JdlElementType("CONFIG_BLOCK");
+  IElementType CONSTANT = new JdlElementType("CONSTANT");
   IElementType CONSTANT_NAME = new JdlElementType("CONSTANT_NAME");
-  IElementType CONSTANT_OPTION = new JdlElementType("CONSTANT_OPTION");
-  IElementType DEPLOYMENT_BLOCK = new JdlElementType("DEPLOYMENT_BLOCK");
+  IElementType DEPLOYMENT = new JdlElementType("DEPLOYMENT");
   IElementType ENTITIES_LIST = new JdlElementType("ENTITIES_LIST");
-  IElementType ENTITY_BLOCK = new JdlElementType("ENTITY_BLOCK");
+  IElementType ENTITY = new JdlElementType("ENTITY");
   IElementType ENTITY_FIELD_MAPPING = new JdlElementType("ENTITY_FIELD_MAPPING");
   IElementType ENTITY_ID = new JdlElementType("ENTITY_ID");
   IElementType ENTITY_TABLE_NAME = new JdlElementType("ENTITY_TABLE_NAME");
-  IElementType ENUM_BLOCK = new JdlElementType("ENUM_BLOCK");
+  IElementType ENUM = new JdlElementType("ENUM");
   IElementType ENUM_ID = new JdlElementType("ENUM_ID");
   IElementType ENUM_KEY = new JdlElementType("ENUM_KEY");
   IElementType ENUM_VALUE = new JdlElementType("ENUM_VALUE");
@@ -37,9 +37,9 @@ public interface JdlTokenTypes {
   IElementType OPTION_NAME = new JdlElementType("OPTION_NAME");
   IElementType OPTION_NAME_VALUE = new JdlElementType("OPTION_NAME_VALUE");
   IElementType REGEX_LITERAL = new JdlElementType("REGEX_LITERAL");
-  IElementType RELATIONSHIP_BLOCK = new JdlElementType("RELATIONSHIP_BLOCK");
   IElementType RELATIONSHIP_DETAILS = new JdlElementType("RELATIONSHIP_DETAILS");
   IElementType RELATIONSHIP_ENTITY = new JdlElementType("RELATIONSHIP_ENTITY");
+  IElementType RELATIONSHIP_GROUP = new JdlElementType("RELATIONSHIP_GROUP");
   IElementType RELATIONSHIP_MAPPING = new JdlElementType("RELATIONSHIP_MAPPING");
   IElementType RELATIONSHIP_TYPE = new JdlElementType("RELATIONSHIP_TYPE");
   IElementType STRING_LITERAL = new JdlElementType("STRING_LITERAL");
@@ -86,8 +86,8 @@ public interface JdlTokenTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == APPLICATION_BLOCK) {
-        return new JdlApplicationBlockImpl(node);
+      if (type == APPLICATION) {
+        return new JdlApplicationImpl(node);
       }
       else if (type == ARRAY_LITERAL) {
         return new JdlArrayLiteralImpl(node);
@@ -104,20 +104,20 @@ public interface JdlTokenTypes {
       else if (type == CONFIG_BLOCK) {
         return new JdlConfigBlockImpl(node);
       }
+      else if (type == CONSTANT) {
+        return new JdlConstantImpl(node);
+      }
       else if (type == CONSTANT_NAME) {
         return new JdlConstantNameImpl(node);
       }
-      else if (type == CONSTANT_OPTION) {
-        return new JdlConstantOptionImpl(node);
-      }
-      else if (type == DEPLOYMENT_BLOCK) {
-        return new JdlDeploymentBlockImpl(node);
+      else if (type == DEPLOYMENT) {
+        return new JdlDeploymentImpl(node);
       }
       else if (type == ENTITIES_LIST) {
         return new JdlEntitiesListImpl(node);
       }
-      else if (type == ENTITY_BLOCK) {
-        return new JdlEntityBlockImpl(node);
+      else if (type == ENTITY) {
+        return new JdlEntityImpl(node);
       }
       else if (type == ENTITY_FIELD_MAPPING) {
         return new JdlEntityFieldMappingImpl(node);
@@ -128,8 +128,8 @@ public interface JdlTokenTypes {
       else if (type == ENTITY_TABLE_NAME) {
         return new JdlEntityTableNameImpl(node);
       }
-      else if (type == ENUM_BLOCK) {
-        return new JdlEnumBlockImpl(node);
+      else if (type == ENUM) {
+        return new JdlEnumImpl(node);
       }
       else if (type == ENUM_ID) {
         return new JdlEnumIdImpl(node);
@@ -173,14 +173,14 @@ public interface JdlTokenTypes {
       else if (type == REGEX_LITERAL) {
         return new JdlRegexLiteralImpl(node);
       }
-      else if (type == RELATIONSHIP_BLOCK) {
-        return new JdlRelationshipBlockImpl(node);
-      }
       else if (type == RELATIONSHIP_DETAILS) {
         return new JdlRelationshipDetailsImpl(node);
       }
       else if (type == RELATIONSHIP_ENTITY) {
         return new JdlRelationshipEntityImpl(node);
+      }
+      else if (type == RELATIONSHIP_GROUP) {
+        return new JdlRelationshipGroupImpl(node);
       }
       else if (type == RELATIONSHIP_MAPPING) {
         return new JdlRelationshipMappingImpl(node);

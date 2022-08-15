@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlDatabaseType implements JdlEnum {
+public enum JdlDatabaseType implements JdlModelEnum {
   NO("no"),
   SQL("sql"),
   CASSANDRA("cassandra"),

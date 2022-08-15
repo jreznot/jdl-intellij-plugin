@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlApplicationType implements JdlEnum {
+public enum JdlApplicationType implements JdlModelEnum {
   GATEWAY("gateway"),
   MICROSERVICE("microservice"),
   MONOLITH("monolith");

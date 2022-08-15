@@ -61,7 +61,7 @@ final class JdlAnnotator implements Annotator {
             .range(element.getTextRange())
             .textAttributes(JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT)
             .create();
-      } else if (element.getParent() instanceof JdlConstantOption) {
+      } else if (element.getParent() instanceof JdlConstant) {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
             .range(element.getTextRange())
             .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)
@@ -89,7 +89,7 @@ final class JdlAnnotator implements Annotator {
       JdlOptionMapping optionMapping;
       if (findFirstParent(element, p -> p instanceof JdlConfigBlock) != null) {
         optionMapping = JdlOptionModel.INSTANCE.getApplicationConfigOptions().get(optionKey);
-      } else if (findFirstParent(element, p -> p instanceof JdlDeploymentBlock) != null) {
+      } else if (findFirstParent(element, p -> p instanceof JdlDeployment) != null) {
         optionMapping = JdlOptionModel.INSTANCE.getDeploymentOptions().get(optionKey);
       } else {
         optionMapping = null;

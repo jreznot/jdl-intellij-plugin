@@ -6,13 +6,17 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.navigation.ItemPresentation;
 
-public interface JdlApplicationBlock extends PsiElement {
+public interface JdlConstant extends PsiElement {
 
   @NotNull
-  List<JdlConfigBlock> getConfigBlockList();
+  JdlConstantName getConstantName();
 
-  @NotNull
-  List<JdlConfigurationOption> getConfigurationOptionList();
+  @Nullable
+  JdlValue getValue();
+
+  @NotNull String getName();
+
+  @NotNull JdlConstantName getNameElement();
 
   @NotNull ItemPresentation getPresentation();
 

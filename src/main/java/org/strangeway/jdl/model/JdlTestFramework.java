@@ -1,6 +1,6 @@
 package org.strangeway.jdl.model;
 
-public enum JdlTestFramework implements JdlEnum {
+public enum JdlTestFramework implements JdlModelEnum {
   CYPRESS("cypress"),
   PROTRACTOR("protractor"),
   CUCUMBER("cucumber"),

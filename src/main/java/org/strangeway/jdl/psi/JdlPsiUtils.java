@@ -87,7 +87,7 @@ public final class JdlPsiUtils {
     return result;
   }
 
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlApplicationBlock applicationBlock) {
+  public static @NotNull ItemPresentation getPresentation(@NotNull JdlApplication applicationBlock) {
     return new ItemPresentation() {
       @Override
       public String getPresentableText() {
@@ -181,18 +181,18 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @Nullable JdlEnumId getNameElement(@NotNull JdlEnumBlock enumBlock) {
+  public static @Nullable JdlEnumId getNameElement(@NotNull JdlEnum enumBlock) {
     return enumBlock.getEnumId();
   }
 
-  public static @NotNull String getName(@NotNull JdlEnumBlock enumBlock) {
+  public static @NotNull String getName(@NotNull JdlEnum enumBlock) {
     JdlEnumId enumId = enumBlock.getEnumId();
     if (enumId == null) return "";
 
     return enumId.getText();
   }
 
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlEnumBlock enumBlock) {
+  public static @NotNull ItemPresentation getPresentation(@NotNull JdlEnum enumBlock) {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {
@@ -206,18 +206,18 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @Nullable JdlEntityId getNameElement(@NotNull JdlEntityBlock entityBlock) {
+  public static @Nullable JdlEntityId getNameElement(@NotNull JdlEntity entityBlock) {
     return entityBlock.getEntityId();
   }
 
-  public static @NotNull String getName(@NotNull JdlEntityBlock entityBlock) {
+  public static @NotNull String getName(@NotNull JdlEntity entityBlock) {
     JdlEntityId enumId = entityBlock.getEntityId();
     if (enumId == null) return "";
 
     return enumId.getText();
   }
 
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlEntityBlock entityBlock) {
+  public static @NotNull ItemPresentation getPresentation(@NotNull JdlEntity entityBlock) {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {
@@ -277,7 +277,7 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlRelationshipBlock relationship) {
+  public static @NotNull ItemPresentation getPresentation(@NotNull JdlRelationshipGroup relationship) {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {
@@ -327,15 +327,15 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @NotNull String getName(@NotNull JdlConstantOption constant) {
+  public static @NotNull String getName(@NotNull JdlConstant constant) {
     return constant.getConstantName().getText();
   }
 
-  public static @NotNull JdlConstantName getNameElement(@NotNull JdlConstantOption constant) {
+  public static @NotNull JdlConstantName getNameElement(@NotNull JdlConstant constant) {
     return constant.getConstantName();
   }
 
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlConstantOption constant) {
+  public static @NotNull ItemPresentation getPresentation(@NotNull JdlConstant constant) {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {
@@ -357,7 +357,7 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlDeploymentBlock deploymentBlock) {
+  public static @NotNull ItemPresentation getPresentation(@NotNull JdlDeployment deploymentBlock) {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {

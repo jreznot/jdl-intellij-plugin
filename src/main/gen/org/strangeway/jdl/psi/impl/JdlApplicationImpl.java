@@ -12,14 +12,14 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 import com.intellij.navigation.ItemPresentation;
 
-public class JdlDeploymentBlockImpl extends ASTWrapperPsiElement implements JdlDeploymentBlock {
+public class JdlApplicationImpl extends ASTWrapperPsiElement implements JdlApplication {
 
-  public JdlDeploymentBlockImpl(@NotNull ASTNode node) {
+  public JdlApplicationImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitDeploymentBlock(this);
+    visitor.visitApplication(this);
   }
 
   @Override
@@ -30,8 +30,14 @@ public class JdlDeploymentBlockImpl extends ASTWrapperPsiElement implements JdlD
 
   @Override
   @NotNull
-  public List<JdlOptionNameValue> getOptionNameValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlOptionNameValue.class);
+  public List<JdlConfigBlock> getConfigBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlConfigBlock.class);
+  }
+
+  @Override
+  @NotNull
+  public List<JdlConfigurationOption> getConfigurationOptionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlConfigurationOption.class);
   }
 
   @Override
