@@ -53,10 +53,10 @@ final class JdlCompletionContributor extends CompletionContributor {
 
         var allEnums = JdlDeclarationsModel.getAllEnums(parameters.getOriginalFile());
         for (JdlEnum enumBlock : allEnums) {
-          JdlEnumId enumId = enumBlock.getEnumId(); // todo move to PSI mixin
+          String enumId = enumBlock.getName();
 
-          if (enumId != null) {
-            result.addElement(LookupElementBuilder.create(enumId.getText())
+          if (!enumId.isEmpty() && !enumId.isBlank()) {
+            result.addElement(LookupElementBuilder.create(enumId)
                 .withPsiElement(enumBlock)
                 .withIcon(AllIcons.Nodes.Enum));
           }

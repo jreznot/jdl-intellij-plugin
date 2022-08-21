@@ -206,31 +206,6 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @Nullable JdlEntityId getNameElement(@NotNull JdlEntity entityBlock) {
-    return entityBlock.getEntityId();
-  }
-
-  public static @NotNull String getName(@NotNull JdlEntity entityBlock) {
-    JdlEntityId enumId = entityBlock.getEntityId();
-    if (enumId == null) return "";
-
-    return enumId.getText();
-  }
-
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlEntity entityBlock) {
-    return new ItemPresentation() {
-      @Override
-      public @NotNull String getPresentableText() {
-        return entityBlock.getName();
-      }
-
-      @Override
-      public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Javaee.PersistenceEntity;
-      }
-    };
-  }
-
   public static @NotNull String getName(@NotNull JdlConfigurationOption configurationOption) {
     return configurationOption.getConfigurationOptionName().getText();
   }
@@ -357,7 +332,7 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlDeployment deploymentBlock) {
+  public static @NotNull ItemPresentation getPresentation(@SuppressWarnings("unused") @NotNull JdlDeployment deploymentBlock) {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {

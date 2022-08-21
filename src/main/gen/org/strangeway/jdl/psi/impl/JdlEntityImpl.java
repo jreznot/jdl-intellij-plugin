@@ -8,11 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.strangeway.jdl.psi.JdlEntityMixin;
 import org.strangeway.jdl.psi.*;
-import com.intellij.navigation.ItemPresentation;
 
-public class JdlEntityImpl extends ASTWrapperPsiElement implements JdlEntity {
+public class JdlEntityImpl extends JdlEntityMixin implements JdlEntity {
 
   public JdlEntityImpl(@NotNull ASTNode node) {
     super(node);
@@ -44,21 +43,6 @@ public class JdlEntityImpl extends ASTWrapperPsiElement implements JdlEntity {
   @Nullable
   public JdlEntityTableName getEntityTableName() {
     return findChildByClass(JdlEntityTableName.class);
-  }
-
-  @Override
-  public @NotNull String getName() {
-    return JdlPsiUtils.getName(this);
-  }
-
-  @Override
-  public @Nullable JdlEntityId getNameElement() {
-    return JdlPsiUtils.getNameElement(this);
-  }
-
-  @Override
-  public @NotNull ItemPresentation getPresentation() {
-    return JdlPsiUtils.getPresentation(this);
   }
 
 }

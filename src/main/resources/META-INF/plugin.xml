@@ -41,6 +41,8 @@
     <annotator language="JDL" implementationClass="org.strangeway.jdl.JdlAnnotator"/>
     <colorSettingsPage implementation="org.strangeway.jdl.JdlColorSettingsPage"/>
 
+    <lang.elementManipulator forClass="org.strangeway.jdl.psi.JdlId" implementationClass="org.strangeway.jdl.psi.JdlIdManipulator"/>
+
     <lang.psiStructureViewFactory language="JDL" implementationClass="org.strangeway.jdl.JdlPsiStructureViewFactory"/>
 
     <completion.contributor language="JDL" implementationClass="org.strangeway.jdl.JdlCompletionContributor"/>

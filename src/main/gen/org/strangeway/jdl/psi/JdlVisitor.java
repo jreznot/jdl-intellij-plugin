@@ -5,6 +5,7 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNamedElement;
+import com.intellij.psi.PsiNameIdentifierOwner;
 
 public class JdlVisitor extends PsiElementVisitor {
 
@@ -49,7 +50,7 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitEntity(@NotNull JdlEntity o) {
-    visitPsiElement(o);
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitEntityFieldMapping(@NotNull JdlEntityFieldMapping o) {
@@ -158,6 +159,10 @@ public class JdlVisitor extends PsiElementVisitor {
 
   public void visitWithOptionValue(@NotNull JdlWithOptionValue o) {
     visitPsiElement(o);
+  }
+
+  public void visitPsiNameIdentifierOwner(@NotNull PsiNameIdentifierOwner o) {
+    visitElement(o);
   }
 
   public void visitPsiNamedElement(@NotNull PsiNamedElement o) {

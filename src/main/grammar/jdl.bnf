@@ -49,6 +49,9 @@
   implements("optionNameValue")=[
     "com.intellij.psi.PsiNamedElement"
   ]
+  implements("entity")=[
+    "com.intellij.psi.PsiNameIdentifierOwner"
+  ]
 }
 
 root ::= (NEWLINE | application | entity | enum | relationshipGroup
@@ -134,11 +137,7 @@ wildcardLiteral ::= WILDCARD {
 
 entity ::= ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE {
     pin = 1
-    methods = [
-        getName
-        getNameElement
-        getPresentation
-    ]
+    mixin="org.strangeway.jdl.psi.JdlEntityMixin"
 }
 
 entityId ::= IDENTIFIER {
@@ -225,6 +224,7 @@ fieldType ::= IDENTIFIER {
 id ::= IDENTIFIER {
     name = "identifier"
     extends = value
+    mixin="org.strangeway.jdl.psi.JdlIdMixin"
 }
 
 relationshipGroup ::= RELATIONSHIP_KEYWORD relationshipType NEWLINE* LBRACE (NEWLINE | relationshipElement)* RBRACE {

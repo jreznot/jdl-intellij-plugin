@@ -8,9 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
+import org.strangeway.jdl.psi.JdlIdMixin;
 import org.strangeway.jdl.psi.*;
 
-public class JdlIdImpl extends JdlValueImpl implements JdlId {
+public class JdlIdImpl extends JdlIdMixin implements JdlId {
 
   public JdlIdImpl(@NotNull ASTNode node) {
     super(node);
