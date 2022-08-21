@@ -21,7 +21,8 @@ public final class JdlConstants {
       "entities",
       "service",
       "microservice",
-      "paginate"
+      "paginate",
+      "search"
   );
 
   public static final List<String> APPLICATION_NESTED_KEYWORDS = List.of(

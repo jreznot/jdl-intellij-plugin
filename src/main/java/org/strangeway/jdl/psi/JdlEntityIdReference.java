@@ -1,12 +1,9 @@
 package org.strangeway.jdl.psi;
 
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.icons.AllIcons;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.ResolveState;
-import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.model.JdlDeclarationsModel;
@@ -53,7 +50,6 @@ public final class JdlEntityIdReference extends PsiReferenceBase<JdlId> {
 
     Collection<JdlEntity> entities = JdlDeclarationsModel.getAllEntities(containingFile);
 
-    return ContainerUtil.map2Array(entities,
-        e -> LookupElementBuilder.create(e).withIcon(AllIcons.Javaee.PersistenceEntity));
+    return entities.toArray();
   }
 }

@@ -38,6 +38,7 @@
     <lang.syntaxHighlighterFactory language="JDL" implementationClass="org.strangeway.jdl.JdlSyntaxHighlighterFactory"/>
     <lang.commenter language="JDL" implementationClass="org.strangeway.jdl.JdlCommenter"/>
     <lang.foldingBuilder language="JDL" implementationClass="org.strangeway.jdl.JdlFoldingBuilder"/>
+    <lang.findUsagesProvider language="JDL" implementationClass="org.strangeway.jdl.JdlFindUsagesProvider"/>
     <annotator language="JDL" implementationClass="org.strangeway.jdl.JdlAnnotator"/>
     <colorSettingsPage implementation="org.strangeway.jdl.JdlColorSettingsPage"/>
 

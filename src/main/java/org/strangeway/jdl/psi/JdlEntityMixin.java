@@ -36,6 +36,11 @@ public abstract class JdlEntityMixin extends ASTWrapperPsiElement implements Jdl
   }
 
   @Override
+  protected @Nullable Icon getElementIcon(int flags) {
+    return AllIcons.Javaee.PersistenceEntity;
+  }
+
+  @Override
   public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
     // todo implement
     return null;
