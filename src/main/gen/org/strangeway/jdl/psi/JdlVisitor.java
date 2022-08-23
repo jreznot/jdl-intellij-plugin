@@ -4,7 +4,6 @@ package org.strangeway.jdl.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
 
 public class JdlVisitor extends PsiElementVisitor {
@@ -66,7 +65,7 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitEnum(@NotNull JdlEnum o) {
-    visitPsiElement(o);
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitEnumId(@NotNull JdlEnumId o) {
@@ -118,7 +117,7 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitOptionNameValue(@NotNull JdlOptionNameValue o) {
-    visitPsiNamedElement(o);
+    visitPsiElement(o);
   }
 
   public void visitRegexLiteral(@NotNull JdlRegexLiteral o) {
@@ -162,10 +161,6 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitPsiNameIdentifierOwner(@NotNull PsiNameIdentifierOwner o) {
-    visitElement(o);
-  }
-
-  public void visitPsiNamedElement(@NotNull PsiNamedElement o) {
     visitElement(o);
   }
 

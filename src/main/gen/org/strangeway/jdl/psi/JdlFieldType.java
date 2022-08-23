@@ -7,4 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public interface JdlFieldType extends PsiElement {
 
+  @NotNull String getTypeName();
+
 }

@@ -8,11 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.strangeway.jdl.psi.JdlEnumMixin;
 import org.strangeway.jdl.psi.*;
-import com.intellij.navigation.ItemPresentation;
 
-public class JdlEnumImpl extends ASTWrapperPsiElement implements JdlEnum {
+public class JdlEnumImpl extends JdlEnumMixin implements JdlEnum {
 
   public JdlEnumImpl(@NotNull ASTNode node) {
     super(node);
@@ -38,21 +37,6 @@ public class JdlEnumImpl extends ASTWrapperPsiElement implements JdlEnum {
   @NotNull
   public List<JdlEnumValue> getEnumValueList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEnumValue.class);
-  }
-
-  @Override
-  public @NotNull String getName() {
-    return JdlPsiUtils.getName(this);
-  }
-
-  @Override
-  public @Nullable JdlEnumId getNameElement() {
-    return JdlPsiUtils.getNameElement(this);
-  }
-
-  @Override
-  public @NotNull ItemPresentation getPresentation() {
-    return JdlPsiUtils.getPresentation(this);
   }
 
 }

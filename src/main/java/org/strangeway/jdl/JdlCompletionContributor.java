@@ -25,7 +25,9 @@ final class JdlCompletionContributor extends CompletionContributor {
     extend(CompletionType.BASIC, jdlIdentifier().inside(jdlApplicationBlock()).andNot(psiElement().inside(JdlConfigBlock.class)),
         new KeywordsCompletionProvider(JdlConstants.APPLICATION_NESTED_KEYWORDS));
 
-    extend(CompletionType.BASIC, jdlIdentifier().andNot(jdlIdentifier().inside(jdlTopLevelBlock())),
+    extend(CompletionType.BASIC, jdlIdentifier()
+            .andNot(jdlIdentifier().inside(jdlTopLevelBlock()))
+            .andNot(jdlIdentifier().inside(JdlEntitiesList.class)),
         new KeywordsCompletionProvider(JdlConstants.TOP_LEVEL_KEYWORDS));
 
     extend(CompletionType.BASIC, jdlIdentifier().inside(JdlRelationshipMapping.class),
@@ -46,7 +48,7 @@ final class JdlCompletionContributor extends CompletionContributor {
       @Override
       protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context,
                                     @NotNull CompletionResultSet result) {
-        for (var relationshipType : FIELD_TYPES) {
+        for (var relationshipType : FIELD_TYPES.keySet()) {
           result.addElement(LookupElementBuilder.create(relationshipType)
               .withIcon(AllIcons.Nodes.Type));
         }
@@ -55,7 +57,7 @@ final class JdlCompletionContributor extends CompletionContributor {
         for (JdlEnum enumBlock : allEnums) {
           String enumId = enumBlock.getName();
 
-          if (!enumId.isEmpty() && !enumId.isBlank()) {
+          if (enumId != null && !enumId.isEmpty() && !enumId.isBlank()) {
             result.addElement(LookupElementBuilder.create(enumId)
                 .withPsiElement(enumBlock)
                 .withIcon(AllIcons.Nodes.Enum));

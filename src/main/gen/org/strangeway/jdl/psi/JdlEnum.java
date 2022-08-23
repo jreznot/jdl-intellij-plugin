@@ -4,20 +4,14 @@ package org.strangeway.jdl.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface JdlEnum extends PsiElement {
+public interface JdlEnum extends PsiNameIdentifierOwner {
 
   @Nullable
   JdlEnumId getEnumId();
 
   @NotNull
   List<JdlEnumValue> getEnumValueList();
-
-  @NotNull String getName();
-
-  @Nullable JdlEnumId getNameElement();
-
-  @NotNull ItemPresentation getPresentation();
 
 }

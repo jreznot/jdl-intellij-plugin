@@ -8,11 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import org.strangeway.jdl.psi.JdlOptionNameValueMixin;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 import com.intellij.navigation.ItemPresentation;
 
-public class JdlOptionNameValueImpl extends JdlOptionNameValueMixin implements JdlOptionNameValue {
+public class JdlOptionNameValueImpl extends ASTWrapperPsiElement implements JdlOptionNameValue {
 
   public JdlOptionNameValueImpl(@NotNull ASTNode node) {
     super(node);

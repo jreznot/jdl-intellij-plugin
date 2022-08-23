@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.psi.JdlEntity;
+import org.strangeway.jdl.psi.JdlEnum;
 import org.strangeway.jdl.psi.JdlTokenSets;
 import org.strangeway.jdl.psi.JdlTokenTypes;
 
@@ -25,7 +26,8 @@ final class JdlFindUsagesProvider implements FindUsagesProvider {
 
   @Override
   public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
-    return psiElement instanceof JdlEntity;
+    return psiElement instanceof JdlEntity
+        || psiElement instanceof JdlEnum;
   }
 
   @Override
@@ -38,12 +40,15 @@ final class JdlFindUsagesProvider implements FindUsagesProvider {
     if (element instanceof JdlEntity) {
       return "entity";
     }
+    if (element instanceof JdlEnum) {
+      return "enum";
+    }
     return "";
   }
 
   @Override
   public @Nls @NotNull String getDescriptiveName(@NotNull PsiElement element) {
-    String name = element instanceof PsiNamedElement ? ((PsiNamedElement)element).getName() : null;
+    String name = element instanceof PsiNamedElement ? ((PsiNamedElement) element).getName() : null;
     return name != null ? name : "<unnamed>";
   }
 

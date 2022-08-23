@@ -186,31 +186,6 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @Nullable JdlEnumId getNameElement(@NotNull JdlEnum enumBlock) {
-    return enumBlock.getEnumId();
-  }
-
-  public static @NotNull String getName(@NotNull JdlEnum enumBlock) {
-    JdlEnumId enumId = enumBlock.getEnumId();
-    if (enumId == null) return "";
-
-    return enumId.getText();
-  }
-
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlEnum enumBlock) {
-    return new ItemPresentation() {
-      @Override
-      public @NotNull String getPresentableText() {
-        return enumBlock.getName();
-      }
-
-      @Override
-      public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Nodes.Enum;
-      }
-    };
-  }
-
   public static @NotNull String getName(@NotNull JdlConfigurationOption configurationOption) {
     return configurationOption.getConfigurationOptionName().getText();
   }
@@ -353,5 +328,9 @@ public final class JdlPsiUtils {
         return AllIcons.Nodes.Deploy;
       }
     };
+  }
+
+  public static @NotNull String getTypeName(@NotNull JdlFieldType jdlFieldType) {
+    return jdlFieldType.getText();
   }
 }

@@ -4,10 +4,9 @@ package org.strangeway.jdl.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
 import com.intellij.navigation.ItemPresentation;
 
-public interface JdlOptionNameValue extends PsiNamedElement {
+public interface JdlOptionNameValue extends PsiElement {
 
   @NotNull
   JdlOptionName getOptionName();

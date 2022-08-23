@@ -46,10 +46,10 @@
     MICROSERVICE_KEYWORD='microservice'
   ]
 
-  implements("optionNameValue")=[
-    "com.intellij.psi.PsiNamedElement"
-  ]
   implements("entity")=[
+    "com.intellij.psi.PsiNameIdentifierOwner"
+  ]
+  implements("enum")=[
     "com.intellij.psi.PsiNameIdentifierOwner"
   ]
 }
@@ -87,7 +87,6 @@ optionNameValue ::= optionName value? {
         getNameElement
         getPresentation
     ]
-    mixin="org.strangeway.jdl.psi.JdlOptionNameValueMixin"
 }
 
 optionName ::= IDENTIFIER {
@@ -181,11 +180,7 @@ private fieldConstraintParameterValue ::= value (COMMA|&RPARENTH) {
 
 enum ::= ENUM_KEYWORD NEWLINE* enumId NEWLINE* LBRACE (NEWLINE | enumElement)* RBRACE {
     pin = 1
-    methods = [
-        getName
-        getNameElement
-        getPresentation
-    ]
+    mixin="org.strangeway.jdl.psi.JdlEnumMixin"
 }
 
 enumId ::= IDENTIFIER {
@@ -220,6 +215,10 @@ fieldName ::= IDENTIFIER {
 
 fieldType ::= IDENTIFIER {
     name = "field type"
+    methods = [
+        getTypeName
+    ]
+    mixin="org.strangeway.jdl.psi.JdlFieldTypeMixin"
 }
 
 id ::= IDENTIFIER {
