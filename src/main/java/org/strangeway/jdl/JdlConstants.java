@@ -1,6 +1,7 @@
 package org.strangeway.jdl;
 
 import java.util.List;
+import java.util.Map;
 
 public final class JdlConstants {
   private JdlConstants() {
@@ -47,23 +48,23 @@ public final class JdlConstants {
       "ManyToMany"
   );
 
-  public static final List<String> FIELD_TYPES = List.of(
-      "String",
-      "Integer",
-      "Long",
-      "Boolean",
-      "LocalDate",
-      "ZonedDateTime",
-      "BigDecimal",
-      "Float",
-      "Double",
-      "Instant",
-      "Duration",
-      "UUID",
-      "Blob",
-      "AnyBlob",
-      "ImageBlob",
-      "TextBlob"
+  public static final Map<String, String> FIELD_TYPES = Map.ofEntries(
+      Map.entry("String", "java.lang.String"),
+      Map.entry("Integer", "java.lang.Integer"),
+      Map.entry("Long", "java.lang.Long"),
+      Map.entry("Boolean", "java.lang.Boolean"),
+      Map.entry("LocalDate", "java.time.LocalDate"),
+      Map.entry("ZonedDateTime", "java.time.ZonedDateTime"),
+      Map.entry("BigDecimal", "java.math.BigDecimal"),
+      Map.entry("Float", "java.lang.Float"),
+      Map.entry("Double", "java.lang.Double"),
+      Map.entry("Instant", "java.time.Instant"),
+      Map.entry("Duration", "java.time.Duration"),
+      Map.entry("UUID", "java.util.UUID"),
+      Map.entry("Blob", "java.sql.Blob"),
+      Map.entry("AnyBlob", "java.sql.Blob"),
+      Map.entry("ImageBlob", "java.sql.Blob"),
+      Map.entry("TextBlob", "java.sql.Clob")
   );
 
   public static final List<String> FIELD_VALIDATIONS = List.of(

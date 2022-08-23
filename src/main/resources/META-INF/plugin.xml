@@ -29,6 +29,7 @@
   ]]></description>
 
   <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.java</depends>
 
   <extensions defaultExtensionNs="com.intellij">
     <fileType name="JHipster JDL" language="JDL" implementationClass="org.strangeway.jdl.JdlFileType" extensions="jdl;jh"/>
