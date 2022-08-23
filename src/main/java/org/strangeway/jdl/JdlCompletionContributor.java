@@ -48,8 +48,8 @@ final class JdlCompletionContributor extends CompletionContributor {
       @Override
       protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context,
                                     @NotNull CompletionResultSet result) {
-        for (var relationshipType : FIELD_TYPES.keySet()) {
-          result.addElement(LookupElementBuilder.create(relationshipType)
+        for (var fieldType : FIELD_TYPES.keySet()) {
+          result.addElement(LookupElementBuilder.create(fieldType)
               .withIcon(AllIcons.Nodes.Type));
         }
 
@@ -58,8 +58,7 @@ final class JdlCompletionContributor extends CompletionContributor {
           String enumId = enumBlock.getName();
 
           if (enumId != null && !enumId.isEmpty() && !enumId.isBlank()) {
-            result.addElement(LookupElementBuilder.create(enumId)
-                .withPsiElement(enumBlock)
+            result.addElement(LookupElementBuilder.create(enumBlock)
                 .withIcon(AllIcons.Nodes.Enum));
           }
         }
