@@ -53,5 +53,7 @@
     <defaultLiveTemplates file="/org/strangeway/jdl/liveTemplates.xml"/>
 
     <spellchecker.support language="JDL" implementationClass="org.strangeway.jdl.JdlSpellcheckingStrategy"/>
+
+    <navbar implementation="org.strangeway.jdl.JdlNavbarExtension"/>
   </extensions>
 </idea-plugin>

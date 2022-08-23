@@ -41,6 +41,11 @@ public class JdlRelationshipGroupImpl extends ASTWrapperPsiElement implements Jd
   }
 
   @Override
+  public @NotNull String getType() {
+    return JdlPsiUtils.getType(this);
+  }
+
+  @Override
   public @NotNull ItemPresentation getPresentation() {
     return JdlPsiUtils.getPresentation(this);
   }

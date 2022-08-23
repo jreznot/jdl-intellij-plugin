@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.strangeway.jdl.JdlConstants.APPLICATION_UNNAMED;
+import static org.strangeway.jdl.JdlConstants.CONFIG_BLOCK_NAME;
 
 public final class JdlPsiUtils {
   private static final String ourEscapesTable = "\"\"\\\\//b\bf\fn\nr\rt\t";
@@ -87,27 +88,31 @@ public final class JdlPsiUtils {
     return result;
   }
 
+  public static @NotNull String getName(@NotNull JdlApplication applicationBlock) {
+    return applicationBlock.getConfigBlockList().stream()
+        .flatMap(c -> c.getOptionNameValueList().stream())
+        .filter(o -> JdlConstants.APPLICATION_BASE_NAME.equals(o.getName()))
+        .map(o -> {
+          JdlValue value = o.getValue();
+          if (value instanceof JdlId) {
+            return value.getText();
+          }
+          if (value instanceof JdlStringLiteral) {
+            return ((JdlStringLiteral) value).getTextFragments().stream()
+                .map(f -> f.getSecond())
+                .collect(Collectors.joining());
+          }
+          return APPLICATION_UNNAMED;
+        })
+        .findFirst()
+        .orElse(APPLICATION_UNNAMED);
+  }
+
   public static @NotNull ItemPresentation getPresentation(@NotNull JdlApplication applicationBlock) {
     return new ItemPresentation() {
       @Override
       public String getPresentableText() {
-        return applicationBlock.getConfigBlockList().stream()
-            .flatMap(c -> c.getOptionNameValueList().stream())
-            .filter(o -> JdlConstants.APPLICATION_BASE_NAME.equals(o.getName()))
-            .map(o -> {
-              JdlValue value = o.getValue();
-              if (value instanceof JdlId) {
-                return value.getText();
-              }
-              if (value instanceof JdlStringLiteral) {
-                return ((JdlStringLiteral) value).getTextFragments().stream()
-                    .map(f -> f.getSecond())
-                    .collect(Collectors.joining());
-              }
-              return APPLICATION_UNNAMED;
-            })
-            .findFirst()
-            .orElse(APPLICATION_UNNAMED);
+        return getName(applicationBlock);
       }
 
       @Override
@@ -242,7 +247,7 @@ public final class JdlPsiUtils {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {
-        return "config";
+        return CONFIG_BLOCK_NAME;
       }
 
       @Override
@@ -252,14 +257,18 @@ public final class JdlPsiUtils {
     };
   }
 
+  public static @NotNull String getType(@NotNull JdlRelationshipGroup relationship) {
+    JdlRelationshipType relationshipType = relationship.getRelationshipType();
+    if (relationshipType == null) return "<unknown>";
+
+    return relationshipType.getText();
+  }
+
   public static @NotNull ItemPresentation getPresentation(@NotNull JdlRelationshipGroup relationship) {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {
-        JdlRelationshipType relationshipType = relationship.getRelationshipType();
-        if (relationshipType == null) return "<unknown>";
-
-        return relationshipType.getText();
+        return getType(relationship);
       }
 
       @Override

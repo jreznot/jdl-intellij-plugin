@@ -7,7 +7,9 @@ public final class JdlConstants {
   }
 
   public static final String APPLICATION_BASE_NAME = "baseName";
-  public static final String APPLICATION_UNNAMED = "<unnamed application>";
+  public static final String APPLICATION_UNNAMED = "<unnamed>";
+
+  public static final String CONFIG_BLOCK_NAME = "config";
 
   public static final String TRUE = "true";
   public static final String FALSE = "false";

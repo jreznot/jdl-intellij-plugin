@@ -14,6 +14,8 @@ public interface JdlRelationshipGroup extends PsiElement {
   @Nullable
   JdlRelationshipType getRelationshipType();
 
+  @NotNull String getType();
+
   @NotNull ItemPresentation getPresentation();
 
 }

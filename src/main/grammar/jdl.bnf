@@ -60,6 +60,7 @@ root ::= (NEWLINE | application | entity | enum | relationshipGroup
 application ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationContent NEWLINE* RBRACE {
     pin = 1
     methods = [
+        getName
         getPresentation
     ]
 }
@@ -230,6 +231,7 @@ id ::= IDENTIFIER {
 relationshipGroup ::= RELATIONSHIP_KEYWORD relationshipType NEWLINE* LBRACE (NEWLINE | relationshipElement)* RBRACE {
     pin = 1
     methods = [
+        getType
         getPresentation
     ]
 }

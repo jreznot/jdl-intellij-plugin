@@ -41,6 +41,11 @@ public class JdlApplicationImpl extends ASTWrapperPsiElement implements JdlAppli
   }
 
   @Override
+  public @NotNull String getName() {
+    return JdlPsiUtils.getName(this);
+  }
+
+  @Override
   public @NotNull ItemPresentation getPresentation() {
     return JdlPsiUtils.getPresentation(this);
   }
