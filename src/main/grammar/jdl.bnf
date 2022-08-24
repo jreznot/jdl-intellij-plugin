@@ -99,7 +99,13 @@ exceptEntities ::= EXCEPT_KEYWORD entitiesList {
     pin = 1
 }
 
-entitiesList ::= id (COMMA id)*
+entitiesList ::= id entityIdItem* {
+    pin = 1
+}
+
+private entityIdItem ::= COMMA id {
+    pin = 1
+}
 
 private withOption ::= WITH_KEYWORD withOptionValue {
     pin = 1

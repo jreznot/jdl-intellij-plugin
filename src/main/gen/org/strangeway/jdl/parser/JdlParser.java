@@ -409,38 +409,28 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id (COMMA id)*
+  // id entityIdItem*
   public static boolean entitiesList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entitiesList")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ENTITIES_LIST, null);
     r = id(b, l + 1);
+    p = r; // pin = 1
     r = r && entitiesList_1(b, l + 1);
-    exit_section_(b, m, ENTITIES_LIST, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // (COMMA id)*
+  // entityIdItem*
   private static boolean entitiesList_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entitiesList_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!entitiesList_1_0(b, l + 1)) break;
+      if (!entityIdItem(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "entitiesList_1", c)) break;
     }
     return true;
-  }
-
-  // COMMA id
-  private static boolean entitiesList_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "entitiesList_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && id(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   /* ********************************************************** */
@@ -596,6 +586,20 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, IDENTIFIER);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  /* ********************************************************** */
+  // COMMA id
+  static boolean entityIdItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityIdItem")) return false;
+    if (!nextTokenIs(b, COMMA)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeToken(b, COMMA);
+    p = r; // pin = 1
+    r = r && id(b, l + 1);
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
