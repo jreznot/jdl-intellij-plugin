@@ -1,9 +1,11 @@
 package org.strangeway.jdl;
 
+import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiReference;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.model.JdlEnumListType;
 import org.strangeway.jdl.model.JdlEnumType;
@@ -72,6 +74,21 @@ final class JdlAnnotator implements Annotator {
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_KEYWORD)
           .create();
+    }
+
+    resolveIdentifierRefs(element, holder);
+  }
+
+  private void resolveIdentifierRefs(PsiElement element, AnnotationHolder holder) {
+    if (element instanceof JdlId || element instanceof JdlFieldType) {
+      PsiReference reference = element.getReference();
+      if (reference != null && reference.resolve() == null) {
+        String message = String.format("Cannot resolve symbol '%s'", reference.getCanonicalText());
+        holder.newAnnotation(HighlightSeverity.ERROR, message)
+            .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+            .range(element)
+            .create();
+      }
     }
   }
 
