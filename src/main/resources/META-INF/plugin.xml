@@ -11,9 +11,10 @@
     <ul>
       <li>Syntax highlighting and customizable color scheme</li>
       <li>Options completion for all supported JHipster parameters</li>
+      <li>Find usages</li>
+      <li>Rename refactor</li>
       <li>Structure view and quick navigation</li>
       <li>Live templates</li>
-      <li>Spelling check</li>
     </ul>
     <br/>
     Use live templates to speed-up JDL editing:
@@ -57,5 +58,7 @@
     <spellchecker.support language="JDL" implementationClass="org.strangeway.jdl.JdlSpellcheckingStrategy"/>
 
     <navbar implementation="org.strangeway.jdl.JdlNavbarExtension"/>
+
+    <lang.refactoringSupport language="JDL" implementationClass="org.strangeway.jdl.JdlRefactoringSupportProvider"/>
   </extensions>
 </idea-plugin>

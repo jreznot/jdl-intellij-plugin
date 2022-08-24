@@ -5,6 +5,10 @@ import com.intellij.icons.AllIcons;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.impl.source.tree.LeafElement;
+import com.intellij.psi.search.LocalSearchScope;
+import com.intellij.psi.search.SearchScope;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,13 +29,25 @@ public abstract class JdlEnumMixin extends ASTWrapperPsiElement implements JdlEn
 
   @Override
   public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
-    // todo implement
-    return null;
+    if (getEnumId() != null) {
+      ASTNode node = getEnumId().getNode();
+      ((LeafElement) node.getFirstChildNode()).replaceWithText(name);
+    }
+    return this;
   }
 
   @Override
   public @Nullable PsiElement getNameIdentifier() {
     return getEnumId();
+  }
+
+  @Override
+  public @NotNull SearchScope getUseScope() {
+    PsiFile containingFile = getContainingFile();
+    if (containingFile != null) {
+      return new LocalSearchScope(containingFile);
+    }
+    return super.getUseScope();
   }
 
   @Override
