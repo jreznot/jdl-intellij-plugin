@@ -11,10 +11,9 @@
     <ul>
       <li>Syntax highlighting and customizable color scheme</li>
       <li>Options completion for all supported JHipster parameters</li>
-      <li>Find usages</li>
-      <li>Rename refactor</li>
+      <li>Go to declaration and Find usages for entities and enums</li>
       <li>Structure view and quick navigation</li>
-      <li>Live templates</li>
+      <li>Rename refactor</li>
     </ul>
     <br/>
     Use live templates to speed-up JDL editing:

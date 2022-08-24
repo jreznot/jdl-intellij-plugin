@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "1.0.0"
+version = "1.1.0"
 
 repositories {
   mavenCentral()
@@ -31,6 +31,15 @@ tasks {
   patchPluginXml {
     sinceBuild.set("213")
     untilBuild.set("223.*")
+
+    changeNotes.set("""
+      <ul>
+        <li>Implemented go to declaration, find usages and rename refactor for enums and entities. </li>
+        <li>Entity names are shown in auto completion popup for all places where entity id is expected. </li>
+        <li>Unresolved entities and enums references are shown with red highlighting. </li>
+        <li>Extended navbar for easier navigation. </li>
+      </ul>
+    """.trimIndent())
   }
 
   signPlugin {
