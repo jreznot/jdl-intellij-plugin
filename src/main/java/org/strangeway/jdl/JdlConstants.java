@@ -37,6 +37,10 @@ public final class JdlConstants {
       "except"
   );
 
+  public static final List<String> CONFIGURATION_OPTION_NESTED_KEYWORDS = List.of(
+      "with"
+  );
+
   public static final List<String> RELATIONSHIP_NESTED_KEYWORDS = List.of(
       "to"
   );

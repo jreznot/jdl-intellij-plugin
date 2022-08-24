@@ -27,11 +27,15 @@ final class JdlCompletionContributor extends CompletionContributor {
 
     extend(CompletionType.BASIC, jdlIdentifier()
             .andNot(jdlIdentifier().inside(jdlTopLevelBlock()))
+            .andNot(jdlIdentifier().inside(JdlWithOptionValue.class))
             .andNot(jdlIdentifier().inside(JdlEntitiesList.class)),
         new KeywordsCompletionProvider(JdlConstants.TOP_LEVEL_KEYWORDS));
 
     extend(CompletionType.BASIC, jdlIdentifier().inside(JdlRelationshipMapping.class),
         new KeywordsCompletionProvider(JdlConstants.RELATIONSHIP_NESTED_KEYWORDS));
+
+    extend(CompletionType.BASIC, jdlIdentifier().inside(JdlConfigurationOption.class),
+        new KeywordsCompletionProvider(JdlConstants.CONFIGURATION_OPTION_NESTED_KEYWORDS));
 
     extend(CompletionType.BASIC, jdlIdentifier().inside(JdlRelationshipType.class), new CompletionProvider<>() {
       @Override
