@@ -29,6 +29,8 @@
   ]]></description>
 
   <depends>com.intellij.modules.platform</depends>
+  <depends optional="true" config-file="jhipster-ultimate.xml">com.intellij.modules.ultimate</depends>
+  <depends optional="true" config-file="jhipster-uml.xml">com.intellij.diagram</depends>
   <depends>com.intellij.java</depends>
 
   <extensions defaultExtensionNs="com.intellij">

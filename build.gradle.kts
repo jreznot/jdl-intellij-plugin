@@ -16,9 +16,9 @@ java.sourceSets["main"].java {
 
 intellij {
   version.set("2021.3.3")
-  type.set("IC")
+  type.set("IU")
 
-  plugins.set(listOf("com.intellij.java"))
+  plugins.set(listOf("com.intellij.java", "uml"))
 }
 
 tasks {
