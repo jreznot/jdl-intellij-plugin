@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "1.2.0"
+version = "1.2.1"
 
 repositories {
   mavenCentral()
@@ -34,7 +34,7 @@ tasks {
 
     changeNotes.set("""
       <ul>
-        <li>Generate a project sources with a single click on run line marker</li>
+        <li>Generate a project with a single click on floating button</li>
       </ul>
     """.trimIndent())
   }
