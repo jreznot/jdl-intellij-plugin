@@ -1,4 +1,4 @@
-package org.strangeway.jdl.ultimate;
+package org.strangeway.jdl.run;
 
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
@@ -55,8 +55,6 @@ final class JdlRunSettingsEditor extends SettingsEditor<JdlRunConfiguration> {
     }
   });
 
-  private final JTextField appNameField = new JTextField();
-  private final JCheckBox createSubFolderCheckbox = new JCheckBox();
   private final Project project;
 
   public JdlRunSettingsEditor(Project project) {
@@ -70,8 +68,6 @@ final class JdlRunSettingsEditor extends SettingsEditor<JdlRunConfiguration> {
     jdlLocationField.setText(options.getJdlLocation());
     outputLocationField.setText(options.getOutputLocation());
     jhipsterLocationField.setText(options.getJHipsterLocation());
-    createSubFolderCheckbox.setSelected(options.isCreateSubFolder());
-    appNameField.setText(options.getApplicationName());
   }
 
   @Override
@@ -87,8 +83,6 @@ final class JdlRunSettingsEditor extends SettingsEditor<JdlRunConfiguration> {
     options.setJdlLocation(jdlLocation);
     options.setJhipsterLocation(jhipsterLocationField.getText());
     options.setOutputLocation(outputLocationField.getText());
-    options.setApplicationName(appNameField.getText());
-    options.setCreateSubFolder(createSubFolderCheckbox.isSelected());
   }
 
   @Override
@@ -96,8 +90,6 @@ final class JdlRunSettingsEditor extends SettingsEditor<JdlRunConfiguration> {
     return FormBuilder.createFormBuilder()
         .addLabeledComponent("JDL file:", jdlLocationField)
         .addLabeledComponent("Output location:", outputLocationField)
-        .addLabeledComponent("Create nested folder:", createSubFolderCheckbox)
-        .addLabeledComponent("Application name:", appNameField)
         .addLabeledComponent("JHipster executable:", jhipsterLocationField)
         .getPanel();
   }

@@ -1,4 +1,4 @@
-package org.strangeway.jdl.ultimate;
+package org.strangeway.jdl.run;
 
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;

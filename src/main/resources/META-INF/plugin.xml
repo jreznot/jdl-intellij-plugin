@@ -13,6 +13,7 @@
       <li>Options completion for all supported JHipster parameters</li>
       <li>Go to declaration and Find usages for entities and enums</li>
       <li>Structure view and quick navigation</li>
+      <li>Run configuration to start generator with a single click</li>
       <li>Rename refactor</li>
     </ul>
     <br/>
@@ -29,12 +30,11 @@
   ]]></description>
 
   <depends>com.intellij.modules.platform</depends>
-  <depends optional="true" config-file="jhipster-ultimate.xml">com.intellij.modules.ultimate</depends>
   <depends optional="true" config-file="jhipster-uml.xml">com.intellij.diagram</depends>
   <depends>com.intellij.java</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <fileType name="JHipster JDL" language="JDL" implementationClass="org.strangeway.jdl.JdlFileType" extensions="jdl;jh"/>
+    <fileType name="JHipster JDL" language="JDL" fieldName="INSTANCE" implementationClass="org.strangeway.jdl.JdlFileType" extensions="jdl;jh"/>
     <lang.parserDefinition language="JDL" implementationClass="org.strangeway.jdl.psi.JdlParserDefinition"/>
     <lang.braceMatcher language="JDL" implementationClass="org.strangeway.jdl.JdlPairedBraceMatcher"/>
     <lang.quoteHandler language="JDL" implementationClass="org.strangeway.jdl.JdlQuoteHandler"/>
@@ -61,5 +61,19 @@
     <navbar implementation="org.strangeway.jdl.JdlNavbarExtension"/>
 
     <lang.refactoringSupport language="JDL" implementationClass="org.strangeway.jdl.JdlRefactoringSupportProvider"/>
+
+    <configurationType implementation="org.strangeway.jdl.run.JdlRunConfigurationType"/>
+    <runConfigurationProducer implementation="org.strangeway.jdl.run.JdlRunConfigurationProducer"/>
   </extensions>
+
+  <actions>
+    <!--suppress PluginXmlCapitalization -->
+    <action class="org.strangeway.jdl.run.JdlRunFloatingAction"
+            text="Generate with jhipster"
+            icon="AllIcons.Actions.GeneratedFolder"
+            description="Runs jhipster jdl command"
+            id="JhipsterJdlRunFloatingAction">
+      <add-to-group group-id="EditorContextBarMenu"/>
+    </action>
+  </actions>
 </idea-plugin>
