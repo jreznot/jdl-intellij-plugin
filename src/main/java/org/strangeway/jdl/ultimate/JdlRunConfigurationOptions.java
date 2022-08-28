@@ -11,6 +11,8 @@ final class JdlRunConfigurationOptions extends RunConfigurationOptions {
   private final StoredProperty<String> applicationName = string("").provideDelegate(this, "applicationName");
   private final StoredProperty<Boolean> createSubFolder = property(false).provideDelegate(this, "createSubFolder");
 
+  // todo --force parameter
+
   public String getJHipsterLocation() {
     return jhipsterLocation.getValue(this);
   }

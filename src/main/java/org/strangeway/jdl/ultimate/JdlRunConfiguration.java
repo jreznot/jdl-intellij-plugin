@@ -10,8 +10,11 @@ import com.intellij.execution.process.ProcessTerminatedListener;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.CharsetToolkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.io.File;
 
 final class JdlRunConfiguration extends RunConfigurationBase<JdlRunConfigurationOptions> {
 
@@ -26,7 +29,7 @@ final class JdlRunConfiguration extends RunConfigurationBase<JdlRunConfiguration
 
   @Override
   public @NotNull SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
-    return new JdlRunSettingsEditor();
+    return new JdlRunSettingsEditor(getProject());
   }
 
   @Override
@@ -35,7 +38,13 @@ final class JdlRunConfiguration extends RunConfigurationBase<JdlRunConfiguration
       @NotNull
       @Override
       protected ProcessHandler startProcess() throws ExecutionException {
-        GeneralCommandLine commandLine = new GeneralCommandLine(""); // todo command line for JHipster here
+        JdlRunConfigurationOptions options = getOptions();
+
+        File jdlFile = new File(options.getJdlLocation());
+        GeneralCommandLine commandLine = new GeneralCommandLine("jhipster.cmd", "jdl", jdlFile.getAbsolutePath());
+        commandLine.setCharset(CharsetToolkit.getDefaultSystemCharset()); // todo if Windows 10 or 11 then set UTF-8
+        commandLine.setWorkDirectory(jdlFile.getParentFile()); // todo change directory depending on options
+
         OSProcessHandler processHandler = ProcessHandlerFactory.getInstance().createColoredProcessHandler(commandLine);
         ProcessTerminatedListener.attach(processHandler);
         return processHandler;
