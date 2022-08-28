@@ -84,7 +84,12 @@ final class JdlRunConfiguration extends RunConfigurationBase<JdlRunConfiguration
     if (StringUtil.isEmptyOrSpaces(options.getOutputLocation())) {
       return jdlFile.getParentFile();
     } else {
-      return new File(options.getOutputLocation());
+      File outputDir = new File(options.getOutputLocation());
+      if (!outputDir.exists()) {
+        //noinspection ResultOfMethodCallIgnored
+        outputDir.mkdir();
+      }
+      return outputDir;
     }
   }
 
