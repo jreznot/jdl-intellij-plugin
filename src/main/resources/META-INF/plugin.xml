@@ -70,7 +70,7 @@
     <!--suppress PluginXmlCapitalization -->
     <action class="org.strangeway.jdl.run.JdlRunFloatingAction"
             text="Generate with jhipster"
-            icon="AllIcons.Actions.GeneratedFolder"
+            icon="AllIcons.Modules.GeneratedSourceRoot"
             description="Runs jhipster jdl command"
             id="JhipsterJdlRunFloatingAction">
       <add-to-group group-id="EditorContextBarMenu"/>

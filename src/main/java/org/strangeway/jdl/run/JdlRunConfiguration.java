@@ -20,6 +20,8 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import static com.intellij.util.PathUtil.toSystemDependentName;
+
 final class JdlRunConfiguration extends RunConfigurationBase<JdlRunConfigurationOptions> {
 
   JdlRunConfiguration(@NotNull Project project, @Nullable ConfigurationFactory factory, @Nullable String name) {
@@ -53,7 +55,14 @@ final class JdlRunConfiguration extends RunConfigurationBase<JdlRunConfiguration
         if (projectSdk != null
             && projectSdk.getSdkType() instanceof JavaSdkType
             && projectSdk.getHomePath() != null) {
-          commandLine.withEnvironment("JAVA_HOME", projectSdk.getHomePath());
+          String jdkIdePath = projectSdk.getHomePath();
+          String jdkHome = toSystemDependentName(jdkIdePath);
+          commandLine.withEnvironment("JAVA_HOME", jdkHome);
+
+          // try to upgrade PATH
+          String path = System.getenv("PATH");
+          String newPath = path + File.pathSeparatorChar + jdkHome + File.separator + "bin";
+          commandLine.withEnvironment("PATH", newPath);
         }
 
         var processHandler = ProcessHandlerFactory.getInstance().createColoredProcessHandler(commandLine);
