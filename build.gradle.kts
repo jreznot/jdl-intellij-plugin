@@ -1,6 +1,6 @@
 plugins {
   id("java")
-  id("org.jetbrains.intellij") version "1.8.0"
+  id("org.jetbrains.intellij") version "1.8.1"
 }
 
 group = "org.strangeway.jdl"
@@ -34,10 +34,7 @@ tasks {
 
     changeNotes.set("""
       <ul>
-        <li>Implemented go to declaration, find usages and rename refactor for enums and entities. </li>
-        <li>Entity names are shown in auto completion popup for all places where entity id is expected. </li>
-        <li>Unresolved entities and enums references are shown with red highlighting. </li>
-        <li>Extended navbar for easier navigation. </li>
+        <li>Generate a project sources with a single click on run line marker</li>
       </ul>
     """.trimIndent())
   }
