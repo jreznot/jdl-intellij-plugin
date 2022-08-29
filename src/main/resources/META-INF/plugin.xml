@@ -30,8 +30,8 @@
   ]]></description>
 
   <depends>com.intellij.modules.platform</depends>
-  <depends optional="true" config-file="jhipster-uml.xml">com.intellij.diagram</depends>
   <depends>com.intellij.java</depends>
+  <depends optional="true" config-file="jhipster-uml.xml">com.intellij.diagram</depends>
 
   <extensions defaultExtensionNs="com.intellij">
     <fileType name="JHipster JDL" language="JDL" fieldName="INSTANCE" implementationClass="org.strangeway.jdl.JdlFileType" extensions="jdl;jh"/>
