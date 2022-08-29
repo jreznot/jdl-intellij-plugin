@@ -1,6 +1,7 @@
 application {
   config {
-    baseName #[[$NAME$]]#
+    baseName #[[$appName$]]#
+    packageName #[[$appPackage$]]#
     applicationType monolith
     #[[$END$]]#
   }

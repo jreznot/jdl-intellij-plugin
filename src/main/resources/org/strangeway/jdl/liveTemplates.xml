@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templateSet group="JHipster">
     <template description="JHipster JDL application" name="jh-app" toReformat="true"
-              value="application {&#10;    config {&#10;        baseName $NAME$&#10;        $END$&#10;    }&#10;}"
+              value="application {&#10;    config {&#10;        baseName $NAME$&#10;        packageName $PACKAGE_NAME$&#10;        applicationType $TYPE$&#10;        $END$&#10;    }&#10;}"
               shortcut="TAB">
-        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="NAME" defaultValue="demo" alwaysStopAt="true"/>
+        <variable name="PACKAGE_NAME" defaultValue="com.demo" alwaysStopAt="true"/>
+        <variable name="TYPE" expression="complete()" defaultValue="monolith" alwaysStopAt="true"/>
         <context>
             <option name="JDL" value="true"/>
         </context>
