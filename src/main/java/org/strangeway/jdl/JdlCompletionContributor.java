@@ -4,7 +4,6 @@ import com.intellij.codeInsight.TailType;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.lookup.TailTypeDecorator;
-import com.intellij.icons.AllIcons;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
@@ -43,7 +42,7 @@ final class JdlCompletionContributor extends CompletionContributor {
                                     @NotNull CompletionResultSet result) {
         for (var relationshipType : RELATIONSHIP_TYPES) {
           result.addElement(LookupElementBuilder.create(relationshipType)
-              .withIcon(AllIcons.General.InheritedMethod));
+              .withIcon(JhipsterIcons.getRelationshipIcon()));
         }
       }
     });
@@ -54,7 +53,7 @@ final class JdlCompletionContributor extends CompletionContributor {
                                     @NotNull CompletionResultSet result) {
         for (var fieldType : FIELD_TYPES.keySet()) {
           result.addElement(LookupElementBuilder.create(fieldType)
-              .withIcon(AllIcons.Nodes.Type));
+              .withIcon(JhipsterIcons.getFieldTypeIcon()));
         }
 
         var allEnums = JdlDeclarationsModel.getAllEnums(parameters.getOriginalFile());
@@ -63,7 +62,7 @@ final class JdlCompletionContributor extends CompletionContributor {
 
           if (enumId != null && !enumId.isEmpty() && !enumId.isBlank()) {
             result.addElement(LookupElementBuilder.create(enumBlock)
-                .withIcon(AllIcons.Nodes.Enum));
+                .withIcon(JhipsterIcons.getEnumIcon()));
           }
         }
       }
@@ -127,7 +126,7 @@ final class JdlCompletionContributor extends CompletionContributor {
           result.addElement(LookupElementBuilder.create(fieldValidation)
               .withTailText(fieldValidation.endsWith("()") ? "()" : null, true)
               .withPresentableText(fieldValidation.replace("()", ""))
-              .withIcon(AllIcons.General.InspectionsOK));
+              .withIcon(JhipsterIcons.getFieldConstraintIcon()));
         }
       }
     });
@@ -140,14 +139,14 @@ final class JdlCompletionContributor extends CompletionContributor {
         List<JdlModelEnum> values = ((JdlEnumType) optionMapping.getPropertyType()).getValues();
 
         for (JdlModelEnum value : values) {
-          result.addElement(LookupElementBuilder.create(value.getId()).withIcon(AllIcons.Nodes.Enum));
+          result.addElement(LookupElementBuilder.create(value.getId()).withIcon(JhipsterIcons.getEnumIcon()));
         }
       } else if (optionMapping.getPropertyType() instanceof JdlEnumListType) {
         @SuppressWarnings({"unchecked", "rawtypes"})
         List<JdlModelEnum> values = ((JdlEnumListType) optionMapping.getPropertyType()).getValues();
 
         for (JdlModelEnum value : values) {
-          result.addElement(LookupElementBuilder.create(value.getId()).withIcon(AllIcons.Nodes.Enum));
+          result.addElement(LookupElementBuilder.create(value.getId()).withIcon(JhipsterIcons.getEnumIcon()));
         }
       } else if (optionMapping.getPropertyType() == JdlPrimitiveType.BOOLEAN_TYPE) {
         result.addElement(LookupElementBuilder.create(JdlConstants.TRUE).withBoldness(true));
@@ -165,7 +164,7 @@ final class JdlCompletionContributor extends CompletionContributor {
 
       result.addElement(element
           .withTypeText(optionMapping.getPropertyType().getName())
-          .withIcon(AllIcons.Nodes.Property));
+          .withIcon(JhipsterIcons.getPropertyIcon()));
     }
   }
 

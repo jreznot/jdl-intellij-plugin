@@ -1,6 +1,5 @@
 package org.strangeway.jdl;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.ide.navigationToolbar.StructureAwareNavBarModelExtension;
 import com.intellij.lang.Language;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +9,7 @@ import org.strangeway.jdl.psi.*;
 import javax.swing.*;
 
 import static org.strangeway.jdl.JdlConstants.CONFIG_BLOCK_NAME;
+import static org.strangeway.jdl.JdlConstants.DEPLOYMENT_BLOCK_NAME;
 
 final class JdlNavbarExtension extends StructureAwareNavBarModelExtension {
   @NotNull
@@ -21,31 +21,34 @@ final class JdlNavbarExtension extends StructureAwareNavBarModelExtension {
   @Override
   public @Nullable Icon getIcon(Object object) {
     if (object instanceof JdlEntity) {
-      return AllIcons.Javaee.PersistenceEntity;
+      return JhipsterIcons.getEntityIcon();
     }
     if (object instanceof JdlEnum) {
-      return AllIcons.Nodes.Enum;
+      return JhipsterIcons.getEnumIcon();
     }
     if (object instanceof JdlApplication) {
-      return AllIcons.RunConfigurations.Applet;
+      return JhipsterIcons.getApplicationIcon();
     }
     if (object instanceof JdlEntityFieldMapping) {
-      return AllIcons.Nodes.Field;
+      return JhipsterIcons.getFieldIcon();
     }
     if (object instanceof JdlEnumValue) {
-      return AllIcons.Nodes.Field;
+      return JhipsterIcons.getFieldIcon();
     }
     if (object instanceof JdlOptionNameValue) {
-      return AllIcons.Nodes.PropertyWrite;
+      return JhipsterIcons.getPropertyIcon();
     }
     if (object instanceof JdlConfigBlock) {
-      return AllIcons.Json.Object;
+      return JhipsterIcons.getConfigIcon();
     }
     if (object instanceof JdlConfigurationOption) {
-      return AllIcons.Nodes.PropertyWriteStatic;
+      return JhipsterIcons.getConfigurationPropertyIcon();
     }
     if (object instanceof JdlRelationshipGroup) {
-      return AllIcons.General.InheritedMethod;
+      return JhipsterIcons.getRelationshipIcon();
+    }
+    if (object instanceof JdlDeployment) {
+      return JhipsterIcons.getDeployIcon();
     }
     return null;
   }
@@ -78,6 +81,9 @@ final class JdlNavbarExtension extends StructureAwareNavBarModelExtension {
     }
     if (object instanceof JdlRelationshipGroup) {
       return ((JdlRelationshipGroup) object).getType();
+    }
+    if (object instanceof JdlDeployment) {
+      return DEPLOYMENT_BLOCK_NAME;
     }
     return null;
   }

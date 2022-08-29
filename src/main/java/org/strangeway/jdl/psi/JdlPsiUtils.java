@@ -1,6 +1,5 @@
 package org.strangeway.jdl.psi;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
@@ -10,6 +9,7 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.JdlConstants;
+import org.strangeway.jdl.JhipsterIcons;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,8 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.strangeway.jdl.JdlConstants.APPLICATION_UNNAMED;
-import static org.strangeway.jdl.JdlConstants.CONFIG_BLOCK_NAME;
+import static org.strangeway.jdl.JdlConstants.*;
 
 public final class JdlPsiUtils {
   private static final String ourEscapesTable = "\"\"\\\\//b\bf\fn\nr\rt\t";
@@ -117,7 +116,7 @@ public final class JdlPsiUtils {
 
       @Override
       public Icon getIcon(boolean unused) {
-        return AllIcons.RunConfigurations.Applet;
+        return JhipsterIcons.getApplicationIcon();
       }
     };
   }
@@ -147,7 +146,7 @@ public final class JdlPsiUtils {
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Nodes.PropertyWrite;
+        return JhipsterIcons.getPropertyIcon();
       }
     };
   }
@@ -181,7 +180,7 @@ public final class JdlPsiUtils {
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Nodes.Field;
+        return JhipsterIcons.getFieldIcon();
       }
     };
   }
@@ -213,7 +212,7 @@ public final class JdlPsiUtils {
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Nodes.PropertyWriteStatic;
+        return JhipsterIcons.getConfigurationPropertyIcon();
       }
     };
   }
@@ -227,7 +226,7 @@ public final class JdlPsiUtils {
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Json.Object;
+        return JhipsterIcons.getConfigIcon();
       }
     };
   }
@@ -248,7 +247,7 @@ public final class JdlPsiUtils {
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.General.InheritedMethod;
+        return JhipsterIcons.getRelationshipIcon();
       }
     };
   }
@@ -281,7 +280,7 @@ public final class JdlPsiUtils {
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Nodes.Field;
+        return JhipsterIcons.getFieldIcon();
       }
     };
   }
@@ -311,7 +310,7 @@ public final class JdlPsiUtils {
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Nodes.Constant;
+        return JhipsterIcons.getConstantIcon();
       }
     };
   }
@@ -320,12 +319,12 @@ public final class JdlPsiUtils {
     return new ItemPresentation() {
       @Override
       public @NotNull String getPresentableText() {
-        return "deployment";
+        return DEPLOYMENT_BLOCK_NAME;
       }
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Nodes.Deploy;
+        return JhipsterIcons.getDeployIcon();
       }
     };
   }

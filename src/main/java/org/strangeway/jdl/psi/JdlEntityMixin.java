@@ -1,7 +1,6 @@
 package org.strangeway.jdl.psi;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import com.intellij.icons.AllIcons;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
@@ -12,6 +11,7 @@ import com.intellij.psi.search.SearchScope;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.strangeway.jdl.JhipsterIcons;
 
 import javax.swing.*;
 
@@ -41,7 +41,7 @@ public abstract class JdlEntityMixin extends ASTWrapperPsiElement implements Jdl
 
   @Override
   protected @Nullable Icon getElementIcon(int flags) {
-    return AllIcons.Javaee.PersistenceEntity;
+    return JhipsterIcons.getEntityIcon();
   }
 
   @Override
@@ -72,7 +72,7 @@ public abstract class JdlEntityMixin extends ASTWrapperPsiElement implements Jdl
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return AllIcons.Javaee.PersistenceEntity;
+        return JhipsterIcons.getEntityIcon();
       }
     };
   }

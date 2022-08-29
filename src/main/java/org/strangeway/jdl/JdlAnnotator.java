@@ -113,7 +113,7 @@ final class JdlAnnotator implements Annotator {
       }
 
       if (optionMapping != null && isEnumType(optionMapping)) {
-        if (!"false".equals(element.getText())) { // false is highlighted as boolean instead
+        if (!JdlConstants.FALSE.equals(element.getText())) { // false is highlighted as boolean instead
           holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
               .range(element.getTextRange())
               .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)

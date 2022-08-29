@@ -11,6 +11,7 @@ public final class JdlConstants {
   public static final String APPLICATION_UNNAMED = "<unnamed>";
 
   public static final String CONFIG_BLOCK_NAME = "config";
+  public static final String DEPLOYMENT_BLOCK_NAME = "deployment";
 
   public static final String TRUE = "true";
   public static final String FALSE = "false";
@@ -32,13 +33,12 @@ public final class JdlConstants {
       "config",
       "entities",
       "paginate",
-      "dto",
-      "with",
-      "except"
+      "dto"
   );
 
   public static final List<String> CONFIGURATION_OPTION_NESTED_KEYWORDS = List.of(
-      "with"
+      "with",
+      "except"
   );
 
   public static final List<String> RELATIONSHIP_NESTED_KEYWORDS = List.of(
