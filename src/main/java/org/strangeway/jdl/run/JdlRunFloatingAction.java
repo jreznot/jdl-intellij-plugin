@@ -23,19 +23,19 @@ import static com.intellij.openapi.vfs.VfsUtilCore.virtualToIoFile;
 final class JdlRunFloatingAction extends AnAction implements DumbAware {
   @Override
   public void update(@NotNull AnActionEvent e) {
-    PsiFile psiFile = e.getDataContext().getData(CommonDataKeys.PSI_FILE);
+    var psiFile = e.getDataContext().getData(CommonDataKeys.PSI_FILE);
     e.getPresentation().setEnabledAndVisible(psiFile != null && psiFile.getFileType() == JdlFileType.INSTANCE);
   }
 
   @Override
   public void actionPerformed(@NotNull AnActionEvent e) {
-    Project project = e.getProject();
+    var project = e.getProject();
     if (project == null) return;
 
-    PsiFile psiFile = e.getDataContext().getData(CommonDataKeys.PSI_FILE);
+    var psiFile = e.getDataContext().getData(CommonDataKeys.PSI_FILE);
     if (psiFile == null) return;
 
-    VirtualFile jdlFile = psiFile.getVirtualFile();
+    var jdlFile = psiFile.getVirtualFile();
     if (jdlFile == null) return;
 
     var runManager = RunManager.getInstance(project);
@@ -57,12 +57,12 @@ final class JdlRunFloatingAction extends AnAction implements DumbAware {
   }
 
   private static RunConfiguration findRunConfiguration(Project project, VirtualFile jdlFile) {
-    List<RunConfiguration> runConfigurations = RunManager.getInstance(project)
+    var runConfigurations = RunManager.getInstance(project)
         .getConfigurationsList(JdlRunConfigurationType.getInstance());
 
-    for (RunConfiguration runConfiguration : runConfigurations) {
+    for (var runConfiguration : runConfigurations) {
       if (runConfiguration instanceof JdlRunConfiguration) {
-        String jdlLocation = ((JdlRunConfiguration) runConfiguration).getOptions().getJdlLocation();
+        var jdlLocation = ((JdlRunConfiguration) runConfiguration).getOptions().getJdlLocation();
         //noinspection UnstableApiUsage
         if (VfsUtilCore.pathEqualsTo(jdlFile, jdlLocation)) {
           return runConfiguration;

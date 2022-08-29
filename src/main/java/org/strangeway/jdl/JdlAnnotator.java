@@ -81,9 +81,9 @@ final class JdlAnnotator implements Annotator {
 
   private void resolveIdentifierRefs(PsiElement element, AnnotationHolder holder) {
     if (element instanceof JdlId || element instanceof JdlFieldType) {
-      PsiReference reference = element.getReference();
+      var reference = element.getReference();
       if (reference != null && reference.resolve() == null) {
-        String message = String.format("Cannot resolve symbol '%s'", reference.getCanonicalText());
+        var message = String.format("Cannot resolve symbol '%s'", reference.getCanonicalText());
         holder.newAnnotation(HighlightSeverity.ERROR, message)
             .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
             .range(element)
@@ -94,8 +94,8 @@ final class JdlAnnotator implements Annotator {
 
   private static void annotateOptionNameEnumValue(@NotNull PsiElement element, @NotNull AnnotationHolder holder,
                                                   JdlOptionNameValue optionNameValue) {
-    JdlOptionName optionName = optionNameValue.getOptionName();
-    String optionKey = optionName.getText();
+    var optionName = optionNameValue.getOptionName();
+    var optionKey = optionName.getText();
 
     if (APPLICATION_BASE_NAME.equals(optionKey) && optionNameValue.getParent() instanceof JdlConfigBlock) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)

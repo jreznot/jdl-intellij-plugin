@@ -55,13 +55,13 @@ final class JdlRunConfiguration extends RunConfigurationBase<JdlRunConfiguration
         if (projectSdk != null
             && projectSdk.getSdkType() instanceof JavaSdkType
             && projectSdk.getHomePath() != null) {
-          String jdkIdePath = projectSdk.getHomePath();
-          String jdkHome = toSystemDependentName(jdkIdePath);
+          var jdkIdePath = projectSdk.getHomePath();
+          var jdkHome = toSystemDependentName(jdkIdePath);
           commandLine.withEnvironment("JAVA_HOME", jdkHome);
 
           // try to upgrade PATH
-          String path = System.getenv("PATH");
-          String newPath = path + File.pathSeparatorChar + jdkHome + File.separator + "bin";
+          var path = System.getenv("PATH");
+          var newPath = path + File.pathSeparatorChar + jdkHome + File.separator + "bin";
           commandLine.withEnvironment("PATH", newPath);
         }
 
@@ -84,7 +84,7 @@ final class JdlRunConfiguration extends RunConfigurationBase<JdlRunConfiguration
     if (StringUtil.isEmptyOrSpaces(options.getOutputLocation())) {
       return jdlFile.getParentFile();
     } else {
-      File outputDir = new File(options.getOutputLocation());
+      var outputDir = new File(options.getOutputLocation());
       if (!outputDir.exists()) {
         //noinspection ResultOfMethodCallIgnored
         outputDir.mkdir();

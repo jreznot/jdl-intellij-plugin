@@ -22,7 +22,7 @@ final class JdlRunConfigurationProducer extends LazyRunConfigurationProducer<Jdl
     VirtualFile jdlFile = getFileFromContext(context);
 
     if (jdlFile != null && jdlFile.getFileType() == JdlFileType.INSTANCE) {
-      JdlRunConfigurationOptions options = configuration.getOptions();
+      var options = configuration.getOptions();
       options.setJdlLocation(toSystemDependentName(virtualToIoFile(jdlFile).getPath()));
       configuration.setName(jdlFile.getName());
       return true;
@@ -34,7 +34,7 @@ final class JdlRunConfigurationProducer extends LazyRunConfigurationProducer<Jdl
   @Override
   public boolean isConfigurationFromContext(@NotNull JdlRunConfiguration configuration,
                                             @NotNull ConfigurationContext context) {
-    VirtualFile jdlFile = getFileFromContext(context);
+    var jdlFile = getFileFromContext(context);
 
     //noinspection UnstableApiUsage
     return jdlFile != null && VfsUtilCore.pathEqualsTo(jdlFile, configuration.getOptions().getJdlLocation());
