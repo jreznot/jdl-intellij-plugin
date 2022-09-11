@@ -15,7 +15,7 @@ java.sourceSets["main"].java {
 }
 
 intellij {
-  version.set("2022.1.3")
+  version.set("2022.1.4")
   type.set("IU")
 
   plugins.set(listOf("com.intellij.java", "uml"))
@@ -51,6 +51,7 @@ tasks {
 }
 
 tasks {
+  @Suppress("UNUSED_VARIABLE")
   val test by getting(Test::class) {
     isScanForTestClasses = false
     // Only run tests from classes that end with "Test"

@@ -5,7 +5,6 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.model.JdlEnumListType;
 import org.strangeway.jdl.model.JdlEnumType;
@@ -63,7 +62,7 @@ final class JdlAnnotator implements Annotator {
             .range(element.getTextRange())
             .textAttributes(JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT)
             .create();
-      } else if (element.getParent() instanceof JdlConstant) {
+      } else if (element.getParent() instanceof JdlConstantName) {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
             .range(element.getTextRange())
             .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)

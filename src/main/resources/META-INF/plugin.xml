@@ -49,18 +49,19 @@
     <lang.elementManipulator forClass="org.strangeway.jdl.psi.JdlFieldType" implementationClass="org.strangeway.jdl.psi.JdlFieldTypeManipulator"/>
 
     <lang.psiStructureViewFactory language="JDL" implementationClass="org.strangeway.jdl.JdlPsiStructureViewFactory"/>
+    <lang.refactoringSupport language="JDL" implementationClass="org.strangeway.jdl.JdlRefactoringSupportProvider"/>
+    <lang.formatter language="JDL" implementationClass="org.strangeway.jdl.JdlFormattingModelBuilder"/>
+    <codeStyleSettingsProvider implementation="org.strangeway.jdl.JdlCodeStyleSettingsProvider"/>
+    <langCodeStyleSettingsProvider implementation="org.strangeway.jdl.JdlLanguageCodeStyleSettingsProvider"/>
 
     <completion.contributor language="JDL" implementationClass="org.strangeway.jdl.JdlCompletionContributor"/>
 
     <liveTemplateContext implementation="org.strangeway.jdl.JdlLiveTemplateContextType"/>
-
     <defaultLiveTemplates file="/org/strangeway/jdl/liveTemplates.xml"/>
 
     <spellchecker.support language="JDL" implementationClass="org.strangeway.jdl.JdlSpellcheckingStrategy"/>
 
     <navbar implementation="org.strangeway.jdl.JdlNavbarExtension"/>
-
-    <lang.refactoringSupport language="JDL" implementationClass="org.strangeway.jdl.JdlRefactoringSupportProvider"/>
 
     <configurationType implementation="org.strangeway.jdl.run.JdlRunConfigurationType"/>
     <runConfigurationProducer implementation="org.strangeway.jdl.run.JdlRunConfigurationProducer"/>

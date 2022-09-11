@@ -70,9 +70,9 @@ final class JdlColorSettingsPage implements ColorSettingsPage {
         "  <keyword>paginate</keyword> * with <enumValue>pagination</enumValue> except D \n" +
         "}\n" +
         "\n" +
-        "entity <id>A</id>\n" +
+        "entity <id>A</id> { }\n" +
         "/** This comment will be taken into account */\n" +
-        "entity <id>B</id>\n" +
+        "entity <id>B</id> { }\n" +
         "// This comment will be ignored\n" +
         "entity <id>C</id> {\n" +
         "  <fieldName>departmentName</fieldName> String <fieldConstraint>required</fieldConstraint>\n" +
