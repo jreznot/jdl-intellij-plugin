@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.strangeway.jdl.psi.JdlOptionNameValue;
-import org.strangeway.jdl.psi.JdlTokenSets;
-import org.strangeway.jdl.psi.JdlTokenTypes;
-import org.strangeway.jdl.psi.JdlValue;
+import org.strangeway.jdl.psi.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +71,7 @@ final class JdlBlock implements ASTBlock {
   public @NotNull List<Block> getSubBlocks() {
     if (subBlocks == null) {
       int propertyAlignment = jdlCodeStyleSettings.PROPERTY_ALIGNMENT;
+      int fieldAlignment = jdlCodeStyleSettings.FIELD_ALIGNMENT;
 
       var children = node.getChildren(null);
       subBlocks = new ArrayList<>(children.length);
@@ -82,13 +80,13 @@ final class JdlBlock implements ASTBlock {
         if (isWhitespaceOrEmpty(child)) continue;
         if (child.getElementType() == JdlTokenTypes.NEWLINE) continue;
 
-        subBlocks.add(makeSubBlock(child, propertyAlignment));
+        subBlocks.add(makeSubBlock(child, propertyAlignment, fieldAlignment));
       }
     }
     return subBlocks;
   }
 
-  private Block makeSubBlock(ASTNode child, int propertyAlignment) {
+  private Block makeSubBlock(ASTNode child, int propertyAlignment, int fieldAlignment) {
     Indent indent = Indent.getNoneIndent();
     Alignment alignment = null;
     Wrap wrap = null;
@@ -106,6 +104,11 @@ final class JdlBlock implements ASTBlock {
         && parent != null
         && psiElement instanceof JdlOptionNameValue
         && propertyAlignment == ALIGN_PROPERTY_ON_VALUE) {
+      alignment = parent.propertyValueAlignment;
+    } else if (child.getPsi() instanceof JdlFieldType
+        && parent != null
+        && psiElement instanceof JdlEntityFieldMapping
+        && fieldAlignment == ALIGN_PROPERTY_ON_VALUE) {
       alignment = parent.propertyValueAlignment;
     }
 

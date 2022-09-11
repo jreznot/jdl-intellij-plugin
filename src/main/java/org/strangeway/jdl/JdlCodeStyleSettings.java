@@ -21,6 +21,7 @@ public final class JdlCodeStyleSettings extends CustomCodeStyleSettings {
   public int BLOCK_WRAPPING = CommonCodeStyleSettings.WRAP_ALWAYS;
 
   public int PROPERTY_ALIGNMENT = PropertyAlignment.DO_NOT_ALIGN.getId();
+  public int FIELD_ALIGNMENT = PropertyAlignment.DO_NOT_ALIGN.getId();
 
   public JdlCodeStyleSettings(CodeStyleSettings container) {
     super(JdlLanguage.INSTANCE.getID(), container);
@@ -28,7 +29,7 @@ public final class JdlCodeStyleSettings extends CustomCodeStyleSettings {
 
   public enum PropertyAlignment {
     DO_NOT_ALIGN(0, "formatter.align.properties.none"),
-    ALIGN_ON_VALUE(1, "formatter.align.properties.on.value");
+    ALIGN_ON_VALUE(1, "formatter.align.properties.allign");
 
     @PropertyKey(resourceBundle = JdlBundle.BUNDLE)
     private final String myKey;

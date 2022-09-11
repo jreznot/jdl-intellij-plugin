@@ -39,12 +39,12 @@ final class JdlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettin
         "    }\n" +
         "    entities Car\n" +
         "    dto * with mapstruct\n" +
-        "}" +
-        "\n" +
+        "}\n" +
         "\n" +
         "// The comment\n" +
         "entity Car {\n" +
         "    departmentName String required\n" +
+        "    handle String required\n" +
         "}\n" +
         "\n" +
         "deployment {\n" +
@@ -106,6 +106,13 @@ final class JdlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettin
       consumer.showCustomOption(JdlCodeStyleSettings.class,
           "PROPERTY_ALIGNMENT",
           JdlBundle.message("formatter.align.properties.caption"),
+          JdlBundle.message("formatter.objects.label"),
+          ALIGN_OPTIONS,
+          ALIGN_VALUES);
+
+      consumer.showCustomOption(JdlCodeStyleSettings.class,
+          "FIELD_ALIGNMENT",
+          JdlBundle.message("formatter.align.entity.fields.caption"),
           JdlBundle.message("formatter.objects.label"),
           ALIGN_OPTIONS,
           ALIGN_VALUES);
