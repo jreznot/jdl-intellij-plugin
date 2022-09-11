@@ -65,7 +65,9 @@ final class JdlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettin
 
   @Override
   public @Nullable CodeStyleFieldAccessor<?, ?> getAccessor(@NotNull Object codeStyleObject, @NotNull Field field) {
-    if (codeStyleObject instanceof JdlCodeStyleSettings && field.getName().equals("PROPERTY_ALIGNMENT")) {
+    if (codeStyleObject instanceof JdlCodeStyleSettings
+        && (field.getName().equals("PROPERTY_ALIGNMENT")
+        || field.getName().equals("FIELD_ALIGNMENT"))) {
       return new MagicIntegerConstAccessor(
           codeStyleObject, field,
           new int[]{
