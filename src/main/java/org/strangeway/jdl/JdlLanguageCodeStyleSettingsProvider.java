@@ -6,6 +6,7 @@ import com.intellij.application.options.codeStyle.properties.CodeStyleFieldAcces
 import com.intellij.application.options.codeStyle.properties.MagicIntegerConstAccessor;
 import com.intellij.lang.Language;
 import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable;
+import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.ContainerUtil;
@@ -79,6 +80,13 @@ final class JdlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettin
       );
     }
     return null;
+  }
+
+  @Override
+  protected void customizeDefaults(@NotNull CommonCodeStyleSettings commonSettings, CommonCodeStyleSettings.@NotNull IndentOptions indentOptions) {
+    super.customizeDefaults(commonSettings, indentOptions);
+
+    indentOptions.INDENT_SIZE = 2;
   }
 
   @Override
