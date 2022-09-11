@@ -2,8 +2,6 @@ package org.strangeway.jdl;
 
 import com.intellij.application.options.IndentOptionsEditor;
 import com.intellij.application.options.SmartIndentOptionsEditor;
-import com.intellij.application.options.codeStyle.properties.CodeStyleFieldAccessor;
-import com.intellij.application.options.codeStyle.properties.MagicIntegerConstAccessor;
 import com.intellij.lang.Language;
 import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
@@ -11,10 +9,8 @@ import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.JdlCodeStyleSettings.PropertyAlignment;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 
 import static com.intellij.psi.codeStyle.CodeStyleSettingsCustomizableOptions.getInstance;
@@ -61,26 +57,6 @@ final class JdlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettin
   @Override
   public @NotNull Language getLanguage() {
     return JdlLanguage.INSTANCE;
-  }
-
-  @Override
-  public @Nullable CodeStyleFieldAccessor<?, ?> getAccessor(@NotNull Object codeStyleObject, @NotNull Field field) {
-    if (codeStyleObject instanceof JdlCodeStyleSettings
-        && (field.getName().equals("PROPERTY_ALIGNMENT")
-        || field.getName().equals("FIELD_ALIGNMENT"))) {
-      return new MagicIntegerConstAccessor(
-          codeStyleObject, field,
-          new int[]{
-              PropertyAlignment.DO_NOT_ALIGN.getId(),
-              PropertyAlignment.ALIGN_ON_VALUE.getId()
-          },
-          new String[]{
-              "do_not_align",
-              "align_on_value"
-          }
-      );
-    }
-    return null;
   }
 
   @Override
