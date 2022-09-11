@@ -67,7 +67,7 @@ final class JdlColorSettingsPage implements ColorSettingsPage {
         "    <optionName>enableTranslation</optionName> true\n" +
         "  }\n" +
         "  <keyword>entities</keyword> A, C\n" +
-        "  <keyword>paginate</keyword> * with <enumValue>pagination</enumValue> except D \n" +
+        "  <keyword>paginate</keyword> * with <enumValue>pagination</enumValue> except A \n" +
         "}\n" +
         "\n" +
         "entity <id>A</id> { }\n" +
