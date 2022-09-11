@@ -8,9 +8,16 @@ import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
+import com.intellij.psi.util.CachedValueProvider.Result;
+import com.intellij.psi.util.CachedValuesManager;
+import com.intellij.psi.util.PsiModificationTracker;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.JdlFileType;
 import org.strangeway.jdl.JdlLanguage;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class JdlFile extends PsiFileBase {
   public JdlFile(@NotNull FileViewProvider viewProvider) {
@@ -30,11 +37,23 @@ public final class JdlFile extends PsiFileBase {
   @Override
   public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state,
                                      PsiElement lastParent, @NotNull PsiElement place) {
-    ASTNode[] nodes = getNode().getChildren(JdlTokenSets.DECLARATIONS);
-    for (ASTNode node : nodes) {
-      if (!processor.execute(node.getPsi(), state)) return false;
+    List<PsiElement> nodes = getDeclarations();
+    for (PsiElement node : nodes) {
+      if (!processor.execute(node, state)) return false;
     }
-
     return true;
+  }
+
+  private List<PsiElement> getDeclarations() {
+    return CachedValuesManager.getCachedValue(this, () ->
+        Result.create(findDeclarations(this), PsiModificationTracker.MODIFICATION_COUNT)
+    );
+  }
+
+  private static List<PsiElement> findDeclarations(@NotNull JdlFile file) {
+    ASTNode[] nodes = file.getNode().getChildren(JdlTokenSets.DECLARATIONS);
+    return Arrays.stream(nodes)
+        .map(ASTNode::getPsi)
+        .collect(Collectors.toList());
   }
 }
