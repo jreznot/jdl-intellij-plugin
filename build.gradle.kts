@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "1.2.1"
+version = "1.3.0"
 
 repositories {
   mavenCentral()
@@ -34,7 +34,7 @@ tasks {
 
     changeNotes.set("""
       <ul>
-        <li>Generate a project with a single click on floating button</li>
+        <li>Format your JDL files automatically using 'Code-Reformat Code' action</li>
       </ul>
     """.trimIndent())
   }
