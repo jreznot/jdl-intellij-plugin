@@ -434,7 +434,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE
+  // ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? entityBody?
   public static boolean entity(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entity")) return false;
     if (!nextTokenIs(b, ENTITY_KEYWORD)) return false;
@@ -446,10 +446,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = p && report_error_(b, entityId(b, l + 1)) && r;
     r = p && report_error_(b, entity_3(b, l + 1)) && r;
     r = p && report_error_(b, entity_4(b, l + 1)) && r;
-    r = p && report_error_(b, entity_5(b, l + 1)) && r;
-    r = p && report_error_(b, consumeToken(b, LBRACE)) && r;
-    r = p && report_error_(b, entity_7(b, l + 1)) && r;
-    r = p && consumeToken(b, RBRACE) && r;
+    r = p && entity_5(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
@@ -483,31 +480,54 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // NEWLINE*
+  // entityBody?
   private static boolean entity_5(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entity_5")) return false;
+    entityBody(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE
+  static boolean entityBody(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityBody")) return false;
+    if (!nextTokenIs(b, "", LBRACE, NEWLINE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = entityBody_0(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    p = r; // pin = 2
+    r = r && report_error_(b, entityBody_2(b, l + 1));
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // NEWLINE*
+  private static boolean entityBody_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityBody_0")) return false;
     while (true) {
       int c = current_position_(b);
       if (!consumeToken(b, NEWLINE)) break;
-      if (!empty_element_parsed_guard_(b, "entity_5", c)) break;
+      if (!empty_element_parsed_guard_(b, "entityBody_0", c)) break;
     }
     return true;
   }
 
   // (NEWLINE | entityElement)*
-  private static boolean entity_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "entity_7")) return false;
+  private static boolean entityBody_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityBody_2")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!entity_7_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "entity_7", c)) break;
+      if (!entityBody_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "entityBody_2", c)) break;
     }
     return true;
   }
 
   // NEWLINE | entityElement
-  private static boolean entity_7_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "entity_7_0")) return false;
+  private static boolean entityBody_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityBody_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, NEWLINE);

@@ -141,13 +141,17 @@ wildcardLiteral ::= WILDCARD {
     name = "*"
 }
 
-entity ::= ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE {
+entity ::= ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? entityBody? {
     pin = 1
     mixin="org.strangeway.jdl.psi.JdlEntityMixin"
 }
 
 entityId ::= IDENTIFIER {
     name = "entity identifier"
+}
+
+private entityBody ::= NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE {
+    pin = 2
 }
 
 private entityTableDeclaration ::= LPARENTH NEWLINE* entityTableName NEWLINE* RPARENTH {
