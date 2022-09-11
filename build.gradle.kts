@@ -1,6 +1,6 @@
 plugins {
   id("java")
-  id("org.jetbrains.intellij") version "1.8.1"
+  id("org.jetbrains.intellij") version "1.9.0"
 }
 
 group = "org.strangeway.jdl"
@@ -15,7 +15,7 @@ java.sourceSets["main"].java {
 }
 
 intellij {
-  version.set("2021.3.3")
+  version.set("2022.1.3")
   type.set("IU")
 
   plugins.set(listOf("com.intellij.java", "uml"))
@@ -29,8 +29,8 @@ tasks {
   }
 
   patchPluginXml {
-    sinceBuild.set("213")
-    untilBuild.set("223.*")
+    sinceBuild.set("221")
+    untilBuild.set("231.*")
 
     changeNotes.set("""
       <ul>
