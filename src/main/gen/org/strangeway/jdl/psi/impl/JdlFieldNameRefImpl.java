@@ -11,32 +11,20 @@ import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
 
-public class JdlRelationshipDetailsImpl extends ASTWrapperPsiElement implements JdlRelationshipDetails {
+public class JdlFieldNameRefImpl extends ASTWrapperPsiElement implements JdlFieldNameRef {
 
-  public JdlRelationshipDetailsImpl(@NotNull ASTNode node) {
+  public JdlFieldNameRefImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitRelationshipDetails(this);
+    visitor.visitFieldNameRef(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof JdlVisitor) accept((JdlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public JdlFieldConstraint getFieldConstraint() {
-    return findChildByClass(JdlFieldConstraint.class);
-  }
-
-  @Override
-  @NotNull
-  public List<JdlFieldNameRef> getFieldNameRefList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlFieldNameRef.class);
   }
 
 }

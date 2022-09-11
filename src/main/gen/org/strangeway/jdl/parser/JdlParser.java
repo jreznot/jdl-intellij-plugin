@@ -947,6 +947,18 @@ public class JdlParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // IDENTIFIER
+  public static boolean fieldNameRef(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldNameRef")) return false;
+    if (!nextTokenIs(b, "<field reference>", IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FIELD_NAME_REF, "<field reference>");
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER
   public static boolean fieldType(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fieldType")) return false;
     if (!nextTokenIs(b, "<field type>", IDENTIFIER)) return false;
@@ -1089,14 +1101,14 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACE fieldName (LPARENTH fieldName RPARENTH)? fieldConstraint? RBRACE
+  // LBRACE fieldNameRef (LPARENTH fieldNameRef RPARENTH)? fieldConstraint? RBRACE
   public static boolean relationshipDetails(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "relationshipDetails")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LBRACE);
-    r = r && fieldName(b, l + 1);
+    r = r && fieldNameRef(b, l + 1);
     r = r && relationshipDetails_2(b, l + 1);
     r = r && relationshipDetails_3(b, l + 1);
     r = r && consumeToken(b, RBRACE);
@@ -1104,20 +1116,20 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (LPARENTH fieldName RPARENTH)?
+  // (LPARENTH fieldNameRef RPARENTH)?
   private static boolean relationshipDetails_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "relationshipDetails_2")) return false;
     relationshipDetails_2_0(b, l + 1);
     return true;
   }
 
-  // LPARENTH fieldName RPARENTH
+  // LPARENTH fieldNameRef RPARENTH
   private static boolean relationshipDetails_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "relationshipDetails_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LPARENTH);
-    r = r && fieldName(b, l + 1);
+    r = r && fieldNameRef(b, l + 1);
     r = r && consumeToken(b, RPARENTH);
     exit_section_(b, m, null, r);
     return r;

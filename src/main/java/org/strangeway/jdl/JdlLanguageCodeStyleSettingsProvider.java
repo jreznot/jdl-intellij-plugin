@@ -21,13 +21,12 @@ import static com.intellij.psi.codeStyle.CodeStyleSettingsCustomizableOptions.ge
 
 final class JdlLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
 
-  private static final String[] ALIGN_OPTIONS = Arrays.stream(JdlCodeStyleSettings.PropertyAlignment.values())
+  private static final String[] ALIGN_OPTIONS = Arrays.stream(PropertyAlignment.values())
       .map(PropertyAlignment::getDescription)
       .toArray(String[]::new);
 
-  private static final int[] ALIGN_VALUES =
-      ArrayUtil.toIntArray(
-          ContainerUtil.map(JdlCodeStyleSettings.PropertyAlignment.values(), JdlCodeStyleSettings.PropertyAlignment::getId));
+  private static final int[] ALIGN_VALUES = ArrayUtil.toIntArray(
+      ContainerUtil.map(PropertyAlignment.values(), PropertyAlignment::getId));
 
   @org.intellij.lang.annotations.Language("JDL")
   @Override

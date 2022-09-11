@@ -97,7 +97,11 @@ final class JdlBlock implements ASTBlock {
       } else if (!JdlTokenSets.BRACES.contains(child.getElementType())
           && !BLOCK_KEYWORDS.contains(child.getElementType())
           && !BLOCK_IDENTIFIERS.contains(child.getElementType())) {
-        wrap = childWrap;
+
+        if (!COMMENTS.contains(child.getElementType())) {
+          wrap = childWrap;
+        }
+
         indent = Indent.getNormalIndent();
       }
     } else if (child.getPsi() instanceof JdlValue

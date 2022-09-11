@@ -23,7 +23,7 @@ final class JdlAnnotator implements Annotator {
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_NAME)
           .create();
-    } else if (element instanceof JdlFieldName) {
+    } else if (element instanceof JdlFieldName || element instanceof JdlFieldNameRef) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_FIELD_NAME)

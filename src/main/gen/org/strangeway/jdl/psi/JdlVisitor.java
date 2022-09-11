@@ -100,6 +100,10 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFieldNameRef(@NotNull JdlFieldNameRef o) {
+    visitPsiElement(o);
+  }
+
   public void visitFieldType(@NotNull JdlFieldType o) {
     visitPsiElement(o);
   }

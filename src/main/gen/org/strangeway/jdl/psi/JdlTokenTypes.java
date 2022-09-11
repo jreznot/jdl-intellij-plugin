@@ -31,6 +31,7 @@ public interface JdlTokenTypes {
   IElementType FIELD_CONSTRAINT = new JdlElementType("FIELD_CONSTRAINT");
   IElementType FIELD_CONSTRAINT_PARAMETERS = new JdlElementType("FIELD_CONSTRAINT_PARAMETERS");
   IElementType FIELD_NAME = new JdlElementType("FIELD_NAME");
+  IElementType FIELD_NAME_REF = new JdlElementType("FIELD_NAME_REF");
   IElementType FIELD_TYPE = new JdlElementType("FIELD_TYPE");
   IElementType ID = new JdlElementType("ID");
   IElementType NUMBER_LITERAL = new JdlElementType("NUMBER_LITERAL");
@@ -154,6 +155,9 @@ public interface JdlTokenTypes {
       }
       else if (type == FIELD_NAME) {
         return new JdlFieldNameImpl(node);
+      }
+      else if (type == FIELD_NAME_REF) {
+        return new JdlFieldNameRefImpl(node);
       }
       else if (type == FIELD_TYPE) {
         return new JdlFieldTypeImpl(node);

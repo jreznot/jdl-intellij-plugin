@@ -260,7 +260,11 @@ relationshipEntity ::= id relationshipDetails? {
     pin = 1
 }
 
-relationshipDetails ::= LBRACE fieldName (LPARENTH fieldName RPARENTH)? fieldConstraint? RBRACE
+relationshipDetails ::= LBRACE fieldNameRef (LPARENTH fieldNameRef RPARENTH)? fieldConstraint? RBRACE
+
+fieldNameRef ::= IDENTIFIER {
+    name = "field reference"
+}
 
 deployment ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValue)* RBRACE {
     pin = 1
