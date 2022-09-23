@@ -13,6 +13,7 @@ import org.strangeway.jdl.model.JdlOptionModel;
 import org.strangeway.jdl.psi.*;
 
 import static com.intellij.psi.util.PsiTreeUtil.findFirstParent;
+import static org.strangeway.jdl.JdlConstants.ALL_ENTITIES_MATCHER;
 import static org.strangeway.jdl.JdlConstants.APPLICATION_BASE_NAME;
 
 final class JdlAnnotator implements Annotator {
@@ -79,6 +80,18 @@ final class JdlAnnotator implements Annotator {
   }
 
   private void resolveIdentifierRefs(PsiElement element, AnnotationHolder holder) {
+    if (element instanceof JdlId
+        && element.getParent() instanceof JdlEntitiesList
+        && ALL_ENTITIES_MATCHER.equals(element.getText())) {
+
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(element.getTextRange())
+          .textAttributes(JdlSyntaxHighlighter.JDL_KEYWORD)
+          .create();
+      // do not highlight
+      return;
+    }
+
     if (element instanceof JdlId || element instanceof JdlFieldType) {
       var reference = element.getReference();
       if (reference != null && reference.resolve() == null) {

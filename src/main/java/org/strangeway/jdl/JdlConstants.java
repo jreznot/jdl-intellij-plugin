@@ -87,4 +87,6 @@ public final class JdlConstants {
       "User",
       "Authority"
   );
+
+  public static final String ALL_ENTITIES_MATCHER = "all";
 }
