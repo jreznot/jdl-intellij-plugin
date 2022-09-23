@@ -1,6 +1,7 @@
 package org.strangeway.jdl.psi;
 
 import com.intellij.lang.Language;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.SyntheticElement;
 import com.intellij.psi.impl.FakePsiElement;
@@ -9,6 +10,7 @@ import com.intellij.psi.meta.PsiMetaOwner;
 import com.intellij.psi.meta.PsiPresentableMetaData;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.SearchScope;
+import com.intellij.util.PsiNavigateUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +38,11 @@ public final class JdlPredefinedSdkEntity extends FakePsiElement implements Synt
   @Override
   public PsiElement getDeclaration() {
     return this;
+  }
+
+  @Override
+  public @Nullable TextRange getTextRange() {
+    return parent.getTextRange();
   }
 
   @Override
@@ -91,6 +98,11 @@ public final class JdlPredefinedSdkEntity extends FakePsiElement implements Synt
   @Override
   public boolean canNavigate() {
     return true;
+  }
+
+  @Override
+  public void navigate(boolean requestFocus) {
+    PsiNavigateUtil.navigate(parent);
   }
 
   @Override
