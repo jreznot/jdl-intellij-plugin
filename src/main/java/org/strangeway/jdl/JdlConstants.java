@@ -82,4 +82,9 @@ public final class JdlConstants {
       "minbytes()",
       "maxbytes()"
   );
+
+  public static final List<String> PREDEFINED_ENTITIES = List.of(
+      "User",
+      "Authority"
+  );
 }
