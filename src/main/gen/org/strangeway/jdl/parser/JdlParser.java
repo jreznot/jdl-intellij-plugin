@@ -93,7 +93,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (NEWLINE | configBlock | configurationOption)*
+  // (NEWLINE | configBlock | useConfigurationOption | configurationOption)*
   static boolean applicationContent(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "applicationContent")) return false;
     while (true) {
@@ -104,12 +104,13 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // NEWLINE | configBlock | configurationOption
+  // NEWLINE | configBlock | useConfigurationOption | configurationOption
   private static boolean applicationContent_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "applicationContent_0")) return false;
     boolean r;
     r = consumeToken(b, NEWLINE);
     if (!r) r = configBlock(b, l + 1);
+    if (!r) r = useConfigurationOption(b, l + 1);
     if (!r) r = configurationOption(b, l + 1);
     return r;
   }
@@ -331,6 +332,31 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, IDENTIFIER);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  /* ********************************************************** */
+  // withOptionValue withOptionValueItem*
+  public static boolean configurationOptionValues(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "configurationOptionValues")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, CONFIGURATION_OPTION_VALUES, null);
+    r = withOptionValue(b, l + 1);
+    p = r; // pin = 1
+    r = r && configurationOptionValues_1(b, l + 1);
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // withOptionValueItem*
+  private static boolean configurationOptionValues_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "configurationOptionValues_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!withOptionValueItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "configurationOptionValues_1", c)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -1309,7 +1335,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (NEWLINE | application | entity | enum | relationshipGroup
-  //           | deployment | constant | configurationOption)*
+  //           | deployment | constant | useConfigurationOption | configurationOption)*
   static boolean root(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root")) return false;
     while (true) {
@@ -1321,7 +1347,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   // NEWLINE | application | entity | enum | relationshipGroup
-  //           | deployment | constant | configurationOption
+  //           | deployment | constant | useConfigurationOption | configurationOption
   private static boolean root_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_0")) return false;
     boolean r;
@@ -1332,6 +1358,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     if (!r) r = relationshipGroup(b, l + 1);
     if (!r) r = deployment(b, l + 1);
     if (!r) r = constant(b, l + 1);
+    if (!r) r = useConfigurationOption(b, l + 1);
     if (!r) r = configurationOption(b, l + 1);
     return r;
   }
@@ -1345,6 +1372,31 @@ public class JdlParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, DOUBLE_QUOTED_STRING);
     exit_section_(b, m, STRING_LITERAL, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // USE_KEYWORD configurationOptionValues FOR_KEYWORD (entitiesList | WILDCARD)
+  public static boolean useConfigurationOption(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "useConfigurationOption")) return false;
+    if (!nextTokenIs(b, USE_KEYWORD)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, USE_CONFIGURATION_OPTION, null);
+    r = consumeToken(b, USE_KEYWORD);
+    p = r; // pin = 1
+    r = r && report_error_(b, configurationOptionValues(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, FOR_KEYWORD)) && r;
+    r = p && useConfigurationOption_3(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // entitiesList | WILDCARD
+  private static boolean useConfigurationOption_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "useConfigurationOption_3")) return false;
+    boolean r;
+    r = entitiesList(b, l + 1);
+    if (!r) r = consumeToken(b, WILDCARD);
     return r;
   }
 
@@ -1400,6 +1452,20 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, IDENTIFIER);
     exit_section_(b, m, WITH_OPTION_VALUE, r);
     return r;
+  }
+
+  /* ********************************************************** */
+  // COMMA withOptionValue
+  static boolean withOptionValueItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "withOptionValueItem")) return false;
+    if (!nextTokenIs(b, COMMA)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeToken(b, COMMA);
+    p = r; // pin = 1
+    r = r && withOptionValue(b, l + 1);
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
 }

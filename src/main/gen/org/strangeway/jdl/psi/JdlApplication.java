@@ -14,6 +14,9 @@ public interface JdlApplication extends PsiElement {
   @NotNull
   List<JdlConfigurationOption> getConfigurationOptionList();
 
+  @NotNull
+  List<JdlUseConfigurationOption> getUseConfigurationOptionList();
+
   @NotNull String getName();
 
   @NotNull ItemPresentation getPresentation();

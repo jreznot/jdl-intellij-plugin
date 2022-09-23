@@ -71,6 +71,8 @@ NEWLINE = \r\n|[\r\n]
     "deployment"                         { return DEPLOYMENT_KEYWORD; }
     "relationship"                       { return RELATIONSHIP_KEYWORD; }
     "to"                                 { return TO_KEYWORD; }
+    "use"                                { return USE_KEYWORD; }
+    "for"                                { return FOR_KEYWORD; }
 
     {IDENTIFIER}                         { return IDENTIFIER; }
     {INTEGER_LITERAL}                    { return INTEGER_NUMBER; }

@@ -32,6 +32,10 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitConfigurationOptionValues(@NotNull JdlConfigurationOptionValues o) {
+    visitPsiElement(o);
+  }
+
   public void visitConstant(@NotNull JdlConstant o) {
     visitPsiElement(o);
   }
@@ -150,6 +154,10 @@ public class JdlVisitor extends PsiElementVisitor {
 
   public void visitStringLiteral(@NotNull JdlStringLiteral o) {
     visitValue(o);
+  }
+
+  public void visitUseConfigurationOption(@NotNull JdlUseConfigurationOption o) {
+    visitPsiElement(o);
   }
 
   public void visitValue(@NotNull JdlValue o) {

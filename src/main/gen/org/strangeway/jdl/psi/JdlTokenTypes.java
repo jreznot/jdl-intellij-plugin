@@ -13,6 +13,7 @@ public interface JdlTokenTypes {
   IElementType BOOLEAN_LITERAL = new JdlElementType("BOOLEAN_LITERAL");
   IElementType CONFIGURATION_OPTION = new JdlElementType("CONFIGURATION_OPTION");
   IElementType CONFIGURATION_OPTION_NAME = new JdlElementType("CONFIGURATION_OPTION_NAME");
+  IElementType CONFIGURATION_OPTION_VALUES = new JdlElementType("CONFIGURATION_OPTION_VALUES");
   IElementType CONFIG_BLOCK = new JdlElementType("CONFIG_BLOCK");
   IElementType CONSTANT = new JdlElementType("CONSTANT");
   IElementType CONSTANT_NAME = new JdlElementType("CONSTANT_NAME");
@@ -44,6 +45,7 @@ public interface JdlTokenTypes {
   IElementType RELATIONSHIP_MAPPING = new JdlElementType("RELATIONSHIP_MAPPING");
   IElementType RELATIONSHIP_TYPE = new JdlElementType("RELATIONSHIP_TYPE");
   IElementType STRING_LITERAL = new JdlElementType("STRING_LITERAL");
+  IElementType USE_CONFIGURATION_OPTION = new JdlElementType("USE_CONFIGURATION_OPTION");
   IElementType VALUE = new JdlElementType("VALUE");
   IElementType WILDCARD_LITERAL = new JdlElementType("WILDCARD_LITERAL");
   IElementType WITH_OPTION_VALUE = new JdlElementType("WITH_OPTION_VALUE");
@@ -57,30 +59,27 @@ public interface JdlTokenTypes {
   IElementType DEPLOYMENT_KEYWORD = new JdlTokenType("deployment");
   IElementType DOUBLE_NUMBER = new JdlTokenType("DOUBLE_NUMBER");
   IElementType DOUBLE_QUOTED_STRING = new JdlTokenType("DOUBLE_QUOTED_STRING");
-  IElementType DTO_KEYWORD = new JdlTokenType("dto");
-  IElementType ENTITIES_KEYWORD = new JdlTokenType("entities");
   IElementType ENTITY_KEYWORD = new JdlTokenType("entity");
   IElementType ENUM_KEYWORD = new JdlTokenType("enum");
   IElementType EXCEPT_KEYWORD = new JdlTokenType("except");
   IElementType FALSE = new JdlTokenType("false");
+  IElementType FOR_KEYWORD = new JdlTokenType("for");
   IElementType IDENTIFIER = new JdlTokenType("IDENTIFIER");
   IElementType INTEGER_NUMBER = new JdlTokenType("INTEGER_NUMBER");
   IElementType LBRACE = new JdlTokenType("{");
   IElementType LBRACKET = new JdlTokenType("[");
   IElementType LINE_COMMENT = new JdlTokenType("LINE_COMMENT");
   IElementType LPARENTH = new JdlTokenType("(");
-  IElementType MICROSERVICE_KEYWORD = new JdlTokenType("microservice");
   IElementType NEWLINE = new JdlTokenType("NEWLINE");
-  IElementType PAGINATE_KEYWORD = new JdlTokenType("paginate");
   IElementType RBRACE = new JdlTokenType("}");
   IElementType RBRACKET = new JdlTokenType("]");
   IElementType REGEX_STRING = new JdlTokenType("REGEX_STRING");
   IElementType RELATIONSHIP_KEYWORD = new JdlTokenType("relationship");
   IElementType RPARENTH = new JdlTokenType(")");
-  IElementType SERVICE_KEYWORD = new JdlTokenType("service");
   IElementType STRUDEL = new JdlTokenType("@");
   IElementType TO_KEYWORD = new JdlTokenType("to");
   IElementType TRUE = new JdlTokenType("true");
+  IElementType USE_KEYWORD = new JdlTokenType("use");
   IElementType WILDCARD = new JdlTokenType("*");
   IElementType WITH_KEYWORD = new JdlTokenType("with");
 
@@ -101,6 +100,9 @@ public interface JdlTokenTypes {
       }
       else if (type == CONFIGURATION_OPTION_NAME) {
         return new JdlConfigurationOptionNameImpl(node);
+      }
+      else if (type == CONFIGURATION_OPTION_VALUES) {
+        return new JdlConfigurationOptionValuesImpl(node);
       }
       else if (type == CONFIG_BLOCK) {
         return new JdlConfigBlockImpl(node);
@@ -194,6 +196,9 @@ public interface JdlTokenTypes {
       }
       else if (type == STRING_LITERAL) {
         return new JdlStringLiteralImpl(node);
+      }
+      else if (type == USE_CONFIGURATION_OPTION) {
+        return new JdlUseConfigurationOptionImpl(node);
       }
       else if (type == WILDCARD_LITERAL) {
         return new JdlWildcardLiteralImpl(node);

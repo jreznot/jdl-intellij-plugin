@@ -41,6 +41,12 @@ public class JdlApplicationImpl extends ASTWrapperPsiElement implements JdlAppli
   }
 
   @Override
+  @NotNull
+  public List<JdlUseConfigurationOption> getUseConfigurationOptionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlUseConfigurationOption.class);
+  }
+
+  @Override
   public @NotNull String getName() {
     return JdlPsiUtils.getName(this);
   }

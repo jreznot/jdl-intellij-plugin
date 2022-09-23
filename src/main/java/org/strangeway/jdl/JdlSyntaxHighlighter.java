@@ -71,11 +71,10 @@ final class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
     ourMap = new HashMap<>();
 
     fillMap(ourMap, JDL_KEYWORD, JdlTokenTypes.WILDCARD,
-        JdlTokenTypes.APPLICATION_KEYWORD, JdlTokenTypes.CONFIG_KEYWORD, JdlTokenTypes.ENTITIES_KEYWORD,
-        JdlTokenTypes.DTO_KEYWORD, JdlTokenTypes.PAGINATE_KEYWORD, JdlTokenTypes.ENTITY_KEYWORD,
-        JdlTokenTypes.SERVICE_KEYWORD, JdlTokenTypes.EXCEPT_KEYWORD, JdlTokenTypes.WITH_KEYWORD,
-        JdlTokenTypes.ENUM_KEYWORD, JdlTokenTypes.DEPLOYMENT_KEYWORD, JdlTokenTypes.RELATIONSHIP_KEYWORD,
-        JdlTokenTypes.TO_KEYWORD);
+        JdlTokenTypes.APPLICATION_KEYWORD, JdlTokenTypes.CONFIG_KEYWORD, JdlTokenTypes.ENTITY_KEYWORD,
+        JdlTokenTypes.EXCEPT_KEYWORD, JdlTokenTypes.WITH_KEYWORD, JdlTokenTypes.ENUM_KEYWORD,
+        JdlTokenTypes.DEPLOYMENT_KEYWORD, JdlTokenTypes.RELATIONSHIP_KEYWORD,
+        JdlTokenTypes.TO_KEYWORD, JdlTokenTypes.USE_KEYWORD, JdlTokenTypes.FOR_KEYWORD);
 
     fillMap(ourMap, JDL_BRACKETS,
         JdlTokenTypes.LBRACKET, JdlTokenTypes.RBRACKET);

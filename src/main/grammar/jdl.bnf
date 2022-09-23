@@ -32,18 +32,15 @@
 
     APPLICATION_KEYWORD='application'
     CONFIG_KEYWORD='config'
-    ENTITIES_KEYWORD='entities'
     ENTITY_KEYWORD='entity'
     ENUM_KEYWORD='enum'
-    DTO_KEYWORD='dto'
-    PAGINATE_KEYWORD='paginate'
-    SERVICE_KEYWORD='service'
     WITH_KEYWORD='with'
     EXCEPT_KEYWORD='except'
     DEPLOYMENT_KEYWORD='deployment'
     RELATIONSHIP_KEYWORD='relationship'
     TO_KEYWORD='to'
-    MICROSERVICE_KEYWORD='microservice'
+    USE_KEYWORD='use'
+    FOR_KEYWORD='for'
   ]
 
   implements("entity")=[
@@ -55,7 +52,7 @@
 }
 
 root ::= (NEWLINE | application | entity | enum | relationshipGroup
-          | deployment | constant | configurationOption)*
+          | deployment | constant | useConfigurationOption | configurationOption)*
 
 application ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationContent NEWLINE* RBRACE {
     pin = 1
@@ -65,7 +62,7 @@ application ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationContent 
     ]
 }
 
-private applicationContent ::= (NEWLINE | configBlock | configurationOption)*
+private applicationContent ::= (NEWLINE | configBlock | useConfigurationOption | configurationOption)*
 
 configBlock ::= CONFIG_KEYWORD NEWLINE* LBRACE (NEWLINE | configElement)* RBRACE {
     pin = 1
@@ -135,6 +132,18 @@ configurationOption ::= configurationOptionName (wildcardLiteral | entitiesList)
 
 configurationOptionName ::= IDENTIFIER {
     name = "configuration option"
+}
+
+useConfigurationOption ::= USE_KEYWORD configurationOptionValues FOR_KEYWORD (entitiesList | WILDCARD) {
+    pin = 1
+}
+
+configurationOptionValues ::= withOptionValue withOptionValueItem* {
+    pin = 1
+}
+
+private withOptionValueItem ::= COMMA withOptionValue {
+    pin = 1
 }
 
 wildcardLiteral ::= WILDCARD {
