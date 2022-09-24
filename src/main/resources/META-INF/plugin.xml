@@ -72,6 +72,9 @@
     <localInspection language="JDL" shortName="JdlUnusedDeclaration" enabledByDefault="true"
                      implementationClass="org.strangeway.jdl.inspections.JdlUnusedDeclarationInspection"
                      displayName="Unused declaration" groupName="JHipster"/>
+    <localInspection language="JDL" shortName="JdlUnknownOption" enabledByDefault="true" level="WEAK WARNING"
+                     implementationClass="org.strangeway.jdl.inspections.JdlUnknownOptionInspection"
+                     displayName="Unknown option" groupName="JHipster"/>
   </extensions>
 
   <actions>

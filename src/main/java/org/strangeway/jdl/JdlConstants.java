@@ -69,7 +69,8 @@ public final class JdlConstants {
       Map.entry("Blob", "java.sql.Blob"),
       Map.entry("AnyBlob", "java.sql.Blob"),
       Map.entry("ImageBlob", "java.sql.Blob"),
-      Map.entry("TextBlob", "java.sql.Clob")
+      Map.entry("TextBlob", "java.sql.Clob"),
+      Map.entry("Date", "java.util.Date")
   );
 
   public static final List<String> FIELD_VALIDATIONS = List.of(
