@@ -78,6 +78,11 @@ final class JdlAnnotator implements Annotator {
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_KEYWORD)
           .create();
+    } else if (element instanceof JdlAnnotationId) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(element.getTextRange())
+          .textAttributes(JdlSyntaxHighlighter.JDL_ANNOTATION)
+          .create();
     }
 
     resolveIdentifierRefs(element, holder);

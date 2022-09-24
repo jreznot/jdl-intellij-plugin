@@ -29,6 +29,12 @@ public class JdlEntityImpl extends JdlEntityMixin implements JdlEntity {
 
   @Override
   @NotNull
+  public List<JdlAnnotation> getAnnotationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlAnnotation.class);
+  }
+
+  @Override
+  @NotNull
   public List<JdlEntityFieldMapping> getEntityFieldMappingList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlEntityFieldMapping.class);
   }

@@ -65,6 +65,9 @@ final class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
   public static final TextAttributesKey JDL_FIELD_CONSTRAINT =
       createTextAttributesKey("JDL.FIELD_CONSTRAINT", DefaultLanguageHighlighterColors.METADATA);
 
+  public static final TextAttributesKey JDL_ANNOTATION =
+      createTextAttributesKey("JDL.ANNOTATION", DefaultLanguageHighlighterColors.METADATA);
+
   private static final Map<IElementType, TextAttributesKey> ourMap;
 
   static {
@@ -90,6 +93,8 @@ final class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
 
     fillMap(ourMap, JDL_LINE_COMMENT, JdlTokenTypes.LINE_COMMENT);
     fillMap(ourMap, JDL_BLOCK_COMMENT, JdlTokenTypes.BLOCK_COMMENT);
+
+    fillMap(ourMap, JDL_ANNOTATION, JdlTokenTypes.STRUDEL);
   }
 
   @Override

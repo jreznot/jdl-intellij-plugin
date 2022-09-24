@@ -150,13 +150,23 @@ wildcardLiteral ::= ("all" | WILDCARD) {
     name = "*"
 }
 
-entity ::= ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? entityBody? {
-    pin = 1
+entity ::= annotations ENTITY_KEYWORD NEWLINE* entityId NEWLINE* entityTableDeclaration? entityBody? {
+    pin = 2
     mixin="org.strangeway.jdl.psi.JdlEntityMixin"
 }
 
 entityId ::= IDENTIFIER {
     name = "entity identifier"
+}
+
+private annotations ::= (NEWLINE | annotation)*
+
+annotation ::= STRUDEL annotationId LPARENTH withOptionValue RPARENTH {
+    pin = 1
+}
+
+annotationId ::= IDENTIFIER {
+    name = "annotation identifier"
 }
 
 private entityBody ::= NEWLINE* LBRACE (NEWLINE | entityElement)* RBRACE {

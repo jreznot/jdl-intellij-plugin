@@ -9,6 +9,9 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 public interface JdlEntity extends PsiNameIdentifierOwner {
 
   @NotNull
+  List<JdlAnnotation> getAnnotationList();
+
+  @NotNull
   List<JdlEntityFieldMapping> getEntityFieldMappingList();
 
   @Nullable

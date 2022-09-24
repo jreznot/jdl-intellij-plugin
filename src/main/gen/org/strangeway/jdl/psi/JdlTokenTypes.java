@@ -8,6 +8,8 @@ import org.strangeway.jdl.psi.impl.*;
 
 public interface JdlTokenTypes {
 
+  IElementType ANNOTATION = new JdlElementType("ANNOTATION");
+  IElementType ANNOTATION_ID = new JdlElementType("ANNOTATION_ID");
   IElementType APPLICATION = new JdlElementType("APPLICATION");
   IElementType ARRAY_LITERAL = new JdlElementType("ARRAY_LITERAL");
   IElementType BOOLEAN_LITERAL = new JdlElementType("BOOLEAN_LITERAL");
@@ -86,7 +88,13 @@ public interface JdlTokenTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == APPLICATION) {
+      if (type == ANNOTATION) {
+        return new JdlAnnotationImpl(node);
+      }
+      else if (type == ANNOTATION_ID) {
+        return new JdlAnnotationIdImpl(node);
+      }
+      else if (type == APPLICATION) {
         return new JdlApplicationImpl(node);
       }
       else if (type == ARRAY_LITERAL) {

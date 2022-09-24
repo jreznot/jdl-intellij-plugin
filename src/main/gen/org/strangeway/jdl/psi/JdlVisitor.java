@@ -8,6 +8,14 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 
 public class JdlVisitor extends PsiElementVisitor {
 
+  public void visitAnnotation(@NotNull JdlAnnotation o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAnnotationId(@NotNull JdlAnnotationId o) {
+    visitPsiElement(o);
+  }
+
   public void visitApplication(@NotNull JdlApplication o) {
     visitPsiElement(o);
   }
