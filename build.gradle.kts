@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "1.3.0"
+version = "1.4.0"
 
 repositories {
   mavenCentral()
@@ -34,7 +34,10 @@ tasks {
 
     changeNotes.set("""
       <ul>
-        <li>Format your JDL files automatically using 'Code-Reformat Code' action</li>
+        <li>Inspections to check unused declarations, unknown options and incorrect option values</li>
+        <li>Annotations on entities supported</li>
+        <li>Use syntax of configuration options supported</li>
+        <li>Fixed highlighting of predefined User and Authority entities</li>
       </ul>
     """.trimIndent())
   }
