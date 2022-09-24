@@ -13,4 +13,7 @@ public interface JdlUseConfigurationOption extends PsiElement {
   @Nullable
   JdlEntitiesList getEntitiesList();
 
+  @Nullable
+  JdlWildcardLiteral getWildcardLiteral();
+
 }

@@ -55,7 +55,7 @@ public final class JdlEntityIdReference extends PsiReferenceBase<JdlId> {
     PsiFile containingFile = myElement.getContainingFile();
     if (containingFile == null) return EMPTY_OBJECT_ARRAY;
 
-    Collection<JdlEntity> entities = JdlDeclarationsModel.getAllEntities(containingFile);
+    Collection<JdlEntity> entities = JdlDeclarationsModel.findAllEntities(containingFile);
     List<LookupElement> items = new ArrayList<>();
 
     for (JdlEntity entity : entities) {
@@ -65,7 +65,8 @@ public final class JdlEntityIdReference extends PsiReferenceBase<JdlId> {
 
     for (String predefinedEntity : PREDEFINED_ENTITIES) {
       items.add(LookupElementBuilder.create(predefinedEntity)
-          .withIcon(JhipsterIcons.getEntityIcon()));
+          .withIcon(JhipsterIcons.getEntityIcon())
+          .withTypeText("predefined"));
     }
 
     return items.toArray();

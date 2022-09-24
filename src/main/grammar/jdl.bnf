@@ -134,7 +134,7 @@ configurationOptionName ::= IDENTIFIER {
     name = "configuration option"
 }
 
-useConfigurationOption ::= USE_KEYWORD configurationOptionValues FOR_KEYWORD (entitiesList | WILDCARD) {
+useConfigurationOption ::= USE_KEYWORD configurationOptionValues FOR_KEYWORD (wildcardLiteral | entitiesList) {
     pin = 1
 }
 
@@ -146,7 +146,7 @@ private withOptionValueItem ::= COMMA withOptionValue {
     pin = 1
 }
 
-wildcardLiteral ::= WILDCARD {
+wildcardLiteral ::= ("all" | WILDCARD) {
     name = "*"
 }
 

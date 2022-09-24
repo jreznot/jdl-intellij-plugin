@@ -39,4 +39,10 @@ public class JdlUseConfigurationOptionImpl extends ASTWrapperPsiElement implemen
     return findChildByClass(JdlEntitiesList.class);
   }
 
+  @Override
+  @Nullable
+  public JdlWildcardLiteral getWildcardLiteral() {
+    return findChildByClass(JdlWildcardLiteral.class);
+  }
+
 }

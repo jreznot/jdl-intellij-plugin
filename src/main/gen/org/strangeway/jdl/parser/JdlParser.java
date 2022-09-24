@@ -1376,7 +1376,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // USE_KEYWORD configurationOptionValues FOR_KEYWORD (entitiesList | WILDCARD)
+  // USE_KEYWORD configurationOptionValues FOR_KEYWORD (wildcardLiteral | entitiesList)
   public static boolean useConfigurationOption(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "useConfigurationOption")) return false;
     if (!nextTokenIs(b, USE_KEYWORD)) return false;
@@ -1391,12 +1391,12 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // entitiesList | WILDCARD
+  // wildcardLiteral | entitiesList
   private static boolean useConfigurationOption_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "useConfigurationOption_3")) return false;
     boolean r;
-    r = entitiesList(b, l + 1);
-    if (!r) r = consumeToken(b, WILDCARD);
+    r = wildcardLiteral(b, l + 1);
+    if (!r) r = entitiesList(b, l + 1);
     return r;
   }
 
@@ -1417,13 +1417,13 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // WILDCARD
+  // "all" | WILDCARD
   public static boolean wildcardLiteral(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "wildcardLiteral")) return false;
-    if (!nextTokenIs(b, "<*>", WILDCARD)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, WILDCARD_LITERAL, "<*>");
-    r = consumeToken(b, WILDCARD);
+    r = consumeToken(b, "all");
+    if (!r) r = consumeToken(b, WILDCARD);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

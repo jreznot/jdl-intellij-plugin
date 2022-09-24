@@ -65,6 +65,13 @@
 
     <configurationType implementation="org.strangeway.jdl.run.JdlRunConfigurationType"/>
     <runConfigurationProducer implementation="org.strangeway.jdl.run.JdlRunConfigurationProducer"/>
+
+    <localInspection language="JDL" shortName="JdlDuplicatedDeclaration" enabledByDefault="true" level="ERROR"
+                     implementationClass="org.strangeway.jdl.inspections.JdlDuplicatedDeclarationInspection"
+                     displayName="Duplicated declaration" groupName="JHipster"/>
+    <localInspection language="JDL" shortName="JdlUnusedDeclaration" enabledByDefault="true"
+                     implementationClass="org.strangeway.jdl.inspections.JdlUnusedDeclarationInspection"
+                     displayName="Unused declaration" groupName="JHipster"/>
   </extensions>
 
   <actions>

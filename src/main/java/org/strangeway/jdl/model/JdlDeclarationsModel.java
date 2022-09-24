@@ -14,7 +14,7 @@ public final class JdlDeclarationsModel {
   private JdlDeclarationsModel() {
   }
 
-  public static Collection<JdlEnum> getAllEnums(PsiFile file) {
+  public static Collection<JdlEnum> findAllEnums(PsiFile file) {
     List<JdlEnum> enums = new ArrayList<>();
 
     file.acceptChildren(new JdlVisitor() {
@@ -29,7 +29,7 @@ public final class JdlDeclarationsModel {
     return enums;
   }
 
-  public static Collection<JdlEntity> getAllEntities(PsiFile file) {
+  public static Collection<JdlEntity> findAllEntities(PsiFile file) {
     List<JdlEntity> entities = new ArrayList<>();
 
     file.acceptChildren(new JdlVisitor() {

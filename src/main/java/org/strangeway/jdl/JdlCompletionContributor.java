@@ -56,7 +56,7 @@ final class JdlCompletionContributor extends CompletionContributor {
               .withIcon(JhipsterIcons.getFieldTypeIcon()));
         }
 
-        var allEnums = JdlDeclarationsModel.getAllEnums(parameters.getOriginalFile());
+        var allEnums = JdlDeclarationsModel.findAllEnums(parameters.getOriginalFile());
         for (JdlEnum enumBlock : allEnums) {
           String enumId = enumBlock.getName();
 

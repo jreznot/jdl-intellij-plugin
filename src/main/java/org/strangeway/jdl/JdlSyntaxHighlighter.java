@@ -70,7 +70,7 @@ final class JdlSyntaxHighlighter extends SyntaxHighlighterBase {
   static {
     ourMap = new HashMap<>();
 
-    fillMap(ourMap, JDL_KEYWORD, JdlTokenTypes.WILDCARD,
+    fillMap(ourMap, JDL_KEYWORD,
         JdlTokenTypes.APPLICATION_KEYWORD, JdlTokenTypes.CONFIG_KEYWORD, JdlTokenTypes.ENTITY_KEYWORD,
         JdlTokenTypes.EXCEPT_KEYWORD, JdlTokenTypes.WITH_KEYWORD, JdlTokenTypes.ENUM_KEYWORD,
         JdlTokenTypes.DEPLOYMENT_KEYWORD, JdlTokenTypes.RELATIONSHIP_KEYWORD,
