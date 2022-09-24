@@ -4,8 +4,11 @@ import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.strangeway.jdl.model.JdlOptionMapping;
 import org.strangeway.jdl.model.JdlOptionModel;
 import org.strangeway.jdl.psi.*;
+
+import java.util.Map;
 
 final class JdlUnknownOptionInspection extends LocalInspectionTool {
   @Override
@@ -19,14 +22,17 @@ final class JdlUnknownOptionInspection extends LocalInspectionTool {
 
         JdlOptionModel model = JdlOptionModel.INSTANCE;
 
+        Map<String, JdlOptionMapping> options;
         if (o.getParent() instanceof JdlConfigBlock) {
-          if (!model.getApplicationConfigOptions().containsKey(optionName)) {
-            holder.registerProblem(o.getNameElement(), "Unknown option " + optionName);
-          }
+          options = model.getApplicationConfigOptions();
         } else if (o.getParent() instanceof JdlDeployment) {
-          if (!model.getDeploymentOptions().containsKey(optionName)) {
-            holder.registerProblem(o.getNameElement(), "Unknown option " + optionName);
-          }
+          options = model.getDeploymentOptions();
+        } else {
+          return;
+        }
+
+        if (!options.containsKey(optionName)) {
+          holder.registerProblem(o.getNameElement(), "Unknown option " + optionName);
         }
       }
     };

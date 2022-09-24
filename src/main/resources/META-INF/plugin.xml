@@ -75,6 +75,9 @@
     <localInspection language="JDL" shortName="JdlUnknownOption" enabledByDefault="true" level="WEAK WARNING"
                      implementationClass="org.strangeway.jdl.inspections.JdlUnknownOptionInspection"
                      displayName="Unknown option" groupName="JHipster"/>
+    <localInspection language="JDL" shortName="JdlIncorrectOptionType" enabledByDefault="true"
+                     implementationClass="org.strangeway.jdl.inspections.JdlIncorrectOptionTypeInspection"
+                     displayName="Incorrect option value type" groupName="JHipster"/>
   </extensions>
 
   <actions>

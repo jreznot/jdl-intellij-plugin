@@ -6,6 +6,7 @@ public enum JdlProdDatabaseType implements JdlModelEnum {
   MSSQL("mssql"),
   POSTGRESQL("postgresql"),
   ORACLE("oracle"),
+  MONGODB("mongodb"),
   NO("no");
 
   private final String id;
