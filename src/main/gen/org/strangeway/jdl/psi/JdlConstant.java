@@ -4,20 +4,14 @@ package org.strangeway.jdl.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface JdlConstant extends PsiElement {
+public interface JdlConstant extends PsiNameIdentifierOwner {
 
   @NotNull
   JdlConstantName getConstantName();
 
   @Nullable
   JdlValue getValue();
-
-  @NotNull String getName();
-
-  @NotNull JdlConstantName getNameElement();
-
-  @NotNull ItemPresentation getPresentation();
 
 }

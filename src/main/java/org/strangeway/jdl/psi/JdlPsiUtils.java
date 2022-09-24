@@ -285,36 +285,6 @@ public final class JdlPsiUtils {
     };
   }
 
-  public static @NotNull String getName(@NotNull JdlConstant constant) {
-    return constant.getConstantName().getText();
-  }
-
-  public static @NotNull JdlConstantName getNameElement(@NotNull JdlConstant constant) {
-    return constant.getConstantName();
-  }
-
-  public static @NotNull ItemPresentation getPresentation(@NotNull JdlConstant constant) {
-    return new ItemPresentation() {
-      @Override
-      public @NotNull String getPresentableText() {
-        return constant.getName();
-      }
-
-      @Override
-      public @Nullable String getLocationString() {
-        var value = constant.getValue();
-        if (value == null) return null;
-
-        return value.getText();
-      }
-
-      @Override
-      public @NotNull Icon getIcon(boolean unused) {
-        return JhipsterIcons.getConstantIcon();
-      }
-    };
-  }
-
   public static @NotNull ItemPresentation getPresentation(@SuppressWarnings("unused") @NotNull JdlDeployment deploymentBlock) {
     return new ItemPresentation() {
       @Override

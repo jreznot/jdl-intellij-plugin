@@ -10,10 +10,7 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.strangeway.jdl.psi.JdlEntity;
-import org.strangeway.jdl.psi.JdlEnum;
-import org.strangeway.jdl.psi.JdlTokenSets;
-import org.strangeway.jdl.psi.JdlTokenTypes;
+import org.strangeway.jdl.psi.*;
 
 final class JdlFindUsagesProvider implements FindUsagesProvider {
   @Override
@@ -27,7 +24,8 @@ final class JdlFindUsagesProvider implements FindUsagesProvider {
   @Override
   public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
     return psiElement instanceof JdlEntity
-        || psiElement instanceof JdlEnum;
+        || psiElement instanceof JdlEnum
+        || psiElement instanceof JdlConstant;
   }
 
   @Override
@@ -42,6 +40,9 @@ final class JdlFindUsagesProvider implements FindUsagesProvider {
     }
     if (element instanceof JdlEnum) {
       return "enum";
+    }
+    if (element instanceof JdlConstant) {
+      return "constant";
     }
     return "";
   }

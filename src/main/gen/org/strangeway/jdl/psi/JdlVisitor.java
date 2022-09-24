@@ -45,7 +45,7 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitConstant(@NotNull JdlConstant o) {
-    visitPsiElement(o);
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitConstantName(@NotNull JdlConstantName o) {

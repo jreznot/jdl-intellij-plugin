@@ -8,11 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.strangeway.jdl.psi.JdlConstantMixin;
 import org.strangeway.jdl.psi.*;
-import com.intellij.navigation.ItemPresentation;
 
-public class JdlConstantImpl extends ASTWrapperPsiElement implements JdlConstant {
+public class JdlConstantImpl extends JdlConstantMixin implements JdlConstant {
 
   public JdlConstantImpl(@NotNull ASTNode node) {
     super(node);
@@ -38,21 +37,6 @@ public class JdlConstantImpl extends ASTWrapperPsiElement implements JdlConstant
   @Nullable
   public JdlValue getValue() {
     return findChildByClass(JdlValue.class);
-  }
-
-  @Override
-  public @NotNull String getName() {
-    return JdlPsiUtils.getName(this);
-  }
-
-  @Override
-  public @NotNull JdlConstantName getNameElement() {
-    return JdlPsiUtils.getNameElement(this);
-  }
-
-  @Override
-  public @NotNull ItemPresentation getPresentation() {
-    return JdlPsiUtils.getPresentation(this);
   }
 
 }

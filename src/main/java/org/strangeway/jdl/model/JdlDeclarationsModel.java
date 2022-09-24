@@ -2,6 +2,7 @@ package org.strangeway.jdl.model;
 
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
+import org.strangeway.jdl.psi.JdlConstant;
 import org.strangeway.jdl.psi.JdlEntity;
 import org.strangeway.jdl.psi.JdlEnum;
 import org.strangeway.jdl.psi.JdlVisitor;
@@ -36,6 +37,21 @@ public final class JdlDeclarationsModel {
       @Override
       public void visitEntity(@NotNull JdlEntity o) {
         super.visitEntity(o);
+
+        entities.add(o);
+      }
+    });
+
+    return entities;
+  }
+
+  public static Collection<JdlConstant> findAllJdlConstants(PsiFile file) {
+    List<JdlConstant> entities = new ArrayList<>();
+
+    file.acceptChildren(new JdlVisitor() {
+      @Override
+      public void visitConstant(@NotNull JdlConstant o) {
+        super.visitConstant(o);
 
         entities.add(o);
       }

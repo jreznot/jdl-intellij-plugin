@@ -18,6 +18,9 @@ public abstract class JdlIdMixin extends JdlValueImpl implements JdlId {
         || parent instanceof JdlRelationshipEntity) {
       return new JdlEntityIdReference(this);
     }
+    if (parent instanceof JdlFieldConstraintParameters) {
+      return new JdlConstantNameReference(this);
+    }
     return null;
   }
 }

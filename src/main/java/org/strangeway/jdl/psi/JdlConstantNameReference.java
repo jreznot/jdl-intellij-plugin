@@ -17,10 +17,9 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.apache.commons.lang.ArrayUtils.EMPTY_OBJECT_ARRAY;
-import static org.strangeway.jdl.JdlConstants.PREDEFINED_ENTITIES;
 
-final class JdlEntityIdReference extends PsiReferenceBase<JdlId> {
-  public JdlEntityIdReference(@NotNull JdlId element) {
+final class JdlConstantNameReference extends PsiReferenceBase<JdlId> {
+  public JdlConstantNameReference(@NotNull JdlId element) {
     super(element);
   }
 
@@ -29,25 +28,22 @@ final class JdlEntityIdReference extends PsiReferenceBase<JdlId> {
     PsiFile containingFile = myElement.getContainingFile();
     if (containingFile == null) return null;
 
-    List<JdlEntity> entityRefs = new ArrayList<>();
+    List<JdlConstant> constantRefs = new ArrayList<>();
 
     String myId = myElement.getText(); // todo move ID to mixin
-    if (PREDEFINED_ENTITIES.contains(myId)) {
-      return new JdlPredefinedSdkEntity(myElement, myId);
-    }
 
     // todo support files in the same directory
     containingFile.processDeclarations((element, state) -> {
-      if (element instanceof JdlEntity && Objects.equals(myId, ((JdlEntity) element).getName())) {
-        entityRefs.add((JdlEntity) element);
+      if (element instanceof JdlConstant && Objects.equals(myId, ((JdlConstant) element).getName())) {
+        constantRefs.add((JdlConstant) element);
         return false;
       }
       return true;
     }, ResolveState.initial(), null, myElement);
 
-    if (entityRefs.size() != 1) return null;
+    if (constantRefs.size() != 1) return null;
 
-    return entityRefs.get(0);
+    return constantRefs.get(0);
   }
 
   @Override
@@ -55,18 +51,12 @@ final class JdlEntityIdReference extends PsiReferenceBase<JdlId> {
     PsiFile containingFile = myElement.getContainingFile();
     if (containingFile == null) return EMPTY_OBJECT_ARRAY;
 
-    Collection<JdlEntity> entities = JdlDeclarationsModel.findAllEntities(containingFile);
+    Collection<JdlConstant> constants = JdlDeclarationsModel.findAllJdlConstants(containingFile);
     List<LookupElement> items = new ArrayList<>();
 
-    for (JdlEntity entity : entities) {
+    for (JdlConstant entity : constants) {
       items.add(LookupElementBuilder.create(entity)
-          .withIcon(JhipsterIcons.getEntityIcon()));
-    }
-
-    for (String predefinedEntity : PREDEFINED_ENTITIES) {
-      items.add(LookupElementBuilder.create(predefinedEntity)
-          .withIcon(JhipsterIcons.getEntityIcon())
-          .withTypeText("predefined"));
+          .withIcon(JhipsterIcons.getConstantIcon()));
     }
 
     return items.toArray();

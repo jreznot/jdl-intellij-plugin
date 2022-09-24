@@ -49,6 +49,9 @@
   implements("enum")=[
     "com.intellij.psi.PsiNameIdentifierOwner"
   ]
+  implements("constant")=[
+    "com.intellij.psi.PsiNameIdentifierOwner"
+  ]
 }
 
 root ::= (NEWLINE | application | entity | enum | relationshipGroup
@@ -112,11 +115,7 @@ withOptionValue ::= IDENTIFIER
 
 constant ::= constantName ASSIGN value {
     pin = 2
-    methods = [
-        getName
-        getNameElement
-        getPresentation
-    ]
+    mixin="org.strangeway.jdl.psi.JdlConstantMixin"
 }
 
 constantName ::= IDENTIFIER
