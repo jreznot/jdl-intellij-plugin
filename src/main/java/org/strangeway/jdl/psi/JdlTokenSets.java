@@ -1,6 +1,5 @@
 package org.strangeway.jdl.psi;
 
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
 
 public final class JdlTokenSets {
@@ -10,7 +9,6 @@ public final class JdlTokenSets {
   public static final TokenSet STRINGS = TokenSet.create(JdlTokenTypes.DOUBLE_QUOTED_STRING);
   public static final TokenSet BRACES = TokenSet.create(JdlTokenTypes.LBRACE, JdlTokenTypes.RBRACE);
   public static final TokenSet COMMENTS = TokenSet.create(JdlTokenTypes.LINE_COMMENT, JdlTokenTypes.BLOCK_COMMENT);
-  public static final TokenSet WHITESPACES = TokenSet.create(TokenType.WHITE_SPACE);
   public static final TokenSet DECLARATIONS = TokenSet.create(JdlTokenTypes.ENTITY, JdlTokenTypes.ENUM, JdlTokenTypes.CONSTANT);
 
   public static final TokenSet TOP_LEVEL_BLOCKS = TokenSet.create(

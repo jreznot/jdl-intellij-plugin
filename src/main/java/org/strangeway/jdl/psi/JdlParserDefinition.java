@@ -41,7 +41,7 @@ public final class JdlParserDefinition implements ParserDefinition {
 
   @Override
   public @NotNull TokenSet getWhitespaceTokens() {
-    return JdlTokenSets.WHITESPACES;
+    return TokenSet.WHITE_SPACE;
   }
 
   @Override
