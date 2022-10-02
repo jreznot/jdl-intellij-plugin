@@ -43,11 +43,9 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
 WHITE_SPACE = [\t ]+
 NEWLINE = \r\n|[\r\n]
 
-%state INSIDE_BLOCK
-
 %%
 
-<YYINITIAL, INSIDE_BLOCK> {
+<YYINITIAL> {
     ","                                  { return COMMA; }
     ":"                                  { return COLON; }
     "*"                                  { return WILDCARD; }
