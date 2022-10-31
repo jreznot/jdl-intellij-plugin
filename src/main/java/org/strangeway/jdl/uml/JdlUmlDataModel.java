@@ -17,10 +17,7 @@ import org.strangeway.jdl.JdlLanguage;
 import org.strangeway.jdl.psi.JdlEntity;
 import org.strangeway.jdl.psi.JdlEnum;
 import org.strangeway.jdl.psi.JdlFile;
-import org.strangeway.jdl.uml.model.JdlDiagramData;
-import org.strangeway.jdl.uml.model.JdlEntityNodeData;
-import org.strangeway.jdl.uml.model.JdlEnumNodeData;
-import org.strangeway.jdl.uml.model.JdlNodeData;
+import org.strangeway.jdl.uml.model.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +51,18 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   @Override
   public @Nullable DiagramNode<JdlNodeData> addElement(@Nullable JdlNodeData data) {
     if (data == null) return null;
+
+    if (data instanceof JdlFileRoot) {
+      JdlDiagramData diagramData = JdlUmlDataModel.extractData(getProject(), ((JdlFileRoot) data).getVirtualFile());
+      for (JdlEntityNodeData entity : diagramData.getEntities()) {
+        addElement(entity);
+      }
+      for (JdlEnumNodeData enumeration : diagramData.getEnums()) {
+        addElement(enumeration);
+      }
+
+      return null;
+    }
 
     JdlDiagramNode node = new JdlDiagramNode(data, getProvider());
     this.nodes.add(node);
