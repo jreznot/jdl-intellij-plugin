@@ -4,12 +4,12 @@ import org.jetbrains.annotations.NotNull;
 
 public final class JdlEntityNodeLink {
   private final JdlEntityNodeLinkType type;
-  private final JdlEntityNode fromEntity;
-  private final JdlEntityNode toEntity;
+  private final JdlEntityNodeData fromEntity;
+  private final JdlEntityNodeData toEntity;
 
   public JdlEntityNodeLink(@NotNull JdlEntityNodeLinkType type,
-                           @NotNull JdlEntityNode fromEntity,
-                           @NotNull JdlEntityNode toEntity) {
+                           @NotNull JdlEntityNodeData fromEntity,
+                           @NotNull JdlEntityNodeData toEntity) {
     this.type = type;
     this.fromEntity = fromEntity;
     this.toEntity = toEntity;
@@ -19,11 +19,11 @@ public final class JdlEntityNodeLink {
     return type;
   }
 
-  public @NotNull JdlEntityNode getFromEntity() {
+  public @NotNull JdlEntityNodeData getFromEntity() {
     return fromEntity;
   }
 
-  public @NotNull JdlEntityNode getToEntity() {
+  public @NotNull JdlEntityNodeData getToEntity() {
     return toEntity;
   }
 }

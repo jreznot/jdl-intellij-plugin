@@ -6,13 +6,13 @@ import java.util.List;
 
 public final class JdlDiagramData {
 
-  private final List<JdlEntityNode> entities;
-  private final List<JdlEnumNode> enums;
+  private final List<JdlEntityNodeData> entities;
+  private final List<JdlEnumNodeData> enums;
   private final List<JdlEntityNodeLink> entityLinks;
   private final List<JdlEnumNodeLink> enumLinks;
 
-  public JdlDiagramData(@NotNull List<JdlEntityNode> entities,
-                        @NotNull List<JdlEnumNode> enums,
+  public JdlDiagramData(@NotNull List<JdlEntityNodeData> entities,
+                        @NotNull List<JdlEnumNodeData> enums,
                         @NotNull List<JdlEntityNodeLink> entityLinks,
                         @NotNull List<JdlEnumNodeLink> enumLinks) {
     this.entities = entities;
@@ -21,11 +21,11 @@ public final class JdlDiagramData {
     this.enumLinks = enumLinks;
   }
 
-  public @NotNull List<JdlEntityNode> getEntities() {
+  public @NotNull List<JdlEntityNodeData> getEntities() {
     return entities;
   }
 
-  public @NotNull List<JdlEnumNode> getEnums() {
+  public @NotNull List<JdlEnumNodeData> getEnums() {
     return enums;
   }
 

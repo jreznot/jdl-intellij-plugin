@@ -44,7 +44,7 @@ public final class JdlFile extends PsiFileBase {
     return true;
   }
 
-  private List<PsiElement> getDeclarations() {
+  public List<PsiElement> getDeclarations() {
     return CachedValuesManager.getCachedValue(this, () ->
         Result.create(findDeclarations(this), PsiModificationTracker.MODIFICATION_COUNT)
     );

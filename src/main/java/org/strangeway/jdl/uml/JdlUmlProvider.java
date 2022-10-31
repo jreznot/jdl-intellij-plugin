@@ -6,13 +6,13 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.strangeway.jdl.uml.model.JdlDiagramNode;
+import org.strangeway.jdl.uml.model.JdlNodeData;
 
-final class JdlUmlProvider extends DiagramProvider<JdlDiagramNode> {
+final class JdlUmlProvider extends DiagramProvider<JdlNodeData> {
 
-  private final DiagramVfsResolver<JdlDiagramNode> vfsResolver = new JdlUmlVfsResolver();
-  private final DiagramElementManager<JdlDiagramNode> elementManager = new JdlUmlElementManager();
-  private final DiagramRelationshipManager<JdlDiagramNode> relationshipManager = new JdlUmlRelationshipManager();
+  private final DiagramVfsResolver<JdlNodeData> vfsResolver = new JdlUmlVfsResolver();
+  private final DiagramElementManager<JdlNodeData> elementManager = new JdlUmlElementManager();
+  private final DiagramRelationshipManager<JdlNodeData> relationshipManager = new JdlUmlRelationshipManager();
 
   @Pattern("[a-zA-Z0-9_-]*")
   @Override
@@ -26,12 +26,20 @@ final class JdlUmlProvider extends DiagramProvider<JdlDiagramNode> {
     return "JHipster Entities";
   }
 
+  public JdlUmlProvider() {
+    this.elementManager.setUmlProvider(this);
+  }
+
   @Override
-  public @NotNull DiagramDataModel<JdlDiagramNode> createDataModel(@NotNull Project project,
-                                                                   @Nullable JdlDiagramNode JdlDiagramNode,
-                                                                   @Nullable VirtualFile virtualFile,
-                                                                   @NotNull DiagramPresentationModel diagramPresentationModel) {
-    return new JdlUmlDataModel(project, this); // todo
+  public @NotNull DiagramDataModel<JdlNodeData> createDataModel(@NotNull Project project,
+                                                                @Nullable JdlNodeData seedData,
+                                                                @Nullable VirtualFile umlVirtualFile,
+                                                                @NotNull DiagramPresentationModel diagramPresentationModel) {
+    JdlUmlDataModel dataModel = new JdlUmlDataModel(project, this);
+    if (seedData != null) {
+      dataModel.addElement(seedData);
+    }
+    return dataModel;
   }
 
   @Override
@@ -40,17 +48,17 @@ final class JdlUmlProvider extends DiagramProvider<JdlDiagramNode> {
   }
 
   @Override
-  public @NotNull DiagramElementManager<JdlDiagramNode> getElementManager() {
+  public @NotNull DiagramElementManager<JdlNodeData> getElementManager() {
     return elementManager;
   }
 
   @Override
-  public @NotNull DiagramVfsResolver<JdlDiagramNode> getVfsResolver() {
+  public @NotNull DiagramVfsResolver<JdlNodeData> getVfsResolver() {
     return vfsResolver;
   }
 
   @Override
-  public @NotNull DiagramRelationshipManager<JdlDiagramNode> getRelationshipManager() {
+  public @NotNull DiagramRelationshipManager<JdlNodeData> getRelationshipManager() {
     return relationshipManager;
   }
 

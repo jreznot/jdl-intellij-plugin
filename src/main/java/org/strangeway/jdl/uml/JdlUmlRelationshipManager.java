@@ -4,11 +4,11 @@ import com.intellij.diagram.DiagramCategory;
 import com.intellij.diagram.DiagramRelationshipInfo;
 import com.intellij.diagram.DiagramRelationshipManager;
 import org.jetbrains.annotations.Nullable;
-import org.strangeway.jdl.uml.model.JdlDiagramNode;
+import org.strangeway.jdl.uml.model.JdlNodeData;
 
-final class JdlUmlRelationshipManager implements DiagramRelationshipManager<JdlDiagramNode> {
+final class JdlUmlRelationshipManager implements DiagramRelationshipManager<JdlNodeData> {
   @Override
-  public @Nullable DiagramRelationshipInfo getDependencyInfo(JdlDiagramNode jdlDiagramNode, JdlDiagramNode t1, DiagramCategory diagramCategory) {
+  public @Nullable DiagramRelationshipInfo getDependencyInfo(JdlNodeData jdlNodeData, JdlNodeData t1, DiagramCategory diagramCategory) {
     return null;
   }
 }
