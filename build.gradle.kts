@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "1.4.0"
+version = "2.0.0"
 
 repositories {
   mavenCentral()
@@ -15,7 +15,7 @@ java.sourceSets["main"].java {
 }
 
 intellij {
-  version.set("2022.1.4")
+  version.set("2022.2.3")
   type.set("IU")
 
   plugins.set(listOf("com.intellij.java", "uml"))
