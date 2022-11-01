@@ -9,11 +9,13 @@ import com.intellij.openapi.util.ModificationTracker;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.PsiModificationTracker;
+import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.JdlLanguage;
 import org.strangeway.jdl.psi.JdlEntity;
 import org.strangeway.jdl.psi.JdlEnum;
+import org.strangeway.jdl.psi.JdlEnumValue;
 import org.strangeway.jdl.psi.JdlFile;
 import org.strangeway.jdl.uml.model.*;
 
@@ -93,11 +95,17 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
       if (declaration instanceof JdlEnum) {
         JdlEnum enumeration = (JdlEnum) declaration;
         String name = enumeration.getName();
-        enums.add(new JdlEnumNodeData(name != null ? name : "", List.of()));
+
+        List<String> enumItems = ContainerUtil.map(enumeration.getEnumValueList(), JdlEnumValue::getName);
+        enums.add(new JdlEnumNodeData(name != null ? name : "", enumItems));
       } else if (declaration instanceof JdlEntity) {
         JdlEntity entity = (JdlEntity) declaration;
         String name = entity.getName();
-        entities.add(new JdlEntityNodeData(name != null ? name : "", List.of()));
+
+        List<JdlEntityNodeField> fieldItems = ContainerUtil.map(entity.getEntityFieldMappingList(), field ->
+            new JdlEntityNodeField(field.getName(), field.getType(), field.isRequired()));
+
+        entities.add(new JdlEntityNodeData(name != null ? name : "", fieldItems));
       }
     }
 

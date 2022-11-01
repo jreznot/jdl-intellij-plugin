@@ -1,6 +1,7 @@
 package org.strangeway.jdl.uml.model;
 
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.JhipsterIcons;
 
@@ -8,12 +9,12 @@ import javax.swing.*;
 
 public final class JdlDiagramRootData implements JdlNodeData {
 
-  private final VirtualFile virtualFile;
+  private final VirtualFilePointer virtualFile;
   private final String name;
 
-  public JdlDiagramRootData(VirtualFile virtualFile) {
+  public JdlDiagramRootData(VirtualFilePointer virtualFile) {
     this.virtualFile = virtualFile;
-    this.name = virtualFile.getName();
+    this.name = virtualFile.getFileName();
   }
 
   @Override
@@ -27,7 +28,6 @@ public final class JdlDiagramRootData implements JdlNodeData {
   }
 
   public @Nullable VirtualFile getVirtualFile() {
-    if (!virtualFile.isValid()) return null;
-    return virtualFile;
+    return virtualFile.getFile();
   }
 }

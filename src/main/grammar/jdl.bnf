@@ -192,6 +192,7 @@ entityFieldMapping ::= fieldName fieldType fieldConstraint* {
         getType
         getNameElement
         getPresentation
+        isRequired
     ]
 }
 

@@ -66,4 +66,9 @@ public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements J
     return JdlPsiUtils.getPresentation(this);
   }
 
+  @Override
+  public boolean isRequired() {
+    return JdlPsiUtils.isRequired(this);
+  }
+
 }

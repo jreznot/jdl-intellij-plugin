@@ -25,4 +25,6 @@ public interface JdlEntityFieldMapping extends PsiElement {
 
   @NotNull ItemPresentation getPresentation();
 
+  boolean isRequired();
+
 }

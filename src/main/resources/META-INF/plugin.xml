@@ -88,6 +88,7 @@
             description="Runs jhipster jdl command"
             id="JhipsterJdlRunFloatingAction">
       <add-to-group group-id="EditorContextBarMenu"/>
+      <add-to-group group-id="RunContextGroup"/>
     </action>
   </actions>
 </idea-plugin>

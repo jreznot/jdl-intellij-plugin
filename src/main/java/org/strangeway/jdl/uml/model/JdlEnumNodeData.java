@@ -1,5 +1,6 @@
 package org.strangeway.jdl.uml.model;
 
+import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.JhipsterIcons;
 
@@ -8,11 +9,11 @@ import java.util.List;
 
 public final class JdlEnumNodeData implements JdlNodeData {
   private final String name;
-  private final List<String> options;
+  private final List<JdlEnumNodeItem> options;
 
   public JdlEnumNodeData(@NotNull String name, @NotNull List<@NotNull String> options) {
     this.name = name;
-    this.options = options;
+    this.options = ContainerUtil.map(options, JdlEnumNodeItem::new);
   }
 
   @Override
@@ -25,7 +26,7 @@ public final class JdlEnumNodeData implements JdlNodeData {
     return JhipsterIcons.getEnumIcon();
   }
 
-  public @NotNull List<@NotNull String> getOptions() {
+  public @NotNull List<@NotNull JdlEnumNodeItem> getOptions() {
     return options;
   }
 }

@@ -166,6 +166,10 @@ public final class JdlPsiUtils {
     return fieldType.getText();
   }
 
+  public static boolean isRequired(@NotNull JdlEntityFieldMapping fieldMapping) {
+    return false; // todo
+  }
+
   public static @NotNull ItemPresentation getPresentation(@NotNull JdlEntityFieldMapping fieldMapping) {
     return new ItemPresentation() {
       @Override

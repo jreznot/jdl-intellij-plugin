@@ -8,9 +8,9 @@ import java.util.List;
 
 public final class JdlEntityNodeData implements JdlNodeData {
   private final String name;
-  private final List<JdlEntityNodeProperty> properties;
+  private final List<JdlEntityNodeField> properties;
 
-  public JdlEntityNodeData(@NotNull String name, @NotNull List<JdlEntityNodeProperty> properties) {
+  public JdlEntityNodeData(@NotNull String name, @NotNull List<JdlEntityNodeField> properties) {
     this.name = name;
     this.properties = properties;
   }
@@ -25,7 +25,7 @@ public final class JdlEntityNodeData implements JdlNodeData {
     return JhipsterIcons.getEntityIcon();
   }
 
-  public @NotNull List<JdlEntityNodeProperty> getProperties() {
+  public @NotNull List<JdlEntityNodeField> getProperties() {
     return properties;
   }
 }
