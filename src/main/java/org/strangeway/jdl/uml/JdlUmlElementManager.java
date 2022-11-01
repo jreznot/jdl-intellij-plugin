@@ -15,11 +15,6 @@ import org.strangeway.jdl.uml.model.JdlEnumNodeData;
 import org.strangeway.jdl.uml.model.JdlFileRoot;
 import org.strangeway.jdl.uml.model.JdlNodeData;
 
-import java.util.Collection;
-import java.util.List;
-
-import static java.util.Collections.emptyList;
-
 final class JdlUmlElementManager extends AbstractDiagramElementManager<JdlNodeData> {
   @Override
   public @Nullable JdlNodeData findInDataContext(@NotNull DataContext dataContext) {
@@ -30,17 +25,6 @@ final class JdlUmlElementManager extends AbstractDiagramElementManager<JdlNodeDa
     if (virtualFile == null) return null;
 
     return new JdlFileRoot(virtualFile);
-  }
-
-  @Override
-  public @NotNull Collection<JdlNodeData> findElementsInDataContext(@NotNull DataContext dataContext) {
-    PsiFile file = PlatformCoreDataKeys.PSI_FILE.getData(dataContext);
-    if (!(file instanceof JdlFile)) return emptyList();
-
-    VirtualFile virtualFile = file.getVirtualFile();
-    if (virtualFile == null) return emptyList();
-
-    return List.of(new JdlFileRoot(virtualFile));
   }
 
   @Override
