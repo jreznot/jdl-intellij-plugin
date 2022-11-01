@@ -8,7 +8,7 @@ import org.strangeway.jdl.uml.model.JdlNodeData;
 
 final class JdlUmlRelationshipManager implements DiagramRelationshipManager<JdlNodeData> {
   @Override
-  public @Nullable DiagramRelationshipInfo getDependencyInfo(JdlNodeData jdlNodeData, JdlNodeData t1, DiagramCategory diagramCategory) {
+  public @Nullable DiagramRelationshipInfo getDependencyInfo(JdlNodeData from, JdlNodeData to, DiagramCategory diagramCategory) {
     return null;
   }
 }

@@ -2,38 +2,39 @@ package org.strangeway.jdl.uml.model;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.List;
 
 public final class JdlDiagramData {
 
-  private final List<JdlEntityNodeData> entities;
-  private final List<JdlEnumNodeData> enums;
-  private final List<JdlEntityNodeLink> entityLinks;
-  private final List<JdlEnumNodeLink> enumLinks;
+  private final Collection<JdlEntityNodeData> entities;
+  private final Collection<JdlEnumNodeData> enums;
+  private final Collection<JdlEntityNodeLink> entityLinks;
+  private final Collection<JdlEnumNodeLink> enumLinks;
 
-  public JdlDiagramData(@NotNull List<JdlEntityNodeData> entities,
-                        @NotNull List<JdlEnumNodeData> enums,
-                        @NotNull List<JdlEntityNodeLink> entityLinks,
-                        @NotNull List<JdlEnumNodeLink> enumLinks) {
+  public JdlDiagramData(@NotNull Collection<JdlEntityNodeData> entities,
+                        @NotNull Collection<JdlEnumNodeData> enums,
+                        @NotNull Collection<JdlEntityNodeLink> entityLinks,
+                        @NotNull Collection<JdlEnumNodeLink> enumLinks) {
     this.entities = entities;
     this.enums = enums;
     this.entityLinks = entityLinks;
     this.enumLinks = enumLinks;
   }
 
-  public @NotNull List<JdlEntityNodeData> getEntities() {
+  public @NotNull Collection<JdlEntityNodeData> getEntities() {
     return entities;
   }
 
-  public @NotNull List<JdlEnumNodeData> getEnums() {
+  public @NotNull Collection<JdlEnumNodeData> getEnums() {
     return enums;
   }
 
-  public @NotNull List<JdlEntityNodeLink> getEntityLinks() {
+  public @NotNull Collection<JdlEntityNodeLink> getEntityLinks() {
     return entityLinks;
   }
 
-  public @NotNull List<JdlEnumNodeLink> getEnumLinks() {
+  public @NotNull Collection<JdlEnumNodeLink> getEnumLinks() {
     return enumLinks;
   }
 }

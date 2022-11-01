@@ -7,25 +7,22 @@ import com.intellij.diagram.DiagramProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.ModificationTracker;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.JdlLanguage;
-import org.strangeway.jdl.psi.JdlEntity;
-import org.strangeway.jdl.psi.JdlEnum;
-import org.strangeway.jdl.psi.JdlEnumValue;
-import org.strangeway.jdl.psi.JdlFile;
+import org.strangeway.jdl.psi.*;
 import org.strangeway.jdl.uml.model.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   private final List<JdlDiagramNode> nodes = new ArrayList<>();
+  private final List<JdlDiagramEntityEdge> edges = new ArrayList<>();
 
   public JdlUmlDataModel(@NotNull Project project,
                          @NotNull DiagramProvider<JdlNodeData> provider) {
@@ -54,11 +51,21 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
 
     if (data instanceof JdlDiagramRootData) {
       var diagramData = JdlUmlDataModel.extractData(getProject(), ((JdlDiagramRootData) data).getVirtualFile());
+      var entityMapping = new HashMap<JdlEntityNodeData, DiagramNode<JdlNodeData>>();
+
+      // todo Add User entity in case we have relations to it !!!
+
       for (var entity : diagramData.getEntities()) {
-        addElement(entity);
+        entityMapping.put(entity, addElement(entity));
       }
       for (var enumeration : diagramData.getEnums()) {
         addElement(enumeration);
+      }
+
+      for (JdlEntityNodeLink entityLink : diagramData.getEntityLinks()) {
+        var from = entityMapping.get(entityLink.getFromEntity());
+        var to = entityMapping.get(entityLink.getToEntity());
+        edges.add(new JdlDiagramEntityEdge(from, to, entityLink.getType()));
       }
 
       return null;
@@ -71,7 +78,7 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
 
   @Override
   public @NotNull Collection<? extends DiagramEdge<JdlNodeData>> getEdges() {
-    return Collections.emptyList(); // todo
+    return edges;
   }
 
   @Override
@@ -88,28 +95,58 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   }
 
   public static @NotNull JdlDiagramData extractData(@NotNull JdlFile file) {
-    List<JdlEntityNodeData> entities = new ArrayList<>();
-    List<JdlEnumNodeData> enums = new ArrayList<>();
+    Map<String, JdlEntityNodeData> entities = new HashMap<>();
+    Map<String, JdlEnumNodeData> enums = new HashMap<>();
 
     for (var declaration : file.getDeclarations()) {
       if (declaration instanceof JdlEnum) {
         JdlEnum enumeration = (JdlEnum) declaration;
         String name = enumeration.getName();
 
-        List<String> enumItems = ContainerUtil.map(enumeration.getEnumValueList(), JdlEnumValue::getName);
-        enums.add(new JdlEnumNodeData(name != null ? name : "", enumItems));
+        if (name != null) {
+          List<String> enumItems = ContainerUtil.map(enumeration.getEnumValueList(), JdlEnumValue::getName);
+          enums.put(name, new JdlEnumNodeData(name, enumItems));
+        }
       } else if (declaration instanceof JdlEntity) {
         JdlEntity entity = (JdlEntity) declaration;
         String name = entity.getName();
 
-        List<JdlEntityNodeField> fieldItems = ContainerUtil.map(entity.getEntityFieldMappingList(), field ->
-            new JdlEntityNodeField(field.getName(), field.getType(), field.isRequired()));
+        if (name != null) {
+          List<JdlEntityNodeField> fieldItems = ContainerUtil.map(entity.getEntityFieldMappingList(), field ->
+              new JdlEntityNodeField(field.getName(), field.getType(), field.isRequired()));
+          entities.put(name, new JdlEntityNodeData(name, fieldItems));
+        }
+      }
+    }
 
-        entities.add(new JdlEntityNodeData(name != null ? name : "", fieldItems));
+    List<JdlRelationshipGroup> relationships = Arrays.stream(file.getChildren())
+        .filter(c -> c instanceof JdlRelationshipGroup)
+        .map(c -> ((JdlRelationshipGroup) c))
+        .collect(Collectors.toList());
+
+    List<JdlEntityNodeLink> entityLinks = new ArrayList<>();
+    for (JdlRelationshipGroup relationshipGroup : relationships) {
+      var type = JdlEntityNodeLinkType.fromString(relationshipGroup.getType());
+      if (type == null) continue;
+
+      for (JdlRelationshipMapping mapping : relationshipGroup.getRelationshipMappingList()) {
+        var entityPair = mapping.getRelationshipEntityList().stream()
+            .map(JdlRelationshipEntity::getId)
+            .map(PsiElement::getText)
+            .collect(Collectors.toList());
+
+        if (entityPair.size() == 2) {
+          var leftEntityNode = entities.get(entityPair.get(0));
+          var rightEntityNode = entities.get(entityPair.get(1));
+
+          if (leftEntityNode != null && rightEntityNode != null) {
+            entityLinks.add(new JdlEntityNodeLink(type, leftEntityNode, rightEntityNode));
+          }
+        }
       }
     }
 
     // todo
-    return new JdlDiagramData(entities, enums, List.of(), List.of());
+    return new JdlDiagramData(entities.values(), enums.values(), entityLinks, List.of());
   }
 }
