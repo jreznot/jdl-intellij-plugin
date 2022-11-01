@@ -10,21 +10,21 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.psi.JdlFile;
+import org.strangeway.jdl.uml.model.JdlDiagramRootData;
 import org.strangeway.jdl.uml.model.JdlEntityNodeData;
 import org.strangeway.jdl.uml.model.JdlEnumNodeData;
-import org.strangeway.jdl.uml.model.JdlFileRoot;
 import org.strangeway.jdl.uml.model.JdlNodeData;
 
 final class JdlUmlElementManager extends AbstractDiagramElementManager<JdlNodeData> {
   @Override
   public @Nullable JdlNodeData findInDataContext(@NotNull DataContext dataContext) {
-    PsiFile file = PlatformCoreDataKeys.PSI_FILE.getData(dataContext);
+    var file = PlatformCoreDataKeys.PSI_FILE.getData(dataContext);
     if (!(file instanceof JdlFile)) return null;
 
-    VirtualFile virtualFile = file.getVirtualFile();
+    var virtualFile = file.getVirtualFile();
     if (virtualFile == null) return null;
 
-    return new JdlFileRoot(virtualFile);
+    return new JdlDiagramRootData(virtualFile);
   }
 
   @Override
@@ -34,7 +34,7 @@ final class JdlUmlElementManager extends AbstractDiagramElementManager<JdlNodeDa
 
   @Override
   public boolean canBeBuiltFrom(@Nullable Object element) {
-    return element instanceof JdlFileRoot || super.canBeBuiltFrom(element);
+    return element instanceof JdlDiagramRootData || super.canBeBuiltFrom(element);
   }
 
   @Override

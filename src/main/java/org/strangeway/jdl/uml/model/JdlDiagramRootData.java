@@ -6,12 +6,12 @@ import org.strangeway.jdl.JhipsterIcons;
 
 import javax.swing.*;
 
-public final class JdlFileRoot implements JdlNodeData {
+public final class JdlDiagramRootData implements JdlNodeData {
 
   private final VirtualFile virtualFile;
   private final String name;
 
-  public JdlFileRoot(VirtualFile virtualFile) {
+  public JdlDiagramRootData(VirtualFile virtualFile) {
     this.virtualFile = virtualFile;
     this.name = virtualFile.getName();
   }

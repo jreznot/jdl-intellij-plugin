@@ -7,8 +7,6 @@ import com.intellij.diagram.DiagramProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.ModificationTracker;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.PsiModificationTracker;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +32,7 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
 
   @Override
   public @NotNull ModificationTracker getModificationTracker() {
-    var psiModificationTracker = PsiModificationTracker.SERVICE.getInstance(getProject());
+    var psiModificationTracker = PsiModificationTracker.getInstance(getProject());
     return psiModificationTracker.forLanguage(JdlLanguage.INSTANCE);
   }
 
@@ -52,19 +50,19 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   public @Nullable DiagramNode<JdlNodeData> addElement(@Nullable JdlNodeData data) {
     if (data == null) return null;
 
-    if (data instanceof JdlFileRoot) {
-      JdlDiagramData diagramData = JdlUmlDataModel.extractData(getProject(), ((JdlFileRoot) data).getVirtualFile());
-      for (JdlEntityNodeData entity : diagramData.getEntities()) {
+    if (data instanceof JdlDiagramRootData) {
+      var diagramData = JdlUmlDataModel.extractData(getProject(), ((JdlDiagramRootData) data).getVirtualFile());
+      for (var entity : diagramData.getEntities()) {
         addElement(entity);
       }
-      for (JdlEnumNodeData enumeration : diagramData.getEnums()) {
+      for (var enumeration : diagramData.getEnums()) {
         addElement(enumeration);
       }
 
       return null;
     }
 
-    JdlDiagramNode node = new JdlDiagramNode(data, getProvider());
+    var node = new JdlDiagramNode(data, getProvider());
     this.nodes.add(node);
     return node;
   }
@@ -81,7 +79,7 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   public static @NotNull JdlDiagramData extractData(@NotNull Project project, @Nullable VirtualFile file) {
     if (file == null) return new JdlDiagramData(List.of(), List.of(), List.of(), List.of());
 
-    PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
+    var psiFile = PsiManager.getInstance(project).findFile(file);
     if (!(psiFile instanceof JdlFile)) return new JdlDiagramData(List.of(), List.of(), List.of(), List.of());
 
     return extractData((JdlFile) psiFile);
@@ -91,7 +89,7 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
     List<JdlEntityNodeData> entities = new ArrayList<>();
     List<JdlEnumNodeData> enums = new ArrayList<>();
 
-    for (PsiElement declaration : file.getDeclarations()) {
+    for (var declaration : file.getDeclarations()) {
       if (declaration instanceof JdlEnum) {
         JdlEnum enumeration = (JdlEnum) declaration;
         String name = enumeration.getName();
