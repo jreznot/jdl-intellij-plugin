@@ -39,18 +39,18 @@ final class JdlDiagramEntityEdge extends DiagramEdgeBase<JdlNodeData> {
 
   static final DiagramRelationshipInfo ONE_TO_MANY = (new DiagramRelationshipInfoAdapter.Builder()).setName("TO_MANY")
       .setLineType(DiagramLineType.SOLID)
-      .setSourceArrow(DiagramRelationshipInfo.DIAMOND)
-      .setTargetArrow(DiagramRelationshipInfo.ANGLE)
-      .setUpperTargetLabel("*")
-      .setUpperSourceLabel("1")
-      .create();
-
-  static final DiagramRelationshipInfo MANY_TO_ONE = (new DiagramRelationshipInfoAdapter.Builder()).setName("TO_MANY")
-      .setLineType(DiagramLineType.SOLID)
       .setSourceArrow(DiagramRelationshipInfo.ANGLE)
       .setTargetArrow(DiagramRelationshipInfo.DIAMOND)
       .setUpperTargetLabel("1")
       .setUpperSourceLabel("*")
+      .create();
+
+  static final DiagramRelationshipInfo MANY_TO_ONE = (new DiagramRelationshipInfoAdapter.Builder()).setName("TO_MANY")
+      .setLineType(DiagramLineType.SOLID)
+      .setSourceArrow(DiagramRelationshipInfo.DIAMOND)
+      .setTargetArrow(DiagramRelationshipInfo.ANGLE)
+      .setUpperTargetLabel("*")
+      .setUpperSourceLabel("1")
       .create();
 
   static final DiagramRelationshipInfo MANY_TO_MANY = (new DiagramRelationshipInfoAdapter.Builder()).setName("TO_MANY")

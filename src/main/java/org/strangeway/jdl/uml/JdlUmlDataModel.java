@@ -20,9 +20,11 @@ import org.strangeway.jdl.uml.model.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.strangeway.jdl.JdlConstants.USER_ENTITY_NAME;
+
 final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   private final List<JdlDiagramNode> nodes = new ArrayList<>();
-  private final List<JdlDiagramEntityEdge> edges = new ArrayList<>();
+  private final List<DiagramEdge<JdlNodeData>> edges = new ArrayList<>();
 
   public JdlUmlDataModel(@NotNull Project project,
                          @NotNull DiagramProvider<JdlNodeData> provider) {
@@ -52,6 +54,7 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
     if (data instanceof JdlDiagramRootData) {
       var diagramData = JdlUmlDataModel.extractData(getProject(), ((JdlDiagramRootData) data).getVirtualFile());
       var entityMapping = new HashMap<JdlEntityNodeData, DiagramNode<JdlNodeData>>();
+      var enumMapping = new HashMap<JdlEnumNodeData, DiagramNode<JdlNodeData>>();
 
       // todo Add User entity in case we have relations to it !!!
 
@@ -59,13 +62,19 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
         entityMapping.put(entity, addElement(entity));
       }
       for (var enumeration : diagramData.getEnums()) {
-        addElement(enumeration);
+        enumMapping.put(enumeration, addElement(enumeration));
       }
 
       for (JdlEntityNodeLink entityLink : diagramData.getEntityLinks()) {
         var from = entityMapping.get(entityLink.getFromEntity());
         var to = entityMapping.get(entityLink.getToEntity());
         edges.add(new JdlDiagramEntityEdge(from, to, entityLink.getType()));
+      }
+
+      for (JdlEnumNodeLink enumLink : diagramData.getEnumLinks()) {
+        var from = entityMapping.get(enumLink.getEntity());
+        var to = enumMapping.get(enumLink.getEnumeration());
+        edges.add(new JdlDiagramEnumEdge(from, to));
       }
 
       return null;
@@ -95,6 +104,8 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   }
 
   public static @NotNull JdlDiagramData extractData(@NotNull JdlFile file) {
+    var userEntityData = new JdlEntityNodeData(USER_ENTITY_NAME, List.of());
+
     Map<String, JdlEntityNodeData> entities = new HashMap<>();
     Map<String, JdlEnumNodeData> enums = new HashMap<>();
 
@@ -136,6 +147,12 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
             .collect(Collectors.toList());
 
         if (entityPair.size() == 2) {
+          if (USER_ENTITY_NAME.equals(entityPair.get(0)) || USER_ENTITY_NAME.equals(entityPair.get(1))) {
+            if (!entities.containsKey(USER_ENTITY_NAME)) {
+              entities.put(USER_ENTITY_NAME, userEntityData);
+            }
+          }
+
           var leftEntityNode = entities.get(entityPair.get(0));
           var rightEntityNode = entities.get(entityPair.get(1));
 
@@ -146,7 +163,18 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
       }
     }
 
-    // todo
-    return new JdlDiagramData(entities.values(), enums.values(), entityLinks, List.of());
+    List<JdlEnumNodeLink> enumLinks = new ArrayList<>();
+
+    for (var entityNodeData : entities.values()) {
+      for (var property : entityNodeData.getProperties()) {
+        var enumNodeData = enums.get(property.getType());
+
+        if (enumNodeData != null) {
+          enumLinks.add(new JdlEnumNodeLink(entityNodeData, enumNodeData));
+        }
+      }
+    }
+
+    return new JdlDiagramData(entities.values(), enums.values(), entityLinks, enumLinks);
   }
 }

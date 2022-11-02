@@ -85,10 +85,10 @@ public final class JdlConstants {
       "maxbytes()"
   );
 
+  public static final String USER_ENTITY_NAME = "User";
+
   public static final List<String> PREDEFINED_ENTITIES = List.of(
-      "User",
+      USER_ENTITY_NAME,
       "Authority"
   );
-
-  public static final String ALL_ENTITIES_MATCHER = "all";
 }

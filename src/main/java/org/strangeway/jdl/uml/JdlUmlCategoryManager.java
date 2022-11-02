@@ -7,6 +7,6 @@ import org.jetbrains.annotations.NotNull;
 final class JdlUmlCategoryManager extends AbstractDiagramNodeContentManager {
   @Override
   public DiagramCategory @NotNull [] getContentCategories() {
-    return new DiagramCategory[0]; // todo
+    return new DiagramCategory[0]; // todo on/off properties view
   }
 }
