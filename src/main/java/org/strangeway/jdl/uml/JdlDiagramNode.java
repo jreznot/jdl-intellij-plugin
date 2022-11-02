@@ -10,7 +10,7 @@ import org.strangeway.jdl.uml.model.JdlNodeData;
 
 import javax.swing.*;
 
-public final class JdlDiagramNode extends UserDataHolderBase implements DiagramNode<JdlNodeData> {
+final class JdlDiagramNode extends UserDataHolderBase implements DiagramNode<JdlNodeData> {
 
   private final JdlNodeData data;
   private final DiagramProvider<JdlNodeData> provider;

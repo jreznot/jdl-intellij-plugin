@@ -8,11 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.jdl.uml.model.JdlNodeData;
 
+import static com.intellij.diagram.DiagramRelationshipManager.NO_RELATIONSHIP_MANAGER;
+
 final class JdlUmlProvider extends DiagramProvider<JdlNodeData> {
 
   private final DiagramVfsResolver<JdlNodeData> vfsResolver = new JdlUmlVfsResolver();
   private final DiagramElementManager<JdlNodeData> elementManager = new JdlUmlElementManager();
-  private final DiagramRelationshipManager<JdlNodeData> relationshipManager = new JdlUmlRelationshipManager();
 
   @Pattern("[a-zA-Z0-9_-]*")
   @Override
@@ -57,9 +58,10 @@ final class JdlUmlProvider extends DiagramProvider<JdlNodeData> {
     return vfsResolver;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public @NotNull DiagramRelationshipManager<JdlNodeData> getRelationshipManager() {
-    return relationshipManager;
+    return (DiagramRelationshipManager<JdlNodeData>) NO_RELATIONSHIP_MANAGER;
   }
 
   @Override

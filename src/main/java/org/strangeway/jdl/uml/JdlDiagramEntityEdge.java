@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.uml.model.JdlEntityNodeLinkType;
 import org.strangeway.jdl.uml.model.JdlNodeData;
 
-public class JdlDiagramEntityEdge extends DiagramEdgeBase<JdlNodeData> {
+final class JdlDiagramEntityEdge extends DiagramEdgeBase<JdlNodeData> {
   public JdlDiagramEntityEdge(@NotNull DiagramNode<JdlNodeData> source, @NotNull DiagramNode<JdlNodeData> target,
                               @NotNull JdlEntityNodeLinkType linkType) {
     super(source, target, toRelationshipInfo(linkType));
@@ -31,7 +31,7 @@ public class JdlDiagramEntityEdge extends DiagramEdgeBase<JdlNodeData> {
 
   static final DiagramRelationshipInfo ONE_TO_ONE = (new DiagramRelationshipInfoAdapter.Builder()).setName("TO_ONE")
       .setLineType(DiagramLineType.SOLID)
-      .setSourceArrow(DiagramRelationshipInfo.DIAMOND)
+      .setSourceArrow(DiagramRelationshipInfo.ANGLE)
       .setTargetArrow(DiagramRelationshipInfo.ANGLE)
       .setUpperTargetLabel("1")
       .setUpperSourceLabel("1")
@@ -56,7 +56,7 @@ public class JdlDiagramEntityEdge extends DiagramEdgeBase<JdlNodeData> {
   static final DiagramRelationshipInfo MANY_TO_MANY = (new DiagramRelationshipInfoAdapter.Builder()).setName("TO_MANY")
       .setLineType(DiagramLineType.SOLID)
       .setSourceArrow(DiagramRelationshipInfo.DIAMOND)
-      .setTargetArrow(DiagramRelationshipInfo.ANGLE)
+      .setTargetArrow(DiagramRelationshipInfo.DIAMOND)
       .setUpperTargetLabel("*")
       .setUpperSourceLabel("*")
       .create();
