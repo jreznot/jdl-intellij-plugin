@@ -167,7 +167,8 @@ public final class JdlPsiUtils {
   }
 
   public static boolean isRequired(@NotNull JdlEntityFieldMapping fieldMapping) {
-    return false; // todo
+    return fieldMapping.getFieldConstraintList().stream()
+        .anyMatch(c -> "required".equals(c.getFieldConstraintId().getText()));
   }
 
   public static @NotNull ItemPresentation getPresentation(@NotNull JdlEntityFieldMapping fieldMapping) {

@@ -930,13 +930,13 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER fieldConstraintParameters?
+  // fieldConstraintId fieldConstraintParameters?
   public static boolean fieldConstraint(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fieldConstraint")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
+    r = fieldConstraintId(b, l + 1);
     r = r && fieldConstraint_1(b, l + 1);
     exit_section_(b, m, FIELD_CONSTRAINT, r);
     return r;
@@ -947,6 +947,18 @@ public class JdlParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "fieldConstraint_1")) return false;
     fieldConstraintParameters(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean fieldConstraintId(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fieldConstraintId")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, FIELD_CONSTRAINT_ID, r);
+    return r;
   }
 
   /* ********************************************************** */

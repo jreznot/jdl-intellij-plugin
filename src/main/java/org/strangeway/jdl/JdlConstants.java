@@ -73,8 +73,10 @@ public final class JdlConstants {
       Map.entry("Date", "java.util.Date")
   );
 
+  public static final String REQUIRED_FIELD_CONSTRAINT = "required";
+
   public static final List<String> FIELD_VALIDATIONS = List.of(
-      "required",
+      REQUIRED_FIELD_CONSTRAINT,
       "unique",
       "minlength()",
       "maxlength()",

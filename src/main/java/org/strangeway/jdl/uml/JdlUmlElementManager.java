@@ -81,6 +81,9 @@ final class JdlUmlElementManager extends AbstractDiagramElementManager<JdlNodeDa
   @Override
   public @Nullable Icon getItemIcon(@Nullable JdlNodeData nodeElement, @Nullable Object nodeItem, @Nullable DiagramBuilder builder) {
     if (nodeItem instanceof JdlEntityNodeField) {
+      if (((JdlEntityNodeField) nodeItem).isRequired()) {
+        return JhipsterIcons.getRequiredFieldIcon();
+      }
       return JhipsterIcons.getFieldIcon();
     }
     if (nodeItem instanceof JdlEnumNodeItem) {

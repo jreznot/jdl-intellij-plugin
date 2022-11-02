@@ -196,7 +196,9 @@ entityFieldMapping ::= fieldName fieldType fieldConstraint* {
     ]
 }
 
-fieldConstraint ::= IDENTIFIER fieldConstraintParameters?
+fieldConstraint ::= fieldConstraintId fieldConstraintParameters?
+
+fieldConstraintId ::= IDENTIFIER
 
 fieldConstraintParameters ::= LPARENTH fieldConstraintParameterValue* RPARENTH {
     pin = 1

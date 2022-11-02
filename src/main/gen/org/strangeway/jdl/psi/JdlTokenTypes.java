@@ -32,6 +32,7 @@ public interface JdlTokenTypes {
   IElementType EXCEPT_ENTITIES = new JdlElementType("EXCEPT_ENTITIES");
   IElementType EXPLICIT_ENUM_MAPPING = new JdlElementType("EXPLICIT_ENUM_MAPPING");
   IElementType FIELD_CONSTRAINT = new JdlElementType("FIELD_CONSTRAINT");
+  IElementType FIELD_CONSTRAINT_ID = new JdlElementType("FIELD_CONSTRAINT_ID");
   IElementType FIELD_CONSTRAINT_PARAMETERS = new JdlElementType("FIELD_CONSTRAINT_PARAMETERS");
   IElementType FIELD_NAME = new JdlElementType("FIELD_NAME");
   IElementType FIELD_NAME_REF = new JdlElementType("FIELD_NAME_REF");
@@ -159,6 +160,9 @@ public interface JdlTokenTypes {
       }
       else if (type == FIELD_CONSTRAINT) {
         return new JdlFieldConstraintImpl(node);
+      }
+      else if (type == FIELD_CONSTRAINT_ID) {
+        return new JdlFieldConstraintIdImpl(node);
       }
       else if (type == FIELD_CONSTRAINT_PARAMETERS) {
         return new JdlFieldConstraintParametersImpl(node);
