@@ -1,5 +1,13 @@
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij">
         <diagram.Provider implementation="org.strangeway.jdl.uml.JdlUmlProvider"/>
+
+        <fileEditorProvider implementation="org.strangeway.jdl.uml.JdlSplitEditorProvider"/>
     </extensions>
+
+    <actions>
+        <action id="JDL.Layout.EditorOnly" class="org.strangeway.jdl.uml.JdlChangePreviewLayoutAction$EditorOnly"/>
+        <action id="JDL.Layout.EditorAndPreview" class="org.strangeway.jdl.uml.JdlChangePreviewLayoutAction$EditorAndPreview"/>
+        <action id="JDL.Layout.PreviewOnly" class="org.strangeway.jdl.uml.JdlChangePreviewLayoutAction$PreviewOnly"/>
+    </actions>
 </idea-plugin>
