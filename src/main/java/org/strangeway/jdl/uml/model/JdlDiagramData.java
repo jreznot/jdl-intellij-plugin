@@ -3,7 +3,6 @@ package org.strangeway.jdl.uml.model;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.List;
 
 public final class JdlDiagramData {
 

@@ -6,7 +6,10 @@ import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.model.JdlOptionMapping;
 import org.strangeway.jdl.model.JdlOptionModel;
-import org.strangeway.jdl.psi.*;
+import org.strangeway.jdl.psi.JdlConfigBlock;
+import org.strangeway.jdl.psi.JdlDeployment;
+import org.strangeway.jdl.psi.JdlOptionNameValue;
+import org.strangeway.jdl.psi.JdlVisitor;
 
 import java.util.Map;
 
