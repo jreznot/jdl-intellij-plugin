@@ -4,7 +4,10 @@ import com.intellij.diagram.AbstractDiagramElementManager;
 import com.intellij.diagram.DiagramBuilder;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.PlatformCoreDataKeys;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointerManager;
+import com.intellij.psi.PsiFile;
 import com.intellij.ui.SimpleColoredText;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.util.ArrayUtil;
@@ -26,7 +29,12 @@ final class JdlUmlElementManager extends AbstractDiagramElementManager<JdlNodeDa
     var virtualFile = file.getVirtualFile();
     if (virtualFile == null) return null;
 
-    var disposable = file.getProject().getService(JdlDiagramService.class);
+    return getRootData(file.getProject(), virtualFile);
+  }
+
+  @NotNull
+  static JdlDiagramRootData getRootData(Project project, VirtualFile virtualFile) {
+    var disposable = project.getService(JdlDiagramService.class);
     var filePointer = VirtualFilePointerManager.getInstance().create(virtualFile, disposable, null);
 
     return new JdlDiagramRootData(filePointer);

@@ -36,7 +36,7 @@ final class JdlUmlProvider extends DiagramProvider<JdlNodeData> {
                                                                 @Nullable JdlNodeData seedData,
                                                                 @Nullable VirtualFile umlVirtualFile,
                                                                 @NotNull DiagramPresentationModel diagramPresentationModel) {
-    var model = new JdlUmlDataModel(project, this);
+    var model = new JdlUmlDataModel(project, this, seedData);
     if (seedData != null) {
       model.addElement(seedData);
     }

@@ -26,9 +26,12 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   private final List<JdlDiagramNode> nodes = new ArrayList<>();
   private final List<DiagramEdge<JdlNodeData>> edges = new ArrayList<>();
 
+  private final JdlNodeData seedData;
+
   public JdlUmlDataModel(@NotNull Project project,
-                         @NotNull DiagramProvider<JdlNodeData> provider) {
+                         @NotNull DiagramProvider<JdlNodeData> provider, @Nullable JdlNodeData seedData) {
     super(project, provider);
+    this.seedData = seedData;
   }
 
   @Override
@@ -176,5 +179,13 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
     }
 
     return new JdlDiagramData(entities.values(), enums.values(), entityLinks, enumLinks);
+  }
+
+  @Override
+  public void refreshDataModel() {
+    if (seedData != null) {
+      removeAll();
+      addElement(seedData);
+    }
   }
 }

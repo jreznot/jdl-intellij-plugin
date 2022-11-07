@@ -1,5 +1,6 @@
 package org.strangeway.jdl.uml;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
@@ -13,6 +14,8 @@ import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.Alarm;
+import com.intellij.util.ui.update.MergingUpdateQueue;
+import com.intellij.util.ui.update.Update;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,8 +26,7 @@ import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeListener;
 
 final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEditor {
-  private static final long PARSING_CALL_TIMEOUT_MS = 500L;
-  private static final long RENDERING_DELAY_MS = 200L;
+  private static final int RENDERING_DELAY_MS = 500;
 
   private final Project myProject;
   private final VirtualFile myFile;
@@ -32,9 +34,10 @@ final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEdito
 
   private volatile boolean isDisposed = false;
 
-  private final JPanel myHtmlPanelWrapper;
+  private final JPanel myUmlPanelWrapper;
   private @Nullable JdlDiagramPanel myPanel;
-  private final Alarm myPooledAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD, this);
+
+  private final MergingUpdateQueue mergingUpdateQueue = new MergingUpdateQueue("JDL", RENDERING_DELAY_MS, true, null, this);
   private final Alarm mySwingAlarm = new Alarm(Alarm.ThreadToUse.SWING_THREAD, this);
 
   private Editor mainEditor;
@@ -48,19 +51,18 @@ final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEdito
       myDocument.addDocumentListener(new DocumentListener() {
         @Override
         public void beforeDocumentChange(@NotNull DocumentEvent e) {
-          myPooledAlarm.cancelAllRequests();
         }
 
         @Override
         public void documentChanged(@NotNull DocumentEvent e) {
-          myPooledAlarm.addRequest(() -> updateHtml(), PARSING_CALL_TIMEOUT_MS);
+          updateUml();
         }
       }, this);
     }
 
-    myHtmlPanelWrapper = new JPanel(new BorderLayout());
+    myUmlPanelWrapper = new JPanel(new BorderLayout());
 
-    myHtmlPanelWrapper.addComponentListener(new ComponentAdapter() {
+    myUmlPanelWrapper.addComponentListener(new ComponentAdapter() {
       @Override
       public void componentShown(ComponentEvent e) {
         mySwingAlarm.addRequest(() -> {
@@ -85,21 +87,32 @@ final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEdito
     }
   }
 
-  private void detachHtmlPanel() {
+  private void attachHtmlPanel() {
+    myPanel = new JdlDiagramPanel(this);
+    myUmlPanelWrapper.add(myPanel.getComponent(), BorderLayout.CENTER);
+    Disposer.register(this, myPanel);
 
+    if (myUmlPanelWrapper.isShowing()) myUmlPanelWrapper.validate();
+    myUmlPanelWrapper.repaint();
+
+    updateUml();
+  }
+
+  private void detachHtmlPanel() {
+    if (myPanel != null) {
+      myUmlPanelWrapper.remove(myPanel.getComponent());
+      Disposer.dispose(myPanel);
+      myPanel = null;
+    }
   }
 
   private boolean isPreviewShown(Project project, VirtualFile file) {
-    return false;
-  }
-
-  private void attachHtmlPanel() {
-
+    return true;
   }
 
   @Override
   public @NotNull JComponent getComponent() {
-    return myHtmlPanelWrapper;
+    return myUmlPanelWrapper;
   }
 
   @Override
@@ -113,7 +126,8 @@ final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEdito
   }
 
   @Override
-  public void setState(@NotNull FileEditorState state) { }
+  public void setState(@NotNull FileEditorState state) {
+  }
 
   @Override
   public boolean isModified() {
@@ -128,19 +142,17 @@ final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEdito
   @Override
   public void selectNotify() {
     if (myPanel != null) {
-      updateHtmlPooled();
+      updateUml();
     }
   }
 
-  private void updateHtmlPooled() {
-
+  @Override
+  public void addPropertyChangeListener(@NotNull PropertyChangeListener listener) {
   }
 
   @Override
-  public void addPropertyChangeListener(@NotNull PropertyChangeListener listener) { }
-
-  @Override
-  public void removePropertyChangeListener(@NotNull PropertyChangeListener listener) { }
+  public void removePropertyChangeListener(@NotNull PropertyChangeListener listener) {
+  }
 
   @Override
   public @NotNull VirtualFile getFile() {
@@ -155,10 +167,21 @@ final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEdito
     }
   }
 
-  private void updateHtml() {
+  public Project getProject() {
+    return myProject;
+  }
+
+  private void updateUml() {
     if (myPanel == null || myDocument == null || !myFile.isValid() || isDisposed) {
-      return; // todo
+      return;
     }
+
+    mergingUpdateQueue.queue(new Update("JDL.REDRAW") {
+      @Override
+      public void run() {
+        ApplicationManager.getApplication().invokeLater(() -> myPanel.draw());
+      }
+    });
   }
 
   public void setMainEditor(Editor mainEditor) {
