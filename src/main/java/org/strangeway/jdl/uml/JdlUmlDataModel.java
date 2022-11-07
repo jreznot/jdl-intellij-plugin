@@ -107,7 +107,9 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   }
 
   public static @NotNull JdlDiagramData extractData(@NotNull JdlFile file) {
-    var userEntityData = new JdlEntityNodeData(USER_ENTITY_NAME, List.of());
+    var userEntityData = new JdlEntityNodeData(USER_ENTITY_NAME, List.of(
+        new JdlEntityNodeField("login", "String", true)
+    ));
 
     Map<String, JdlEntityNodeData> entities = new HashMap<>();
     Map<String, JdlEnumNodeData> enums = new HashMap<>();

@@ -56,18 +56,18 @@ final class JdlAnnotator implements Annotator {
           annotateOptionNameEnumValue(element, holder, (JdlOptionNameValue) optionNameValue);
         }
       }
+    } else if (element instanceof JdlFieldConstraintId) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(element.getTextRange())
+          .textAttributes(JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT)
+          .create();
     } else if (element instanceof JdlRelationshipType) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_OPTION_ENUM_VALUE)
           .create();
     } else if (element.getNode().getElementType() == JdlTokenTypes.IDENTIFIER) {
-      if (element.getParent() instanceof JdlFieldConstraint) {
-        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-            .range(element.getTextRange())
-            .textAttributes(JdlSyntaxHighlighter.JDL_FIELD_CONSTRAINT)
-            .create();
-      } else if (element.getParent() instanceof JdlConstantName) {
+      if (element.getParent() instanceof JdlConstantName) {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
             .range(element.getTextRange())
             .textAttributes(JdlSyntaxHighlighter.JDL_CONSTANT)
