@@ -34,10 +34,7 @@ tasks {
 
     changeNotes.set("""
       <ul>
-        <li>Inspections to check unused declarations, unknown options and incorrect option values</li>
-        <li>Annotations on entities supported</li>
-        <li>Use syntax of configuration options supported</li>
-        <li>Fixed highlighting of predefined User and Authority entities</li>
+        <li>UML preview in editor</li>
       </ul>
     """.trimIndent())
   }
