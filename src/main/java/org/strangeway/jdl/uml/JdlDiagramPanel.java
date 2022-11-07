@@ -3,7 +3,9 @@ package org.strangeway.jdl.uml;
 import com.intellij.diagram.DiagramBuilder;
 import com.intellij.diagram.DiagramBuilderFactory;
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.DataProvider;
 import com.intellij.openapi.graph.GraphDataKeys;
 import com.intellij.openapi.graph.services.GraphLayoutService;
 import com.intellij.openapi.project.Project;
@@ -13,6 +15,8 @@ import com.intellij.psi.PsiManager;
 import com.intellij.ui.JBColor;
 import com.intellij.uml.UmlFileEditorImpl;
 import com.intellij.uml.components.UmlGraphZoomableViewport;
+import com.intellij.util.ui.JBUI;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,7 +31,7 @@ final class JdlDiagramPanel implements Disposable {
   @Nullable
   private DiagramBuilder builder;
 
-  private final JComponent chartPanel = new JPanel(new BorderLayout());
+  private final MyPanel chartPanel = new MyPanel();
   private final JdlUmlProvider umlProvider = new JdlUmlProvider();
   private final JdlPreviewFileEditor fileEditor;
 
@@ -52,9 +56,16 @@ final class JdlDiagramPanel implements Disposable {
           .create(project, umlProvider, getRootData(project, virtualFile), null);
       Disposer.register(this, builder);
       builder.getView().setFitContentOnResize(true);
-      chartPanel.add(createSimpleGraphView(builder), BorderLayout.CENTER);
+      JComponent graphView = createSimpleGraphView(builder);
+      chartPanel.add(graphView, BorderLayout.CENTER);
 
-      builder.getDataModel().refreshDataModel();
+      var actionsProvider = builder.getProvider().getExtras().getToolbarActionsProvider();
+      var actionGroup = actionsProvider.createToolbarActions(builder);
+      var actionToolbar = ActionManager.getInstance().createActionToolbar("JDL.UML", actionGroup, true);
+      actionToolbar.setTargetComponent(graphView);
+      actionToolbar.getComponent().setBorder(JBUI.Borders.customLine(JBColor.border(), 0, 0, 1, 0));
+
+      chartPanel.add(actionToolbar.getComponent(), BorderLayout.NORTH);
 
       builder.queryUpdate()
           .withDataReload()
@@ -68,19 +79,36 @@ final class JdlDiagramPanel implements Disposable {
     builder.getPresentationModel().registerActions();
 
     var view = builder.getView();
-    GraphDataKeys.addDataProvider(view, dataId -> {
+    GraphDataKeys.addDataProvider(view, chartPanel);
+
+    view.getCanvasComponent().setBackground(JBColor.GRAY);
+    GraphLayoutService.getInstance().queryLayout(builder.getGraphBuilder()).withFitContent(AFTER).run();
+
+    return new UmlGraphZoomableViewport(builder);
+  }
+
+  private class MyPanel extends JPanel implements DataProvider {
+    public MyPanel() {
+      super(new BorderLayout());
+    }
+
+    @Override
+    public @Nullable Object getData(@NotNull @NonNls String dataId) {
+      if (builder == null) return null;
+
       if (CommonDataKeys.VIRTUAL_FILE.getName().equals(dataId)) {
         return fileEditor.getFile();
       }
       if (CommonDataKeys.PSI_FILE.getName().equals(dataId)) {
         return PsiManager.getInstance(fileEditor.getProject()).findFile(fileEditor.getFile());
       }
+      if (GraphDataKeys.GRAPH_BUILDER.getName().equals(dataId)) {
+        return builder;
+      }
+      if (GraphDataKeys.GRAPH.getName().equals(dataId)) {
+        return builder.getGraph();
+      }
       return UmlFileEditorImpl.getData(dataId, builder);
-    });
-
-    view.getCanvasComponent().setBackground(JBColor.GRAY);
-    GraphLayoutService.getInstance().queryLayout(builder.getGraphBuilder()).withFitContent(AFTER).run();
-
-    return new UmlGraphZoomableViewport(builder);
+    }
   }
 }

@@ -95,7 +95,7 @@ final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEdito
     if (myUmlPanelWrapper.isShowing()) myUmlPanelWrapper.validate();
     myUmlPanelWrapper.repaint();
 
-    updateUml();
+    myPanel.draw();
   }
 
   private void detachHtmlPanel() {
