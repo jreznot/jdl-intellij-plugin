@@ -27,6 +27,7 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
   private final List<DiagramEdge<JdlNodeData>> edges = new ArrayList<>();
 
   private final JdlNodeData seedData;
+  private JdlDiagramData diagramData;
 
   public JdlUmlDataModel(@NotNull Project project,
                          @NotNull DiagramProvider<JdlNodeData> provider, @Nullable JdlNodeData seedData) {
@@ -55,11 +56,10 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
     if (data == null) return null;
 
     if (data instanceof JdlDiagramRootData) {
-      var diagramData = JdlUmlDataModel.extractData(getProject(), ((JdlDiagramRootData) data).getVirtualFile());
+      this.diagramData = JdlUmlDataModel.extractData(getProject(), ((JdlDiagramRootData) data).getVirtualFile());
+
       var entityMapping = new HashMap<JdlEntityNodeData, DiagramNode<JdlNodeData>>();
       var enumMapping = new HashMap<JdlEnumNodeData, DiagramNode<JdlNodeData>>();
-
-      // todo Add User entity in case we have relations to it !!!
 
       for (var entity : diagramData.getEntities()) {
         entityMapping.put(entity, addElement(entity));
@@ -183,8 +183,19 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
 
   @Override
   public void refreshDataModel() {
-    if (seedData != null) {
+    if (seedData instanceof JdlDiagramRootData) {
+      JdlDiagramData newDiagramData = JdlUmlDataModel.extractData(
+          getProject(),
+          ((JdlDiagramRootData) seedData).getVirtualFile()
+      );
+
+      if (newDiagramData.equals(diagramData)) return; // nothing changed
+
       removeAll();
+
+      nodes.clear();
+      edges.clear();
+
       addElement(seedData);
     }
   }

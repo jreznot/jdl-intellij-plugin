@@ -3,6 +3,7 @@ package org.strangeway.jdl.uml.model;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Objects;
 
 public final class JdlDiagramData {
 
@@ -35,5 +36,18 @@ public final class JdlDiagramData {
 
   public @NotNull Collection<JdlEnumNodeLink> getEnumLinks() {
     return enumLinks;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    JdlDiagramData that = (JdlDiagramData) o;
+    return entities.equals(that.entities) && enums.equals(that.enums) && entityLinks.equals(that.entityLinks) && enumLinks.equals(that.enumLinks);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(entities, enums, entityLinks, enumLinks);
   }
 }

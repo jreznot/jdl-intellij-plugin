@@ -3,6 +3,8 @@ package org.strangeway.jdl.uml.model;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public final class JdlEntityNodeField {
   private final String name;
   private final String type;
@@ -24,5 +26,18 @@ public final class JdlEntityNodeField {
 
   public boolean isRequired() {
     return required;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    JdlEntityNodeField that = (JdlEntityNodeField) o;
+    return required == that.required && name.equals(that.name) && Objects.equals(type, that.type);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, type, required);
   }
 }

@@ -53,15 +53,15 @@ final class JdlDiagramPanel implements Disposable {
       Disposer.register(this, builder);
       builder.getView().setFitContentOnResize(true);
       chartPanel.add(createSimpleGraphView(builder), BorderLayout.CENTER);
+
+      builder.getDataModel().refreshDataModel();
+
+      builder.queryUpdate()
+          .withDataReload()
+          .withPresentationUpdate()
+          .withRelayout()
+          .runAsync();
     }
-
-    builder.getDataModel().refreshDataModel();
-
-    builder.queryUpdate()
-        .withDataReload()
-        .withPresentationUpdate()
-        .withRelayout()
-        .runAsync();
   }
 
   private JComponent createSimpleGraphView(@NotNull DiagramBuilder builder) {

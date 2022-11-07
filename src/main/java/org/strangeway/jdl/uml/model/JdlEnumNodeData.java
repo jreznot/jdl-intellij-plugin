@@ -6,6 +6,7 @@ import org.strangeway.jdl.JhipsterIcons;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Objects;
 
 public final class JdlEnumNodeData implements JdlNodeData {
   private final String name;
@@ -28,5 +29,18 @@ public final class JdlEnumNodeData implements JdlNodeData {
 
   public @NotNull List<@NotNull JdlEnumNodeItem> getOptions() {
     return options;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    JdlEnumNodeData that = (JdlEnumNodeData) o;
+    return name.equals(that.name) && options.equals(that.options);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, options);
   }
 }

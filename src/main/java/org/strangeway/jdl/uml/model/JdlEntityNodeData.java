@@ -5,6 +5,7 @@ import org.strangeway.jdl.JhipsterIcons;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Objects;
 
 public final class JdlEntityNodeData implements JdlNodeData {
   private final String name;
@@ -27,5 +28,18 @@ public final class JdlEntityNodeData implements JdlNodeData {
 
   public @NotNull List<JdlEntityNodeField> getProperties() {
     return properties;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    JdlEntityNodeData that = (JdlEntityNodeData) o;
+    return name.equals(that.name) && properties.equals(that.properties);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, properties);
   }
 }

@@ -26,7 +26,7 @@ import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeListener;
 
 final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEditor {
-  private static final int RENDERING_DELAY_MS = 500;
+  private static final int RENDERING_DELAY_MS = 1000;
 
   private final Project myProject;
   private final VirtualFile myFile;
@@ -179,7 +179,13 @@ final class JdlPreviewFileEditor extends UserDataHolderBase implements FileEdito
     mergingUpdateQueue.queue(new Update("JDL.REDRAW") {
       @Override
       public void run() {
-        ApplicationManager.getApplication().invokeLater(() -> myPanel.draw());
+        ApplicationManager.getApplication().invokeLater(() -> {
+          if (myPanel == null || !myFile.isValid() || isDisposed) {
+            return;
+          }
+
+          myPanel.draw();
+        });
       }
     });
   }
