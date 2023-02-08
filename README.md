@@ -20,6 +20,7 @@ Follow author in Twitter: [@Yuriy Artamonov](https://twitter.com/Yuriy_Artamonov
 
 ## Development
 
+- Simply open project in IntelliJ IDEA 2022.3
 - Make sure Plugin DevKit plugin enabled in IntelliJ IDEA
 - Install Grammar-Kit plugin to edit .bnf and .flex
 - Build and Run the plugin using `Run Plugin` run configuration
