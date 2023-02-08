@@ -1,10 +1,10 @@
 plugins {
   id("java")
-  id("org.jetbrains.intellij") version "1.9.0"
+  id("org.jetbrains.intellij") version "1.12.0"
 }
 
 group = "org.strangeway.jdl"
-version = "2.1.0"
+version = "2.2.0"
 
 repositories {
   mavenCentral()
@@ -15,7 +15,7 @@ java.sourceSets["main"].java {
 }
 
 intellij {
-  version.set("2022.2.3")
+  version.set("2022.3.2")
   type.set("IU")
 
   plugins.set(listOf("com.intellij.java", "uml"))
@@ -24,18 +24,16 @@ intellij {
 tasks {
   // Set the JVM compatibility versions
   withType<JavaCompile> {
-    sourceCompatibility = "11"
-    targetCompatibility = "11"
+    sourceCompatibility = "17"
+    targetCompatibility = "17"
   }
 
   patchPluginXml {
-    sinceBuild.set("222")
-    untilBuild.set("232.*")
+    sinceBuild.set("223")
+    untilBuild.set("233.*")
 
     changeNotes.set("""
-      <ul>
-        <li>UML preview in editor</li>
-      </ul>
+      TODO
     """.trimIndent())
   }
 
