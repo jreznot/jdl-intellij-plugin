@@ -26,7 +26,7 @@ import org.strangeway.jdl.psi.JdlFile;
 
 final class JdlLiveTemplateContextType extends TemplateContextType {
   public JdlLiveTemplateContextType() {
-    super("JDL", "JDL");
+    super("JDL");
   }
 
   @Override

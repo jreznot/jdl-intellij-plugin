@@ -56,7 +56,7 @@
 
     <completion.contributor language="JDL" implementationClass="org.strangeway.jdl.JdlCompletionContributor"/>
 
-    <liveTemplateContext implementation="org.strangeway.jdl.JdlLiveTemplateContextType"/>
+    <liveTemplateContext contextId="JDL" implementation="org.strangeway.jdl.JdlLiveTemplateContextType"/>
     <defaultLiveTemplates file="/org/strangeway/jdl/liveTemplates.xml"/>
 
     <spellchecker.support language="JDL" implementationClass="org.strangeway.jdl.JdlSpellcheckingStrategy"/>
