@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "2.2.1"
+version = "2.2.2"
 
 repositories {
   mavenCentral()
@@ -33,7 +33,7 @@ tasks {
     untilBuild.set("233.*")
 
     changeNotes.set("""
-      TODO
+      Update metadata: application.config.microfrontends and neo4j database types
     """.trimIndent())
   }
 
