@@ -57,7 +57,7 @@ public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements J
   }
 
   @Override
-  public @NotNull JdlFieldName getNameElement() {
+  public JdlFieldName getNameElement() {
     return JdlPsiUtils.getNameElement(this);
   }
 

@@ -160,7 +160,7 @@ entityId ::= IDENTIFIER {
 
 private annotations ::= (NEWLINE | annotation)*
 
-annotation ::= STRUDEL annotationId LPARENTH withOptionValue RPARENTH {
+annotation ::= STRUDEL annotationId (LPARENTH withOptionValue RPARENTH)? {
     pin = 1
 }
 

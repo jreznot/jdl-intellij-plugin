@@ -41,7 +41,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   };
 
   /* ********************************************************** */
-  // STRUDEL annotationId LPARENTH withOptionValue RPARENTH
+  // STRUDEL annotationId (LPARENTH withOptionValue RPARENTH)?
   public static boolean annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation")) return false;
     if (!nextTokenIs(b, STRUDEL)) return false;
@@ -50,11 +50,28 @@ public class JdlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, STRUDEL);
     p = r; // pin = 1
     r = r && report_error_(b, annotationId(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, LPARENTH)) && r;
-    r = p && report_error_(b, withOptionValue(b, l + 1)) && r;
-    r = p && consumeToken(b, RPARENTH) && r;
+    r = p && annotation_2(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  // (LPARENTH withOptionValue RPARENTH)?
+  private static boolean annotation_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_2")) return false;
+    annotation_2_0(b, l + 1);
+    return true;
+  }
+
+  // LPARENTH withOptionValue RPARENTH
+  private static boolean annotation_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPARENTH);
+    r = r && withOptionValue(b, l + 1);
+    r = r && consumeToken(b, RPARENTH);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */

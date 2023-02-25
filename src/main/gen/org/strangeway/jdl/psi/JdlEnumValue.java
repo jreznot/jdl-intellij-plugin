@@ -16,7 +16,7 @@ public interface JdlEnumValue extends PsiElement {
 
   @NotNull String getName();
 
-  @NotNull JdlEnumKey getNameElement();
+  JdlEnumKey getNameElement();
 
   @NotNull ItemPresentation getPresentation();
 

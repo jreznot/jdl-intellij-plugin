@@ -46,7 +46,7 @@ public class JdlEnumValueImpl extends ASTWrapperPsiElement implements JdlEnumVal
   }
 
   @Override
-  public @NotNull JdlEnumKey getNameElement() {
+  public JdlEnumKey getNameElement() {
     return JdlPsiUtils.getNameElement(this);
   }
 

@@ -17,7 +17,6 @@ public class JdlIdImpl extends JdlIdMixin implements JdlId {
     super(node);
   }
 
-  @Override
   public void accept(@NotNull JdlVisitor visitor) {
     visitor.visitId(this);
   }

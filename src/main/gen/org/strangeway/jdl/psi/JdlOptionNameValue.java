@@ -16,7 +16,7 @@ public interface JdlOptionNameValue extends PsiElement {
 
   @NotNull String getName();
 
-  @NotNull JdlOptionName getNameElement();
+  JdlOptionName getNameElement();
 
   @NotNull ItemPresentation getPresentation();
 
