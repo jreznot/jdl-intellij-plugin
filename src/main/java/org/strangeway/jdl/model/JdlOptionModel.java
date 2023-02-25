@@ -75,7 +75,7 @@ public final class JdlOptionModel {
         new JdlOptionMapping("clusteredDbApps", STRING_ARRAY_TYPE, "[]"),
         new JdlOptionMapping("gatewayType", STRING_TYPE, "SpringCloudGateway"),
         new JdlEnumMapping("monitoring", JdlMonitoringType.class, JdlMonitoringType.NO),
-        new JdlEnumMapping("serviceDiscoveryType", JdlServiceDiscoveryType.class, JdlServiceDiscoveryType.EUREKA),
+        new JdlEnumMapping("serviceDiscoveryType", JdlServiceDiscoveryType.class, JdlServiceDiscoveryType.CONSUL),
         new JdlOptionMapping("dockerRepositoryName", STRING_TYPE),
         new JdlOptionMapping("dockerPushCommand", STRING_TYPE, "docker push"),
         new JdlOptionMapping("kubernetesNamespace", STRING_TYPE, "default"),
