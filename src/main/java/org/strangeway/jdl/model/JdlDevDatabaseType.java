@@ -28,7 +28,8 @@ public enum JdlDevDatabaseType implements JdlModelEnum {
   POSTGRESQL("postgresql"),
   ORACLE("oracle"),
   MONGODB("mongodb"),
-  NO("no");
+  NO("no"),
+  NEO4J("neo4j");
 
   private final String id;
 

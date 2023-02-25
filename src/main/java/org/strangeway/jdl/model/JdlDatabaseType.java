@@ -24,7 +24,8 @@ public enum JdlDatabaseType implements JdlModelEnum {
   SQL("sql"),
   CASSANDRA("cassandra"),
   COUCHBASE("couchbase"),
-  MONGODB("mongodb");
+  MONGODB("mongodb"),
+  NEO4J("neo4j");
 
   private final String id;
 

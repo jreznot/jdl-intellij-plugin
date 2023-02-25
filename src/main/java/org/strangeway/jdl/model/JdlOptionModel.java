@@ -64,7 +64,8 @@ public final class JdlOptionModel {
         new JdlOptionMapping("skipServer", BOOLEAN_TYPE, "false"),
         new JdlOptionMapping("skipUserManagement", BOOLEAN_TYPE, "false"),
         new JdlEnumListMapping("testFrameworks", JdlTestFramework.class),
-        new JdlEnumMapping("websocket", JdlWebsocket.class)
+        new JdlEnumMapping("websocket", JdlWebsocket.class),
+        new JdlOptionMapping("microfrontends", STRING_ARRAY_TYPE, "[]")
     ));
 
     this.deploymentOptions = getSortedOptions(List.of(
