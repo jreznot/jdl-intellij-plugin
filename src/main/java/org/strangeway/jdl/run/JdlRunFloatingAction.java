@@ -23,6 +23,7 @@ import com.intellij.execution.ExecutorRegistryImpl.RunnerHelper;
 import com.intellij.execution.RunManager;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.execution.executors.DefaultRunExecutor;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -38,8 +39,13 @@ import static com.intellij.openapi.vfs.VfsUtilCore.virtualToIoFile;
 
 final class JdlRunFloatingAction extends AnAction implements DumbAware {
   @Override
+  public @NotNull ActionUpdateThread getActionUpdateThread() {
+    return ActionUpdateThread.BGT;
+  }
+
+  @Override
   public void update(@NotNull AnActionEvent e) {
-    var psiFile = e.getDataContext().getData(CommonDataKeys.PSI_FILE);
+    var psiFile = e.getData(CommonDataKeys.PSI_FILE);
     e.getPresentation().setEnabledAndVisible(psiFile != null && psiFile.getFileType() == JdlFileType.INSTANCE);
   }
 
@@ -48,7 +54,7 @@ final class JdlRunFloatingAction extends AnAction implements DumbAware {
     var project = e.getProject();
     if (project == null) return;
 
-    var psiFile = e.getDataContext().getData(CommonDataKeys.PSI_FILE);
+    var psiFile = e.getData(CommonDataKeys.PSI_FILE);
     if (psiFile == null) return;
 
     var jdlFile = psiFile.getVirtualFile();
