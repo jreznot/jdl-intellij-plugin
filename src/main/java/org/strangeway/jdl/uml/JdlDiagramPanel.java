@@ -25,10 +25,12 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataProvider;
+import com.intellij.openapi.actionSystem.PlatformCoreDataKeys;
 import com.intellij.openapi.graph.GraphDataKeys;
 import com.intellij.openapi.graph.services.GraphLayoutService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
+import com.intellij.openapi.util.UserDataHolder;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.ui.JBColor;
@@ -115,19 +117,27 @@ final class JdlDiagramPanel implements Disposable {
     public @Nullable Object getData(@NotNull @NonNls String dataId) {
       if (builder == null) return null;
 
-      if (CommonDataKeys.VIRTUAL_FILE.getName().equals(dataId)) {
-        return fileEditor.getFile();
+      if (PlatformCoreDataKeys.BGT_DATA_PROVIDER.is(dataId)) {
+        return (DataProvider) this::getSlowData;
       }
-      if (CommonDataKeys.PSI_FILE.getName().equals(dataId)) {
-        return PsiManager.getInstance(fileEditor.getProject()).findFile(fileEditor.getFile());
-      }
-      if (GraphDataKeys.GRAPH_BUILDER.getName().equals(dataId)) {
+      if (GraphDataKeys.GRAPH_BUILDER.is(dataId)) {
         return builder;
       }
-      if (GraphDataKeys.GRAPH.getName().equals(dataId)) {
+      if (GraphDataKeys.GRAPH.is(dataId)) {
         return builder.getGraph();
       }
       return UmlFileEditorImpl.getData(dataId, builder);
+    }
+
+    @Nullable
+    private UserDataHolder getSlowData(@NonNls @NotNull String dataId) {
+      if (CommonDataKeys.VIRTUAL_FILE.is(dataId)) {
+        return fileEditor.getFile();
+      }
+      if (CommonDataKeys.PSI_FILE.is(dataId)) {
+        return PsiManager.getInstance(fileEditor.getProject()).findFile(fileEditor.getFile());
+      }
+      return null;
     }
   }
 }
