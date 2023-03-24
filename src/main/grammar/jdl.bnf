@@ -185,8 +185,8 @@ private entityElement ::= entityFieldMapping (COMMA|&NEWLINE) {
     recoverWhile = notRBraceOrNextOption
 }
 
-entityFieldMapping ::= fieldName fieldType fieldConstraint* {
-    pin = 1
+entityFieldMapping ::= annotations fieldName fieldType fieldConstraint* {
+    pin = 2
     methods = [
         getName
         getType

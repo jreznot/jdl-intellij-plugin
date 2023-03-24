@@ -1,10 +1,10 @@
 plugins {
   id("java")
-  id("org.jetbrains.intellij") version "1.13.0"
+  id("org.jetbrains.intellij") version "1.13.1"
 }
 
 group = "org.strangeway.jdl"
-version = "2.2.3"
+version = "2.2.4"
 
 repositories {
   mavenCentral()
@@ -15,7 +15,7 @@ java.sourceSets["main"].java {
 }
 
 intellij {
-  version.set("2022.3.2")
+  version.set("2022.3.3")
   type.set("IU")
 
   plugins.set(listOf("com.intellij.java", "uml"))
@@ -33,9 +33,7 @@ tasks {
     untilBuild.set("233.*")
 
     changeNotes.set("""
-      Support @embedded and @readOnly annotation syntax.
-      
-      Update metadata: application.config.microfrontends and neo4j database types
+      Support @annotations on entity fields
     """.trimIndent())
   }
 

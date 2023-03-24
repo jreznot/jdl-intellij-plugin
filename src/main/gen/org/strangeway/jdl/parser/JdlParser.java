@@ -1,15 +1,16 @@
 // This is a generated file. Not intended for manual editing.
 package org.strangeway.jdl.parser;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LightPsiParser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
-import com.intellij.lang.LightPsiParser;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
+
+import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
+import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class JdlParser implements PsiParser, LightPsiParser {
@@ -664,27 +665,27 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // fieldName fieldType fieldConstraint*
+  // annotations fieldName fieldType fieldConstraint*
   public static boolean entityFieldMapping(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entityFieldMapping")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, ENTITY_FIELD_MAPPING, null);
-    r = fieldName(b, l + 1);
-    p = r; // pin = 1
+    Marker m = enter_section_(b, l, _NONE_, ENTITY_FIELD_MAPPING, "<entity field mapping>");
+    r = annotations(b, l + 1);
+    r = r && fieldName(b, l + 1);
+    p = r; // pin = 2
     r = r && report_error_(b, fieldType(b, l + 1));
-    r = p && entityFieldMapping_2(b, l + 1) && r;
+    r = p && entityFieldMapping_3(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
   // fieldConstraint*
-  private static boolean entityFieldMapping_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "entityFieldMapping_2")) return false;
+  private static boolean entityFieldMapping_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entityFieldMapping_3")) return false;
     while (true) {
       int c = current_position_(b);
       if (!fieldConstraint(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "entityFieldMapping_2", c)) break;
+      if (!empty_element_parsed_guard_(b, "entityFieldMapping_3", c)) break;
     }
     return true;
   }
