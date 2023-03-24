@@ -1,5 +1,5 @@
 JdlFile
-  JdlApplicationBlockImpl(APPLICATION_BLOCK)
+  JdlApplicationImpl(APPLICATION)
     PsiElement(application)('application')
     PsiWhiteSpace(' ')
     PsiElement({)('{')
