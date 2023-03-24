@@ -23,7 +23,13 @@ import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.CachedValueProvider.Result;
+import com.intellij.psi.util.CachedValuesManager;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.jdl.model.JdlEnumListType;
 import org.strangeway.jdl.model.JdlEnumType;
@@ -31,6 +37,7 @@ import org.strangeway.jdl.model.JdlOptionMapping;
 import org.strangeway.jdl.model.JdlOptionModel;
 import org.strangeway.jdl.psi.*;
 
+import static com.intellij.psi.search.GlobalSearchScope.allScope;
 import static com.intellij.psi.util.PsiTreeUtil.findFirstParent;
 import static org.strangeway.jdl.JdlConstants.APPLICATION_BASE_NAME;
 
@@ -108,6 +115,12 @@ final class JdlAnnotator implements Annotator {
   }
 
   private void resolveIdentifierRefs(PsiElement element, AnnotationHolder holder) {
+    if (element instanceof JdlFieldType
+        && looksLikeJdkType((JdlFieldType) element)
+        && !isJdkConfigured(element.getProject())) {
+      return;
+    }
+
     if (element instanceof JdlId || element instanceof JdlFieldType) {
       var reference = element.getReference();
       if (reference != null && reference.resolve() == null) {
@@ -118,6 +131,17 @@ final class JdlAnnotator implements Annotator {
             .create();
       }
     }
+  }
+
+  private static boolean looksLikeJdkType(@NotNull JdlFieldType fieldType) {
+    return JdlConstants.FIELD_TYPES.containsKey(fieldType.getTypeName());
+  }
+
+  private static boolean isJdkConfigured(@NotNull Project project) {
+    return CachedValuesManager.getManager(project).getCachedValue(project, () -> {
+      PsiClass stringClass = JavaPsiFacade.getInstance(project).findClass("java.lang.String", allScope(project));
+      return Result.create(stringClass != null, ProjectRootManager.getInstance(project));
+    });
   }
 
   private static void annotateOptionNameEnumValue(@NotNull PsiElement element, @NotNull AnnotationHolder holder,
