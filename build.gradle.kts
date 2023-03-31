@@ -48,11 +48,8 @@ tasks {
   }
 }
 
-tasks {
-  @Suppress("UNUSED_VARIABLE")
-  val test by getting(Test::class) {
-    isScanForTestClasses = false
-    // Only run tests from classes that end with "Test"
-    include("**/*Test.class")
-  }
+tasks.create("test", Test::class) {
+  isScanForTestClasses = false
+  // Only run tests from classes that end with "Test"
+  include("**/*Test.class")
 }
