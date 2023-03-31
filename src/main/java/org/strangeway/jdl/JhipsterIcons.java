@@ -27,7 +27,7 @@ import javax.swing.*;
 import static com.intellij.openapi.util.IconLoader.getIcon;
 
 public final class JhipsterIcons {
-  public static final Icon FILE_ICON = getIcon("/org/strangeway/jdl/icons/file.svg", JhipsterIcons.class);
+  public static final Icon FILE_ICON = getIcon("/org/strangeway/jdl/icons/hipster.svg", JhipsterIcons.class);
   private static final Icon REQUIRED_MARK_ICON = getIcon("/org/strangeway/jdl/icons/required-mark.svg", JhipsterIcons.class);
   private static final Icon REQUIRED_FIELD = new LayeredIcon(AllIcons.Nodes.Field, REQUIRED_MARK_ICON);
 

@@ -1,10 +1,10 @@
 plugins {
   id("java")
-  id("org.jetbrains.intellij") version "1.13.2"
+  id("org.jetbrains.intellij") version "1.13.3"
 }
 
 group = "org.strangeway.jdl"
-version = "2.2.4"
+version = "2.3.0"
 
 repositories {
   mavenCentral()
@@ -15,7 +15,7 @@ java.sourceSets["main"].java {
 }
 
 intellij {
-  version.set("2022.3.3")
+  version.set("2023.1")
   type.set("IU")
 
   plugins.set(listOf("com.intellij.java", "uml"))
@@ -29,11 +29,11 @@ tasks {
   }
 
   patchPluginXml {
-    sinceBuild.set("223")
+    sinceBuild.set("231")
     untilBuild.set("233.*")
 
     changeNotes.set("""
-      Support @annotations on entity fields
+      Icons changed to be compatible with new UI
     """.trimIndent())
   }
 
