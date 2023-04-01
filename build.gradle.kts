@@ -46,10 +46,10 @@ tasks {
   publishPlugin {
     token.set(System.getenv("PUBLISH_TOKEN"))
   }
-}
 
-tasks.create("test", Test::class) {
-  isScanForTestClasses = false
-  // Only run tests from classes that end with "Test"
-  include("**/*Test.class")
+  withType(Test::class) {
+    isScanForTestClasses = false
+    // Only run tests from classes that end with "Test"
+    include("**/*Test.class")
+  }
 }
