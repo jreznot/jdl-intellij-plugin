@@ -76,7 +76,6 @@ NEWLINE = \r\n|[\r\n]
     "true"                               { return TRUE; }
     "false"                              { return FALSE; }
 
-    "enum"                               { return ENUM_KEYWORD; }
     "with"                               { return WITH_KEYWORD; }
     "except"                             { return EXCEPT_KEYWORD; }
     "to"                                 { return TO_KEYWORD; }
