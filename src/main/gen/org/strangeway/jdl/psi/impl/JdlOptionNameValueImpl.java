@@ -46,7 +46,7 @@ public class JdlOptionNameValueImpl extends ASTWrapperPsiElement implements JdlO
   }
 
   @Override
-  public JdlOptionName getNameElement() {
+  public @NotNull JdlOptionName getNameElement() {
     return JdlPsiUtils.getNameElement(this);
   }
 

@@ -41,7 +41,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   };
 
   /* ********************************************************** */
-  // STRUDEL annotationId (LPARENTH withOptionValue RPARENTH)?
+  // STRUDEL annotationId (LPARENTH annotationValue RPARENTH)?
   public static boolean annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation")) return false;
     if (!nextTokenIs(b, STRUDEL)) return false;
@@ -55,20 +55,20 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // (LPARENTH withOptionValue RPARENTH)?
+  // (LPARENTH annotationValue RPARENTH)?
   private static boolean annotation_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_2")) return false;
     annotation_2_0(b, l + 1);
     return true;
   }
 
-  // LPARENTH withOptionValue RPARENTH
+  // LPARENTH annotationValue RPARENTH
   private static boolean annotation_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LPARENTH);
-    r = r && withOptionValue(b, l + 1);
+    r = r && annotationValue(b, l + 1);
     r = r && consumeToken(b, RPARENTH);
     exit_section_(b, m, null, r);
     return r;
@@ -82,6 +82,19 @@ public class JdlParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ANNOTATION_ID, "<annotation identifier>");
     r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // withOptionValue | stringLiteral | numberLiteral
+  public static boolean annotationValue(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotationValue")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ANNOTATION_VALUE, "<annotation value>");
+    r = withOptionValue(b, l + 1);
+    if (!r) r = stringLiteral(b, l + 1);
+    if (!r) r = numberLiteral(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -464,7 +477,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValue)* RBRACE
+  // DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | deploymentElement)* RBRACE
   public static boolean deployment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "deployment")) return false;
     if (!nextTokenIs(b, DEPLOYMENT_KEYWORD)) return false;
@@ -491,7 +504,7 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (NEWLINE | optionNameValue)*
+  // (NEWLINE | deploymentElement)*
   private static boolean deployment_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "deployment_3")) return false;
     while (true) {
@@ -502,12 +515,48 @@ public class JdlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // NEWLINE | optionNameValue
+  // NEWLINE | deploymentElement
   private static boolean deployment_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "deployment_3_0")) return false;
     boolean r;
+    Marker m = enter_section_(b);
     r = consumeToken(b, NEWLINE);
-    if (!r) r = optionNameValue(b, l + 1);
+    if (!r) r = deploymentElement(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // optionNameValue (COMMA|&NEWLINE)
+  static boolean deploymentElement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deploymentElement")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = optionNameValue(b, l + 1);
+    p = r; // pin = 1
+    r = r && deploymentElement_1(b, l + 1);
+    exit_section_(b, l, m, r, p, JdlParser::notRBraceOrNextOption);
+    return r || p;
+  }
+
+  // COMMA|&NEWLINE
+  private static boolean deploymentElement_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deploymentElement_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    if (!r) r = deploymentElement_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // &NEWLINE
+  private static boolean deploymentElement_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "deploymentElement_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _AND_);
+    r = consumeToken(b, NEWLINE);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

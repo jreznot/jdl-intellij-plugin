@@ -16,6 +16,10 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitAnnotationValue(@NotNull JdlAnnotationValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitApplication(@NotNull JdlApplication o) {
     visitPsiElement(o);
   }

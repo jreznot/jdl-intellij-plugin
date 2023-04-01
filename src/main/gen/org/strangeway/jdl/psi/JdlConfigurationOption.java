@@ -25,7 +25,7 @@ public interface JdlConfigurationOption extends PsiElement {
 
   @NotNull String getName();
 
-  JdlConfigurationOptionName getNameElement();
+  @NotNull JdlConfigurationOptionName getNameElement();
 
   @NotNull ItemPresentation getPresentation();
 

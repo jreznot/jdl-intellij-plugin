@@ -64,7 +64,7 @@ public class JdlConfigurationOptionImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  public JdlConfigurationOptionName getNameElement() {
+  public @NotNull JdlConfigurationOptionName getNameElement() {
     return JdlPsiUtils.getNameElement(this);
   }
 

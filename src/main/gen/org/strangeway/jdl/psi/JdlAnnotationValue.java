@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface JdlAnnotation extends PsiElement {
+public interface JdlAnnotationValue extends PsiElement {
 
   @Nullable
-  JdlAnnotationId getAnnotationId();
+  JdlValue getValue();
 
   @Nullable
-  JdlAnnotationValue getAnnotationValue();
+  JdlWithOptionValue getWithOptionValue();
 
 }

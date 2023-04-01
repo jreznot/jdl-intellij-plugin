@@ -35,8 +35,8 @@ public class JdlAnnotationImpl extends ASTWrapperPsiElement implements JdlAnnota
 
   @Override
   @Nullable
-  public JdlWithOptionValue getWithOptionValue() {
-    return findChildByClass(JdlWithOptionValue.class);
+  public JdlAnnotationValue getAnnotationValue() {
+    return findChildByClass(JdlAnnotationValue.class);
   }
 
 }

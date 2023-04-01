@@ -161,7 +161,9 @@ entityId ::= IDENTIFIER {
 
 private annotations ::= (NEWLINE | annotation)*
 
-annotation ::= STRUDEL annotationId (LPARENTH withOptionValue RPARENTH)? {
+annotationValue ::= withOptionValue | stringLiteral | numberLiteral
+
+annotation ::= STRUDEL annotationId (LPARENTH annotationValue RPARENTH)? {
     pin = 1
 }
 
@@ -288,11 +290,16 @@ fieldNameRef ::= IDENTIFIER {
     name = "field reference"
 }
 
-deployment ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | optionNameValue)* RBRACE {
+deployment ::= DEPLOYMENT_KEYWORD NEWLINE* LBRACE (NEWLINE | deploymentElement)* RBRACE {
     pin = 1
     methods = [
         getPresentation
     ]
+}
+
+private deploymentElement ::= optionNameValue (COMMA|&NEWLINE) {
+    pin = 1
+    recoverWhile = notRBraceOrNextOption
 }
 
 booleanLiteral ::= TRUE | FALSE {

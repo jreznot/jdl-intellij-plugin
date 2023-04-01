@@ -10,6 +10,7 @@ public interface JdlTokenTypes {
 
   IElementType ANNOTATION = new JdlElementType("ANNOTATION");
   IElementType ANNOTATION_ID = new JdlElementType("ANNOTATION_ID");
+  IElementType ANNOTATION_VALUE = new JdlElementType("ANNOTATION_VALUE");
   IElementType APPLICATION = new JdlElementType("APPLICATION");
   IElementType ARRAY_LITERAL = new JdlElementType("ARRAY_LITERAL");
   IElementType BOOLEAN_LITERAL = new JdlElementType("BOOLEAN_LITERAL");
@@ -94,6 +95,9 @@ public interface JdlTokenTypes {
       }
       else if (type == ANNOTATION_ID) {
         return new JdlAnnotationIdImpl(node);
+      }
+      else if (type == ANNOTATION_VALUE) {
+        return new JdlAnnotationValueImpl(node);
       }
       else if (type == APPLICATION) {
         return new JdlApplicationImpl(node);

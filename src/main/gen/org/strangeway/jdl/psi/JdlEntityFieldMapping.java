@@ -24,7 +24,7 @@ public interface JdlEntityFieldMapping extends PsiElement {
 
   @Nullable String getType();
 
-  JdlFieldName getNameElement();
+  @NotNull JdlFieldName getNameElement();
 
   @NotNull ItemPresentation getPresentation();
 
