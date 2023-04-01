@@ -1,16 +1,15 @@
 // This is a generated file. Not intended for manual editing.
 package org.strangeway.jdl.parser;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.LightPsiParser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import com.intellij.lang.PsiParser;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
-
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.tree.TokenSet;
+import com.intellij.lang.PsiParser;
+import com.intellij.lang.LightPsiParser;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class JdlParser implements PsiParser, LightPsiParser {
@@ -268,13 +267,12 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CONFIG_KEYWORD NEWLINE* LBRACE (NEWLINE | configElement)* RBRACE
+  // configKeyword NEWLINE* LBRACE (NEWLINE | configElement)* RBRACE
   public static boolean configBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "configBlock")) return false;
-    if (!nextTokenIs(b, CONFIG_KEYWORD)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, CONFIG_BLOCK, null);
-    r = consumeToken(b, CONFIG_KEYWORD);
+    Marker m = enter_section_(b, l, _NONE_, CONFIG_BLOCK, "<config block>");
+    r = configKeyword(b, l + 1);
     p = r; // pin = 1
     r = r && report_error_(b, configBlock_1(b, l + 1));
     r = p && report_error_(b, consumeToken(b, LBRACE)) && r;
@@ -347,6 +345,17 @@ public class JdlParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b, l, _AND_);
     r = consumeToken(b, NEWLINE);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // "config"
+  public static boolean configKeyword(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "configKeyword")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CONFIG_KEYWORD, "<config keyword>");
+    r = consumeToken(b, "config");
     exit_section_(b, l, m, r, false, null);
     return r;
   }

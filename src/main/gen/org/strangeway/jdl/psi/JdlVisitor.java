@@ -32,6 +32,10 @@ public class JdlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitConfigKeyword(@NotNull JdlConfigKeyword o) {
+    visitPsiElement(o);
+  }
+
   public void visitConfigurationOption(@NotNull JdlConfigurationOption o) {
     visitPsiElement(o);
   }

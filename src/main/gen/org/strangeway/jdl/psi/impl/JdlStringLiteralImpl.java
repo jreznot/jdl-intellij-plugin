@@ -19,7 +19,6 @@ public class JdlStringLiteralImpl extends JdlStringLiteralMixin implements JdlSt
     super(node);
   }
 
-  @Override
   public void accept(@NotNull JdlVisitor visitor) {
     visitor.visitStringLiteral(this);
   }

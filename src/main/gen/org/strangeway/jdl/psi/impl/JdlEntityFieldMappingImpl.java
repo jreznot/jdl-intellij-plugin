@@ -1,16 +1,16 @@
 // This is a generated file. Not intended for manual editing.
 package org.strangeway.jdl.psi.impl;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import static org.strangeway.jdl.psi.JdlTokenTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
-
-import java.util.List;
+import com.intellij.navigation.ItemPresentation;
 
 public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements JdlEntityFieldMapping {
 
@@ -24,7 +24,7 @@ public class JdlEntityFieldMappingImpl extends ASTWrapperPsiElement implements J
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof JdlVisitor) accept((JdlVisitor) visitor);
+    if (visitor instanceof JdlVisitor) accept((JdlVisitor)visitor);
     else super.accept(visitor);
   }
 

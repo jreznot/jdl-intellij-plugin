@@ -44,7 +44,12 @@ import static org.strangeway.jdl.JdlConstants.APPLICATION_BASE_NAME;
 final class JdlAnnotator implements Annotator {
   @Override
   public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-    if (element instanceof JdlWildcardLiteral) {
+    if (element instanceof JdlConfigKeyword) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(element.getTextRange())
+          .textAttributes(JdlSyntaxHighlighter.JDL_KEYWORD)
+          .create();
+    } else if (element instanceof JdlWildcardLiteral) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_KEYWORD)

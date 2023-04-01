@@ -31,7 +31,6 @@
     NEWLINE='regexp:/\r\n|[\r\n]'
 
     APPLICATION_KEYWORD='application'
-    CONFIG_KEYWORD='config'
     ENTITY_KEYWORD='entity'
     ENUM_KEYWORD='enum'
     WITH_KEYWORD='with'
@@ -67,12 +66,14 @@ application ::= APPLICATION_KEYWORD NEWLINE* LBRACE NEWLINE* applicationContent 
 
 private applicationContent ::= (NEWLINE | configBlock | useConfigurationOption | configurationOption)*
 
-configBlock ::= CONFIG_KEYWORD NEWLINE* LBRACE (NEWLINE | configElement)* RBRACE {
+configBlock ::= configKeyword NEWLINE* LBRACE (NEWLINE | configElement)* RBRACE {
     pin = 1
     methods = [
         getPresentation
     ]
 }
+
+configKeyword ::= "config"
 
 private configElement ::= optionNameValue (COMMA|&NEWLINE) {
     pin = 1

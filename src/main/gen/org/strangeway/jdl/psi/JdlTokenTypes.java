@@ -17,6 +17,7 @@ public interface JdlTokenTypes {
   IElementType CONFIGURATION_OPTION_NAME = new JdlElementType("CONFIGURATION_OPTION_NAME");
   IElementType CONFIGURATION_OPTION_VALUES = new JdlElementType("CONFIGURATION_OPTION_VALUES");
   IElementType CONFIG_BLOCK = new JdlElementType("CONFIG_BLOCK");
+  IElementType CONFIG_KEYWORD = new JdlElementType("CONFIG_KEYWORD");
   IElementType CONSTANT = new JdlElementType("CONSTANT");
   IElementType CONSTANT_NAME = new JdlElementType("CONSTANT_NAME");
   IElementType DEPLOYMENT = new JdlElementType("DEPLOYMENT");
@@ -58,7 +59,6 @@ public interface JdlTokenTypes {
   IElementType BLOCK_COMMENT = new JdlTokenType("BLOCK_COMMENT");
   IElementType COLON = new JdlTokenType(":");
   IElementType COMMA = new JdlTokenType(",");
-  IElementType CONFIG_KEYWORD = new JdlTokenType("config");
   IElementType DEPLOYMENT_KEYWORD = new JdlTokenType("deployment");
   IElementType DOUBLE_NUMBER = new JdlTokenType("DOUBLE_NUMBER");
   IElementType DOUBLE_QUOTED_STRING = new JdlTokenType("DOUBLE_QUOTED_STRING");
@@ -115,6 +115,9 @@ public interface JdlTokenTypes {
       }
       else if (type == CONFIG_BLOCK) {
         return new JdlConfigBlockImpl(node);
+      }
+      else if (type == CONFIG_KEYWORD) {
+        return new JdlConfigKeywordImpl(node);
       }
       else if (type == CONSTANT) {
         return new JdlConstantImpl(node);

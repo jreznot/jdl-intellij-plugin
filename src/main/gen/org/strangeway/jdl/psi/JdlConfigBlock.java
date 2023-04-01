@@ -9,6 +9,9 @@ import com.intellij.navigation.ItemPresentation;
 public interface JdlConfigBlock extends PsiElement {
 
   @NotNull
+  JdlConfigKeyword getConfigKeyword();
+
+  @NotNull
   List<JdlOptionNameValue> getOptionNameValueList();
 
   @NotNull ItemPresentation getPresentation();

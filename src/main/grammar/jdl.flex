@@ -5,11 +5,31 @@ import com.intellij.psi.tree.IElementType;
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
+
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 %%
 
 %{
   public _JdlLexer() {
     this((java.io.Reader)null);
+  }
+
+  private final IntArrayList myStateStack = new IntArrayList();
+
+  protected void resetInternal() {
+    myStateStack.clear();
+  }
+
+  private void pushState(int newState) {
+    myStateStack.add(yystate());
+    yybegin(newState);
+  }
+
+  private void popState() {
+    if (myStateStack.isEmpty()) return;
+
+    int state = myStateStack.removeInt(myStateStack.size() - 1);
+    yybegin(state);
   }
 %}
 
@@ -43,9 +63,38 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
 WHITE_SPACE = [\t ]+
 NEWLINE = \r\n|[\r\n]
 
+%eof{
+    resetInternal();
+%eof}
+
+%state BRACES_BODY
+
 %%
 
+// hard keywords
+<YYINITIAL, BRACES_BODY> {
+    "enum"                               { return ENUM_KEYWORD; }
+    "with"                               { return WITH_KEYWORD; }
+    "except"                             { return EXCEPT_KEYWORD; }
+    "to"                                 { return TO_KEYWORD; }
+    "use"                                { return USE_KEYWORD; }
+    "for"                                { return FOR_KEYWORD; }
+}
+
+<BRACES_BODY> {
+    {IDENTIFIER}                         { return IDENTIFIER; }
+}
+
+// soft keywords
 <YYINITIAL> {
+    "application"                        { return APPLICATION_KEYWORD; }
+    "entity"                             { return ENTITY_KEYWORD; }
+    "enum"                               { return ENUM_KEYWORD; }
+    "deployment"                         { return DEPLOYMENT_KEYWORD; }
+    "relationship"                       { return RELATIONSHIP_KEYWORD; }
+}
+
+<YYINITIAL, BRACES_BODY> {
     ","                                  { return COMMA; }
     ":"                                  { return COLON; }
     "*"                                  { return WILDCARD; }
@@ -55,22 +104,10 @@ NEWLINE = \r\n|[\r\n]
     "]"                                  { return RBRACKET; }
     "("                                  { return LPARENTH; }
     ")"                                  { return RPARENTH; }
-    "{"                                  { return LBRACE; }
-    "}"                                  { return RBRACE; }
+    "{"                                  { pushState(BRACES_BODY); return LBRACE; }
+    "}"                                  { popState(); return RBRACE; }
     "@"                                  { return STRUDEL; }
     "="                                  { return ASSIGN; }
-
-    "application"                        { return APPLICATION_KEYWORD; }
-    "config"                             { return CONFIG_KEYWORD; }
-    "entity"                             { return ENTITY_KEYWORD; }
-    "enum"                               { return ENUM_KEYWORD; }
-    "with"                               { return WITH_KEYWORD; }
-    "except"                             { return EXCEPT_KEYWORD; }
-    "deployment"                         { return DEPLOYMENT_KEYWORD; }
-    "relationship"                       { return RELATIONSHIP_KEYWORD; }
-    "to"                                 { return TO_KEYWORD; }
-    "use"                                { return USE_KEYWORD; }
-    "for"                                { return FOR_KEYWORD; }
 
     {IDENTIFIER}                         { return IDENTIFIER; }
     {INTEGER_LITERAL}                    { return INTEGER_NUMBER; }
@@ -83,4 +120,11 @@ NEWLINE = \r\n|[\r\n]
     {REGEX_STRING}                       { return REGEX_STRING; }
 }
 
-[^] { return BAD_CHARACTER; }
+[^] {
+    if (myStateStack.isEmpty()) {
+      return BAD_CHARACTER;
+    }
+
+    yypushback(1);
+    popState();
+}

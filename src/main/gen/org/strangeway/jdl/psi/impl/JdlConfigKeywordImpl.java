@@ -10,39 +10,21 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.jdl.psi.*;
-import com.intellij.navigation.ItemPresentation;
 
-public class JdlConfigBlockImpl extends ASTWrapperPsiElement implements JdlConfigBlock {
+public class JdlConfigKeywordImpl extends ASTWrapperPsiElement implements JdlConfigKeyword {
 
-  public JdlConfigBlockImpl(@NotNull ASTNode node) {
+  public JdlConfigKeywordImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitConfigBlock(this);
+    visitor.visitConfigKeyword(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof JdlVisitor) accept((JdlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public JdlConfigKeyword getConfigKeyword() {
-    return findNotNullChildByClass(JdlConfigKeyword.class);
-  }
-
-  @Override
-  @NotNull
-  public List<JdlOptionNameValue> getOptionNameValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, JdlOptionNameValue.class);
-  }
-
-  @Override
-  public @NotNull ItemPresentation getPresentation() {
-    return JdlPsiUtils.getPresentation(this);
   }
 
 }
