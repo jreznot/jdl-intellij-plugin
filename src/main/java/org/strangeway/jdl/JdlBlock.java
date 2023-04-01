@@ -121,7 +121,9 @@ final class JdlBlock implements ASTBlock {
           wrap = childWrap;
         }
 
-        indent = Indent.getNormalIndent();
+        if (!isEntityAnnotation(child)) {
+          indent = Indent.getNormalIndent();
+        }
       }
     } else if (child.getPsi() instanceof JdlValue
         && parent != null
@@ -136,6 +138,13 @@ final class JdlBlock implements ASTBlock {
     }
 
     return new JdlBlock(child, this, jdlCodeStyleSettings, alignment, indent, wrap, spacingBuilder);
+  }
+
+  private boolean isEntityAnnotation(ASTNode child) {
+    if (child.getElementType() != JdlTokenTypes.ANNOTATION) return false;
+
+    ASTNode treeParent = child.getTreeParent();
+    return treeParent.getElementType() == JdlTokenTypes.ENTITY;
   }
 
   @Override
