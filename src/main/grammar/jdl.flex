@@ -73,6 +73,9 @@ NEWLINE = \r\n|[\r\n]
 
 // hard keywords
 <YYINITIAL, BRACES_BODY> {
+    "true"                               { return TRUE; }
+    "false"                              { return FALSE; }
+
     "enum"                               { return ENUM_KEYWORD; }
     "with"                               { return WITH_KEYWORD; }
     "except"                             { return EXCEPT_KEYWORD; }
@@ -98,8 +101,6 @@ NEWLINE = \r\n|[\r\n]
     ","                                  { return COMMA; }
     ":"                                  { return COLON; }
     "*"                                  { return WILDCARD; }
-    "true"                               { return TRUE; }
-    "false"                              { return FALSE; }
     "["                                  { return LBRACKET; }
     "]"                                  { return RBRACKET; }
     "("                                  { return LPARENTH; }
