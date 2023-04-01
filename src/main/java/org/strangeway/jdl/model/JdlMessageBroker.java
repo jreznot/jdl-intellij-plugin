@@ -21,7 +21,8 @@ package org.strangeway.jdl.model;
 
 public enum JdlMessageBroker implements JdlModelEnum {
   FALSE("false"),
-  KAFKA("kafka");
+  KAFKA("kafka"),
+  PULSAR("pulsar");
 
   private final String id;
 
