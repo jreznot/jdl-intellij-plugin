@@ -31,12 +31,18 @@ public final class JhipsterIcons {
   private static final Icon REQUIRED_MARK_ICON = getIcon("/org/strangeway/jdl/icons/required-mark.svg", JhipsterIcons.class);
   private static final Icon REQUIRED_FIELD = new LayeredIcon(AllIcons.Nodes.Field, REQUIRED_MARK_ICON);
 
+  private static final Icon APPLICATION_ICON = getIcon("/org/strangeway/jdl/icons/structure/application.svg", JhipsterIcons.class);
+  private static final Icon CONFIG_ICON = getIcon("/org/strangeway/jdl/icons/structure/config.svg", JhipsterIcons.class);
+  private static final Icon DEPLOY_ICON = getIcon("/org/strangeway/jdl/icons/structure/deploy.svg", JhipsterIcons.class);
+  private static final Icon ENTITY_ICON = getIcon("/org/strangeway/jdl/icons/structure/entity.svg", JhipsterIcons.class);
+  private static final Icon RELATION_ICON = getIcon("/org/strangeway/jdl/icons/structure/relation.svg", JhipsterIcons.class);
+
   public static Icon getRelationshipIcon() {
-    return AllIcons.General.InheritedMethod;
+    return RELATION_ICON;
   }
 
   public static Icon getEntityIcon() {
-    return AllIcons.Javaee.PersistenceEntity;
+    return ENTITY_ICON;
   }
 
   public static Icon getEnumIcon() {
@@ -52,11 +58,11 @@ public final class JhipsterIcons {
   }
 
   public static Icon getConfigIcon() {
-    return AllIcons.Json.Object;
+    return CONFIG_ICON;
   }
 
   public static Icon getApplicationIcon() {
-    return AllIcons.RunConfigurations.Applet;
+    return APPLICATION_ICON;
   }
 
   public static Icon getFieldIcon() {
@@ -72,7 +78,7 @@ public final class JhipsterIcons {
   }
 
   public static Icon getDeployIcon() {
-    return AllIcons.Nodes.Deploy;
+    return DEPLOY_ICON;
   }
 
   public static Icon getFieldConstraintIcon() {

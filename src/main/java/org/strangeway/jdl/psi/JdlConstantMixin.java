@@ -86,7 +86,7 @@ public abstract class JdlConstantMixin extends ASTWrapperPsiElement implements J
 
       @Override
       public @NotNull Icon getIcon(boolean unused) {
-        return JhipsterIcons.getEntityIcon();
+        return JhipsterIcons.getConstantIcon();
       }
     };
   }
