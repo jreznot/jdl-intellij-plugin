@@ -41,6 +41,7 @@ public final class JdlConstants {
       "enum",
       "relationship",
       "dto",
+      "deployment",
       "entities",
       "service",
       "microservice",

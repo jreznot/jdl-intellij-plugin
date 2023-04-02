@@ -17,26 +17,36 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.strangeway.jdl;
+package org.strangeway.jdl.inspections;
 
-import com.intellij.testFramework.ParsingTestCase;
-import org.strangeway.jdl.psi.JdlParserDefinition;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
-public class JdlParserTest extends ParsingTestCase {
-    public JdlParserTest() {
-        super("", "jdl", new JdlParserDefinition());
-    }
+public class JdlHighlightingTest extends BasePlatformTestCase {
+  @Override
+  protected String getTestDataPath() {
+    return "src/test/resources/org/strangeway/jdl/highlighting";
+  }
 
-    @Override
-    protected String getTestDataPath() {
-        return "src/test/resources/org/strangeway/jdl/parser";
-    }
+  public void testNorthwind() {
+    doTest("Northwind.jdl");
+  }
 
-    public void testApplication() {
-        doTest(true);
-    }
+  public void testMicroservices() {
+    doTest("Microservices.jdl");
+  }
 
-    public void testBlog() {
-        doTest(true);
-    }
+  public void testSpace() {
+    doTest("Space.jdl");
+  }
+
+  private void doTest(String file) {
+    myFixture.enableInspections(
+        JdlIncorrectOptionTypeInspection.class,
+        JdlUnknownOptionInspection.class,
+        JdlDuplicatedDeclarationInspection.class
+    );
+
+    myFixture.configureByFile(file);
+    myFixture.checkHighlighting(true, false, true);
+  }
 }
