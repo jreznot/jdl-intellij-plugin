@@ -27,15 +27,15 @@ import javax.swing.*;
 import static com.intellij.openapi.util.IconLoader.getIcon;
 
 public final class JhipsterIcons {
-  public static final Icon FILE_ICON = getIcon("/org/strangeway/jdl/icons/hipster.svg", JhipsterIcons.class);
+  public static final Icon FILE_ICON = getIcon("/org/strangeway/jdl/icons/file.svg", JhipsterIcons.class);
   private static final Icon REQUIRED_MARK_ICON = getIcon("/org/strangeway/jdl/icons/required-mark.svg", JhipsterIcons.class);
   private static final Icon REQUIRED_FIELD = new LayeredIcon(AllIcons.Nodes.Field, REQUIRED_MARK_ICON);
 
-  private static final Icon APPLICATION_ICON = getIcon("/org/strangeway/jdl/icons/structure/application.svg", JhipsterIcons.class);
-  private static final Icon CONFIG_ICON = getIcon("/org/strangeway/jdl/icons/structure/config.svg", JhipsterIcons.class);
-  private static final Icon DEPLOY_ICON = getIcon("/org/strangeway/jdl/icons/structure/deploy.svg", JhipsterIcons.class);
-  private static final Icon ENTITY_ICON = getIcon("/org/strangeway/jdl/icons/structure/entity.svg", JhipsterIcons.class);
-  private static final Icon RELATION_ICON = getIcon("/org/strangeway/jdl/icons/structure/relation.svg", JhipsterIcons.class);
+  private static final Icon APPLICATION_ICON = getIcon("/org/strangeway/jdl/icons/application.svg", JhipsterIcons.class);
+  private static final Icon CONFIG_ICON = getIcon("/org/strangeway/jdl/icons/config.svg", JhipsterIcons.class);
+  private static final Icon DEPLOY_ICON = getIcon("/org/strangeway/jdl/icons/deploy.svg", JhipsterIcons.class);
+  private static final Icon ENTITY_ICON = getIcon("/org/strangeway/jdl/icons/entity.svg", JhipsterIcons.class);
+  private static final Icon RELATION_ICON = getIcon("/org/strangeway/jdl/icons/relation.svg", JhipsterIcons.class);
 
   public static Icon getRelationshipIcon() {
     return RELATION_ICON;
