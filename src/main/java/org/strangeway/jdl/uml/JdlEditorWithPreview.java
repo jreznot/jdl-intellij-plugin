@@ -19,7 +19,6 @@
 package org.strangeway.jdl.uml;
 
 import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.actionSystem.ex.ActionUtil;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.util.Key;
 import org.jetbrains.annotations.NotNull;
@@ -73,8 +72,7 @@ public final class JdlEditorWithPreview extends TextEditorWithPreview {
 
   @Override
   public void setState(@NotNull FileEditorState state) {
-    if (state instanceof JdlEditorWithPreviewState) {
-      final var actualState = ((JdlEditorWithPreviewState) state);
+    if (state instanceof JdlEditorWithPreviewState actualState) {
       super.setState(actualState.getUnderlyingState());
     }
   }
@@ -87,17 +85,17 @@ public final class JdlEditorWithPreview extends TextEditorWithPreview {
 
   @Override
   protected @NotNull ToggleAction getShowEditorAction() {
-    return (ToggleAction) Objects.requireNonNull(ActionUtil.getAction("JDL.Layout.EditorOnly"));
+    return (ToggleAction) Objects.requireNonNull(ActionManager.getInstance().getAction("JDL.Layout.EditorOnly"));
   }
 
   @Override
   protected @NotNull ToggleAction getShowEditorAndPreviewAction() {
-    return (ToggleAction) Objects.requireNonNull(ActionUtil.getAction("JDL.Layout.EditorAndPreview"));
+    return (ToggleAction) Objects.requireNonNull(ActionManager.getInstance().getAction("JDL.Layout.EditorAndPreview"));
   }
 
   @Override
   protected @NotNull ToggleAction getShowPreviewAction() {
-    return (ToggleAction) Objects.requireNonNull(ActionUtil.getAction("JDL.Layout.PreviewOnly"));
+    return (ToggleAction) Objects.requireNonNull(ActionManager.getInstance().getAction("JDL.Layout.PreviewOnly"));
   }
 
   static @Nullable JdlEditorWithPreview findSplitEditor(AnActionEvent event) {
@@ -117,7 +115,7 @@ public final class JdlEditorWithPreview extends TextEditorWithPreview {
         getShowEditorAction(),
         getShowEditorAndPreviewAction(),
         getShowPreviewAction(),
-        ActionUtil.getAction("JDL.Generate")
+        ActionManager.getInstance().getAction("JDL.Generate")
     );
   }
 }
