@@ -125,6 +125,6 @@ NEWLINE = \r\n|[\r\n]
       return BAD_CHARACTER;
     }
 
-    yypushback(1);
+    yypushback(yylength());
     popState();
 }
