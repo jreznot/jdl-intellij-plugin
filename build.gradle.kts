@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "2.3.3"
+version = "2.3.4"
 
 repositories {
   mavenCentral()
@@ -33,7 +33,7 @@ tasks {
     untilBuild.set("233.*")
 
     changeNotes.set("""
-      New icons for files and structure view
+      Minor fixes
     """.trimIndent())
   }
 

@@ -63,6 +63,8 @@
 
     <navbar implementation="org.strangeway.jdl.JdlNavbarExtension"/>
 
+    <editorNotificationProvider implementation="org.strangeway.jdl.JdlUpgradeNotification"/>
+
     <configurationType implementation="org.strangeway.jdl.run.JdlRunConfigurationType"/>
     <runConfigurationProducer implementation="org.strangeway.jdl.run.JdlRunConfigurationProducer"/>
 
