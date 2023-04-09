@@ -21,6 +21,8 @@ package org.strangeway.jdl.inspections;
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
+import java.util.List;
+
 public class JdlHighlightingTest extends BasePlatformTestCase {
   @Override
   protected String getTestDataPath() {
@@ -40,11 +42,11 @@ public class JdlHighlightingTest extends BasePlatformTestCase {
   }
 
   private void doTest(String file) {
-    myFixture.enableInspections(
+    myFixture.enableInspections(List.of(
         JdlIncorrectOptionTypeInspection.class,
         JdlUnknownOptionInspection.class,
         JdlDuplicatedDeclarationInspection.class
-    );
+    ));
 
     myFixture.configureByFile(file);
     myFixture.checkHighlighting(true, false, true);

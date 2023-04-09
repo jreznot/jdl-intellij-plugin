@@ -21,6 +21,8 @@ package org.strangeway.jdl.inspections;
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
+import java.util.List;
+
 public class JdlInspectionsTest extends BasePlatformTestCase {
   @Override
   protected String getTestDataPath() {
@@ -28,37 +30,37 @@ public class JdlInspectionsTest extends BasePlatformTestCase {
   }
 
   public void testUnusedEntities() {
-    myFixture.enableInspections(JdlUnusedDeclarationInspection.class);
+    myFixture.enableInspections(List.of(JdlUnusedDeclarationInspection.class));
     myFixture.configureByFile("UnusedEntities.jdl");
     myFixture.checkHighlighting();
   }
 
   public void testUnusedEnums() {
-    myFixture.enableInspections(JdlUnusedDeclarationInspection.class);
+    myFixture.enableInspections(List.of(JdlUnusedDeclarationInspection.class));
     myFixture.configureByFile("UnusedEnums.jdl");
     myFixture.checkHighlighting();
   }
 
   public void testDuplicatedEntity() {
-    myFixture.enableInspections(JdlDuplicatedDeclarationInspection.class);
+    myFixture.enableInspections(List.of(JdlDuplicatedDeclarationInspection.class));
     myFixture.configureByFile("DuplicatedEntity.jdl");
     myFixture.checkHighlighting();
   }
 
   public void testDuplicatedEnum() {
-    myFixture.enableInspections(JdlDuplicatedDeclarationInspection.class);
+    myFixture.enableInspections(List.of(JdlDuplicatedDeclarationInspection.class));
     myFixture.configureByFile("DuplicatedEnum.jdl");
     myFixture.checkHighlighting();
   }
 
   public void testUnknownOption() {
-    myFixture.enableInspections(JdlUnknownOptionInspection.class);
+    myFixture.enableInspections(List.of(JdlUnknownOptionInspection.class));
     myFixture.configureByFile("UnknownOptions.jdl");
     myFixture.checkHighlighting();
   }
 
   public void testIncorrectOptionType() {
-    myFixture.enableInspections(JdlIncorrectOptionTypeInspection.class);
+    myFixture.enableInspections(List.of(JdlIncorrectOptionTypeInspection.class));
     myFixture.configureByFile("IncorrectOptionTypes.jdl");
     myFixture.checkHighlighting();
   }

@@ -71,4 +71,39 @@ public class JdlCompletionTest extends BasePlatformTestCase {
         "kubernetesUseDynamicStorage", "monitoring", "openshiftNamespace", "registryReplicas",
         "serviceDiscoveryType", "storageType");
   }
+
+  public void testFieldTypes() {
+    myFixture.testCompletionVariants("FieldTypes.jdl",
+        "SpaceEventType", "AnyBlob", "BigDecimal", "Blob", "Boolean", "Date", "Double", "Duration",
+        "Float", "ImageBlob", "Instant", "Integer", "LocalDate", "Long", "String", "TextBlob", "UUID",
+        "ZonedDateTime"
+    );
+  }
+
+  public void testRelationshipTypes() {
+    myFixture.testCompletionVariants("RelationshipTypes.jdl",
+        "ManyToMany", "ManyToOne", "OneToMany", "OneToOne");
+  }
+
+  public void testBuildToolValues() {
+    myFixture.testCompletionVariants("BuildToolOptions.jdl",
+        "gradle", "maven");
+  }
+
+  public void testDatabaseValues() {
+    myFixture.testCompletionVariants("DatabaseOptions.jdl",
+        "mariadb", "mongodb", "mssql", "mysql", "neo4j", "no", "oracle", "postgresql");
+  }
+
+  public void testServiceDiscoveryTypes() {
+    myFixture.testCompletionVariants("ServiceDiscoveryOptions.jdl",
+        "consul", "eureka", "no");
+  }
+
+  public void testFieldConstraints() {
+    myFixture.testCompletionVariants("FieldConstraints.jdl",
+        "max()", "maxbytes()", "maxlength()", "min()", "minbytes()",
+        "minlength()", "pattern()", "required", "unique"
+    );
+  }
 }
