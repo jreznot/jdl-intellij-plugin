@@ -31,11 +31,11 @@ public final class JhipsterIcons {
   private static final Icon REQUIRED_MARK_ICON = getIcon("/org/strangeway/jdl/icons/required-mark.svg", JhipsterIcons.class);
   private static final Icon REQUIRED_FIELD = new LayeredIcon(AllIcons.Nodes.Field, REQUIRED_MARK_ICON);
 
-  private static final Icon APPLICATION_ICON = getIcon("/org/strangeway/jdl/icons/application.svg", JhipsterIcons.class);
-  private static final Icon CONFIG_ICON = getIcon("/org/strangeway/jdl/icons/config.svg", JhipsterIcons.class);
+  private static final Icon APPLICATION_ICON = AllIcons.RunConfigurations.Application;
+  private static final Icon CONFIG_ICON = AllIcons.FileTypes.Xml;
+  private static final Icon ENTITY_ICON = AllIcons.Javaee.PersistenceEntity;
   private static final Icon DEPLOY_ICON = getIcon("/org/strangeway/jdl/icons/deploy.svg", JhipsterIcons.class);
-  private static final Icon ENTITY_ICON = getIcon("/org/strangeway/jdl/icons/entity.svg", JhipsterIcons.class);
-  private static final Icon RELATION_ICON = getIcon("/org/strangeway/jdl/icons/relation.svg", JhipsterIcons.class);
+  private static final Icon RELATION_ICON = AllIcons.Hierarchy.Subtypes;
 
   public static Icon getRelationshipIcon() {
     return RELATION_ICON;

@@ -1,10 +1,10 @@
 plugins {
   id("java")
-  id("org.jetbrains.intellij") version "1.13.3"
+  id("org.jetbrains.intellij") version "1.15.0"
 }
 
 group = "org.strangeway.jdl"
-version = "2.3.4"
+version = "2.4.0"
 
 repositories {
   mavenCentral()
@@ -15,7 +15,7 @@ java.sourceSets["main"].java {
 }
 
 intellij {
-  version.set("2023.1")
+  version.set("2023.2")
   type.set("IU")
 
   plugins.set(listOf("com.intellij.java", "uml"))
@@ -29,11 +29,11 @@ tasks {
   }
 
   patchPluginXml {
-    sinceBuild.set("231")
-    untilBuild.set("233.*")
+    sinceBuild.set("232")
+    untilBuild.set("241.*")
 
     changeNotes.set("""
-      Minor fixes
+      Unify icons with new UI in IntelliJ IDEA
     """.trimIndent())
   }
 
