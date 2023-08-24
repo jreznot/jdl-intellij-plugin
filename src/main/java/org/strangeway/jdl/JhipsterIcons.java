@@ -27,14 +27,15 @@ import javax.swing.*;
 import static com.intellij.openapi.util.IconLoader.getIcon;
 
 public final class JhipsterIcons {
-  public static final Icon FILE_ICON = getIcon("/org/strangeway/jdl/icons/file.svg", JhipsterIcons.class);
   private static final Icon REQUIRED_MARK_ICON = getIcon("/org/strangeway/jdl/icons/required-mark.svg", JhipsterIcons.class);
+
+  public static final Icon FILE_ICON = AllIcons.FileTypes.UiForm;
   private static final Icon REQUIRED_FIELD = new LayeredIcon(AllIcons.Nodes.Field, REQUIRED_MARK_ICON);
 
   private static final Icon APPLICATION_ICON = AllIcons.RunConfigurations.Application;
   private static final Icon CONFIG_ICON = AllIcons.FileTypes.Xml;
   private static final Icon ENTITY_ICON = AllIcons.Javaee.PersistenceEntity;
-  private static final Icon DEPLOY_ICON = getIcon("/org/strangeway/jdl/icons/deploy.svg", JhipsterIcons.class);
+  private static final Icon DEPLOY_ICON = AllIcons.General.ProjectStructure;
   private static final Icon RELATION_ICON = AllIcons.Hierarchy.Subtypes;
 
   public static Icon getRelationshipIcon() {
