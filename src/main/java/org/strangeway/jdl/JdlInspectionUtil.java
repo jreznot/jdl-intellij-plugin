@@ -22,7 +22,6 @@ package org.strangeway.jdl;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.util.CachedValueProvider.Result;
 import com.intellij.psi.util.PsiModificationTracker;
@@ -34,6 +33,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.intellij.psi.util.CachedValuesManager.getCachedValue;
+import static java.util.Objects.requireNonNullElse;
 
 public final class JdlInspectionUtil {
   private JdlInspectionUtil() {
@@ -43,7 +43,7 @@ public final class JdlInspectionUtil {
     return getCachedValue(file, () -> {
       Collection<JdlEntity> allEntities = JdlDeclarationsModel.findAllEntities(file);
       Map<String, List<JdlEntity>> map = allEntities.stream()
-          .collect(Collectors.groupingBy(PsiNamedElement::getName));
+          .collect(Collectors.groupingBy(jdlEntity -> requireNonNullElse(jdlEntity.getName(), "")));
       return Result.create(map, PsiModificationTracker.MODIFICATION_COUNT);
     });
   }
@@ -52,7 +52,7 @@ public final class JdlInspectionUtil {
     return getCachedValue(file, () -> {
       Collection<JdlEnum> allEnums = JdlDeclarationsModel.findAllEnums(file);
       Map<String, List<JdlEnum>> map = allEnums.stream()
-          .collect(Collectors.groupingBy(PsiNamedElement::getName));
+          .collect(Collectors.groupingBy(jdlEnum -> requireNonNullElse(jdlEnum.getName(), "")));
       return Result.create(map, PsiModificationTracker.MODIFICATION_COUNT);
     });
   }
