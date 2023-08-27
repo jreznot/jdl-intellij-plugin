@@ -30,6 +30,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.EditorNotificationPanel;
 import com.intellij.ui.EditorNotificationProvider;
 import com.intellij.ui.EditorNotifications;
+import com.intellij.util.concurrency.AppExecutorUtil;
 import com.intellij.util.io.HttpRequests;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -73,17 +74,18 @@ public class JdlUpgradeNotification implements EditorNotificationProvider {
 
   private static void dismiss(Project project) {
     PropertiesComponent.getInstance().setValue(KEY, true);
-
-    try {
-      var code = HttpRequests.request(augment(DISMISS)).connect(request ->
-          ((HttpURLConnection) request.getConnection()).getResponseCode());
-
-      Logger.getInstance(JdlUpgradeNotification.class).debug("Received " + code);
-    } catch (IOException e) {
-      Logger.getInstance(JdlUpgradeNotification.class).warn("Error on dismiss ", e);
-    }
-
     EditorNotifications.getInstance(project).updateAllNotifications();
+
+    AppExecutorUtil.getAppExecutorService().submit(() -> {
+      try {
+        var code = HttpRequests.request(augment(DISMISS)).connect(request ->
+            ((HttpURLConnection) request.getConnection()).getResponseCode());
+
+        Logger.getInstance(JdlUpgradeNotification.class).debug("Received " + code);
+      } catch (IOException e) {
+        Logger.getInstance(JdlUpgradeNotification.class).warn("Error on dismiss ", e);
+      }
+    });
   }
 
   private static String augment(String link) {
