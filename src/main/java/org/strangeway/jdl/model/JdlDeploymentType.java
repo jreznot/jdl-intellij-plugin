@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlDeploymentType implements JdlModelEnum {
   DOCKER_COMPOSE("docker-compose"),
   OPENSHIFT("openshift"),

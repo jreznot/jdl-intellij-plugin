@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlClientPackageManager implements JdlModelEnum {
   NPM("npm"),
   YARN("yarn");

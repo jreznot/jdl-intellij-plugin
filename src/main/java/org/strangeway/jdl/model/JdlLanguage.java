@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlLanguage implements JdlModelEnum {
   ALBANIAN("al"),
   ARABIC("ar-ly"),

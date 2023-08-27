@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlAuthenticationType implements JdlModelEnum {
   NO("no"),
   JWT("jwt"),

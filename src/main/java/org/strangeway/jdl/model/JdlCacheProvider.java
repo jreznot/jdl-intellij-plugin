@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlCacheProvider implements JdlModelEnum {
   NO("no"),
   CAFFEINE("caffeine"),

@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlSearchEngine implements JdlModelEnum {
   FALSE("false"),
   ELASTICSEARCH("elasticsearch"),

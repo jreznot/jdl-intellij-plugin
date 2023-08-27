@@ -48,7 +48,7 @@ public final class JdlCodeStyleSettings extends CustomCodeStyleSettings {
 
   public enum PropertyAlignment {
     DO_NOT_ALIGN(0, "formatter.align.properties.none"),
-    ALIGN_ON_VALUE(1, "formatter.align.properties.allign");
+    ALIGN_ON_VALUE(1, "formatter.align.properties.align");
 
     @PropertyKey(resourceBundle = JdlBundle.BUNDLE)
     private final String myKey;

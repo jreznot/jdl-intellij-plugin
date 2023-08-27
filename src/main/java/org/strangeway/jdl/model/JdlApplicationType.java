@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlApplicationType implements JdlModelEnum {
   GATEWAY("gateway"),
   MICROSERVICE("microservice"),

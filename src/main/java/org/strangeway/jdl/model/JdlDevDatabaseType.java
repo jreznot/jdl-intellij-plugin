@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlDevDatabaseType implements JdlModelEnum {
   H2DISK("h2Disk"),
   H2MEMORY("h2Memory"),

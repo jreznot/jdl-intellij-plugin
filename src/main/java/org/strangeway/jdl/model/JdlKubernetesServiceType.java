@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlKubernetesServiceType implements JdlModelEnum {
   LOAD_BALANCER("LoadBalancer"),
   NODE_PORT("NodePort"),

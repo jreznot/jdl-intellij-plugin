@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlProdDatabaseType implements JdlModelEnum {
   MYSQL("mysql"),
   MARIADB("mariadb"),

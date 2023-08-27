@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlClientFramework implements JdlModelEnum {
   ANGULARX("angularX"),
   ANGULAR("angular"),

@@ -37,7 +37,6 @@ import org.strangeway.jdl.psi.*;
 import org.strangeway.jdl.uml.model.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.strangeway.jdl.JdlConstants.USER_ENTITY_NAME;
 
@@ -134,16 +133,14 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
     Map<String, JdlEnumNodeData> enums = new HashMap<>();
 
     for (var declaration : file.getDeclarations()) {
-      if (declaration instanceof JdlEnum) {
-        JdlEnum enumeration = (JdlEnum) declaration;
+      if (declaration instanceof JdlEnum enumeration) {
         String name = enumeration.getName();
 
         if (name != null) {
           List<String> enumItems = ContainerUtil.map(enumeration.getEnumValueList(), JdlEnumValue::getName);
           enums.put(name, new JdlEnumNodeData(name, enumItems));
         }
-      } else if (declaration instanceof JdlEntity) {
-        JdlEntity entity = (JdlEntity) declaration;
+      } else if (declaration instanceof JdlEntity entity) {
         String name = entity.getName();
 
         if (name != null) {
@@ -157,7 +154,7 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
     List<JdlRelationshipGroup> relationships = Arrays.stream(file.getChildren())
         .filter(c -> c instanceof JdlRelationshipGroup)
         .map(c -> ((JdlRelationshipGroup) c))
-        .collect(Collectors.toList());
+        .toList();
 
     List<JdlEntityNodeLink> entityLinks = new ArrayList<>();
     for (JdlRelationshipGroup relationshipGroup : relationships) {
@@ -168,7 +165,7 @@ final class JdlUmlDataModel extends DiagramDataModel<JdlNodeData> {
         var entityPair = mapping.getRelationshipEntityList().stream()
             .map(JdlRelationshipEntity::getId)
             .map(PsiElement::getText)
-            .collect(Collectors.toList());
+            .toList();
 
         if (entityPair.size() == 2) {
           if (USER_ENTITY_NAME.equals(entityPair.get(0)) || USER_ENTITY_NAME.equals(entityPair.get(1))) {

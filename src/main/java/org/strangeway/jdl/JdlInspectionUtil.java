@@ -86,8 +86,7 @@ public final class JdlInspectionUtil {
       public void visitWildcardLiteral(@NotNull JdlWildcardLiteral o) {
         super.visitWildcardLiteral(o);
 
-        if (o.getParent() instanceof JdlConfigurationOption) {
-          JdlConfigurationOption configurationOption = (JdlConfigurationOption) o.getParent();
+        if (o.getParent() instanceof JdlConfigurationOption configurationOption) {
           if ("entities".equals(configurationOption.getName())) {
             allUsed.set(true);
           }
@@ -96,8 +95,7 @@ public final class JdlInspectionUtil {
 
       private boolean isUnderEntitiesSelector(@NotNull PsiElement o) {
         if (o.getParent() instanceof JdlEntitiesList
-            && o.getParent().getParent() instanceof JdlConfigurationOption) {
-          JdlConfigurationOption configurationOption = (JdlConfigurationOption) o.getParent().getParent();
+            && o.getParent().getParent() instanceof JdlConfigurationOption configurationOption) {
           return "entities".equals(configurationOption.getName());
         }
         return false;

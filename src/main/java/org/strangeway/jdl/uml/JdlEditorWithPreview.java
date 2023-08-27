@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public final class JdlEditorWithPreview extends TextEditorWithPreview {
+final class JdlEditorWithPreview extends TextEditorWithPreview {
   public static final Key<JdlEditorWithPreview> PARENT_SPLIT_EDITOR_KEY = Key.create("jdl.parentSplit");
 
   public JdlEditorWithPreview(@NotNull TextEditor editor, @NotNull JdlPreviewFileEditor preview) {

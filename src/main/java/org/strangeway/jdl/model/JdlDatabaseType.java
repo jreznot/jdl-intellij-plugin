@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlDatabaseType implements JdlModelEnum {
   NO("no"),
   SQL("sql"),

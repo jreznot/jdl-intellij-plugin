@@ -19,6 +19,7 @@
 
 package org.strangeway.jdl.model;
 
+@SuppressWarnings("unused")
 public enum JdlTestFramework implements JdlModelEnum {
   CYPRESS("cypress"),
   PROTRACTOR("protractor"),
