@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "2.4.0"
+version = "2.4.1"
 
 repositories {
   mavenCentral()
@@ -33,7 +33,7 @@ tasks {
     untilBuild.set("241.*")
 
     changeNotes.set("""
-      Unify icons with new UI in IntelliJ IDEA
+      Allow jdl search option with no value
     """.trimIndent())
   }
 
