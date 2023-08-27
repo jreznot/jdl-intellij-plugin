@@ -22,6 +22,7 @@ package org.strangeway.jdl.model;
 public enum JdlSearchEngine implements JdlModelEnum {
   FALSE("false"),
   ELASTICSEARCH("elasticsearch"),
+  COUCHBASE("couchbase"),
   NO("no");
 
   private final String id;
