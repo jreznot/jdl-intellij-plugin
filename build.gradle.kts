@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.jdl"
-version = "2.4.1"
+version = "2.4.2"
 
 repositories {
   mavenCentral()
@@ -33,7 +33,7 @@ tasks {
     untilBuild.set("241.*")
 
     changeNotes.set("""
-      Allow jdl search option with no value
+      Enabled JDL highlighting during indexing
     """.trimIndent())
   }
 

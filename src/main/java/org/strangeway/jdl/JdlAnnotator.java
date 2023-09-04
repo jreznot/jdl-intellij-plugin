@@ -23,6 +23,8 @@ import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
+import com.intellij.openapi.project.DumbAware;
+import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.JavaPsiFacade;
@@ -41,7 +43,7 @@ import static com.intellij.psi.search.GlobalSearchScope.allScope;
 import static com.intellij.psi.util.PsiTreeUtil.findFirstParent;
 import static org.strangeway.jdl.JdlConstants.APPLICATION_BASE_NAME;
 
-final class JdlAnnotator implements Annotator {
+final class JdlAnnotator implements Annotator, DumbAware {
   @Override
   public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
     if (element instanceof JdlConfigKeyword) {
@@ -143,6 +145,8 @@ final class JdlAnnotator implements Annotator {
   }
 
   private static boolean isJdkConfigured(@NotNull Project project) {
+    if (DumbService.isDumb(project)) return false;
+
     return CachedValuesManager.getManager(project).getCachedValue(project, () -> {
       PsiClass stringClass = JavaPsiFacade.getInstance(project).findClass("java.lang.String", allScope(project));
       return Result.create(stringClass != null, ProjectRootManager.getInstance(project));
