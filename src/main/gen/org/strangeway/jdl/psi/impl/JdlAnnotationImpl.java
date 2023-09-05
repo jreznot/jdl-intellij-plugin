@@ -1,15 +1,15 @@
 // This is a generated file. Not intended for manual editing.
 package org.strangeway.jdl.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import org.strangeway.jdl.psi.*;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElementVisitor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.strangeway.jdl.psi.JdlAnnotation;
+import org.strangeway.jdl.psi.JdlAnnotationId;
+import org.strangeway.jdl.psi.JdlAnnotationValue;
+import org.strangeway.jdl.psi.JdlVisitor;
 
 public class JdlAnnotationImpl extends ASTWrapperPsiElement implements JdlAnnotation {
 

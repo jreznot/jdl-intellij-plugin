@@ -49,8 +49,14 @@ final class JdlCompletionContributor extends CompletionContributor {
             .andNot(jdlIdentifier().inside(JdlEntitiesList.class)),
         new KeywordsCompletionProvider(JdlConstants.TOP_LEVEL_KEYWORDS));
 
-    extend(CompletionType.BASIC, jdlIdentifier().inside(JdlRelationshipMapping.class),
+    extend(CompletionType.BASIC, jdlIdentifier().inside(JdlRelationshipMapping.class).andNot(psiElement().inside(JdlRelationshipOption.class)),
         new KeywordsCompletionProvider(JdlConstants.RELATIONSHIP_NESTED_KEYWORDS));
+
+    extend(CompletionType.BASIC, jdlIdentifier().inside(JdlRelationshipOptionId.class),
+        new OptionCompletionProvider(RELATIONSHIP_OPTIONS));
+
+    extend(CompletionType.BASIC, psiElement().inside(JdlStringLiteral.class).inside(psiElement(JdlRelationshipOption.class)),
+        new OptionCompletionProvider(RELATIONSHIP_OPTION_VALUES));
 
     extend(CompletionType.BASIC, jdlIdentifier().inside(JdlConfigurationOption.class),
         new KeywordsCompletionProvider(JdlConstants.CONFIGURATION_OPTION_NESTED_KEYWORDS));
@@ -204,6 +210,22 @@ final class JdlCompletionContributor extends CompletionContributor {
       for (var topLevelKeyword : applicationNestedKeywords) {
         var element = LookupElementBuilder.create(topLevelKeyword).withBoldness(true);
         result.addElement(TailTypeDecorator.withTail(element, TailType.INSERT_SPACE));
+      }
+    }
+  }
+
+  private static final class OptionCompletionProvider extends CompletionProvider<CompletionParameters> {
+    private final List<String> keywords;
+
+    private OptionCompletionProvider(List<String> keywords) {
+      this.keywords = keywords;
+    }
+
+    @Override
+    protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context,
+                                  @NotNull CompletionResultSet result) {
+      for (var k : keywords) {
+        result.addElement(LookupElementBuilder.create(k));
       }
     }
   }

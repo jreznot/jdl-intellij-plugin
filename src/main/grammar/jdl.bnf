@@ -280,7 +280,13 @@ relationshipMapping ::= relationshipEntity NEWLINE* TO_KEYWORD NEWLINE* relation
     pin = 1
 }
 
-relationshipEntity ::= id relationshipDetails? {
+relationshipEntity ::= relationshipOption? id relationshipDetails? {
+    pin = 2
+}
+
+relationshipOptionId ::= IDENTIFIER
+
+relationshipOption ::= STRUDEL relationshipOptionId (LPARENTH stringLiteral RPARENTH)? {
     pin = 1
 }
 

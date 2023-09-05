@@ -111,7 +111,7 @@ final class JdlAnnotator implements Annotator, DumbAware {
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_KEYWORD)
           .create();
-    } else if (element instanceof JdlAnnotationId) {
+    } else if (element instanceof JdlAnnotationId || element instanceof JdlRelationshipOptionId) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(element.getTextRange())
           .textAttributes(JdlSyntaxHighlighter.JDL_ANNOTATION)

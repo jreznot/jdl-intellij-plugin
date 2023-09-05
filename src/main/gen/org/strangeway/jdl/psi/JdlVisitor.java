@@ -1,10 +1,10 @@
 // This is a generated file. Not intended for manual editing.
 package org.strangeway.jdl.psi;
 
-import org.jetbrains.annotations.*;
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiNameIdentifierOwner;
+import org.jetbrains.annotations.NotNull;
 
 public class JdlVisitor extends PsiElementVisitor {
 
@@ -165,6 +165,14 @@ public class JdlVisitor extends PsiElementVisitor {
   }
 
   public void visitRelationshipMapping(@NotNull JdlRelationshipMapping o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRelationshipOption(@NotNull JdlRelationshipOption o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRelationshipOptionId(@NotNull JdlRelationshipOptionId o) {
     visitPsiElement(o);
   }
 

@@ -6,16 +6,19 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.strangeway.jdl.psi.*;
+import org.strangeway.jdl.psi.JdlRelationshipOption;
+import org.strangeway.jdl.psi.JdlRelationshipOptionId;
+import org.strangeway.jdl.psi.JdlStringLiteral;
+import org.strangeway.jdl.psi.JdlVisitor;
 
-public class JdlRelationshipEntityImpl extends ASTWrapperPsiElement implements JdlRelationshipEntity {
+public class JdlRelationshipOptionImpl extends ASTWrapperPsiElement implements JdlRelationshipOption {
 
-  public JdlRelationshipEntityImpl(@NotNull ASTNode node) {
+  public JdlRelationshipOptionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull JdlVisitor visitor) {
-    visitor.visitRelationshipEntity(this);
+    visitor.visitRelationshipOption(this);
   }
 
   @Override
@@ -25,21 +28,15 @@ public class JdlRelationshipEntityImpl extends ASTWrapperPsiElement implements J
   }
 
   @Override
-  @NotNull
-  public JdlId getId() {
-    return findNotNullChildByClass(JdlId.class);
+  @Nullable
+  public JdlRelationshipOptionId getRelationshipOptionId() {
+    return findChildByClass(JdlRelationshipOptionId.class);
   }
 
   @Override
   @Nullable
-  public JdlRelationshipDetails getRelationshipDetails() {
-    return findChildByClass(JdlRelationshipDetails.class);
-  }
-
-  @Override
-  @Nullable
-  public JdlRelationshipOption getRelationshipOption() {
-    return findChildByClass(JdlRelationshipOption.class);
+  public JdlStringLiteral getStringLiteral() {
+    return findChildByClass(JdlStringLiteral.class);
   }
 
 }

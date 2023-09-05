@@ -106,4 +106,16 @@ public class JdlCompletionTest extends BasePlatformTestCase {
         "minlength()", "pattern()", "required", "unique"
     );
   }
+
+  public void testRelationshipOptions() {
+    myFixture.testCompletionVariants("RelationshipOptions.jdl",
+        "Id", "OnDelete", "OnUpdate"
+    );
+  }
+
+  public void testRelationshipOptionValues() {
+    myFixture.testCompletionVariants("RelationshipOptionValues.jdl",
+        "CASCADE", "NO ACTION", "RESTRICT", "SET DEFAULT", "SET NULL"
+    );
+  }
 }

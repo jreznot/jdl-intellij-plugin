@@ -1,9 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package org.strangeway.jdl.psi;
 
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.tree.IElementType;
 import org.strangeway.jdl.psi.impl.*;
 
 public interface JdlTokenTypes {
@@ -48,6 +48,8 @@ public interface JdlTokenTypes {
   IElementType RELATIONSHIP_ENTITY = new JdlElementType("RELATIONSHIP_ENTITY");
   IElementType RELATIONSHIP_GROUP = new JdlElementType("RELATIONSHIP_GROUP");
   IElementType RELATIONSHIP_MAPPING = new JdlElementType("RELATIONSHIP_MAPPING");
+  IElementType RELATIONSHIP_OPTION = new JdlElementType("RELATIONSHIP_OPTION");
+  IElementType RELATIONSHIP_OPTION_ID = new JdlElementType("RELATIONSHIP_OPTION_ID");
   IElementType RELATIONSHIP_TYPE = new JdlElementType("RELATIONSHIP_TYPE");
   IElementType STRING_LITERAL = new JdlElementType("STRING_LITERAL");
   IElementType USE_CONFIGURATION_OPTION = new JdlElementType("USE_CONFIGURATION_OPTION");
@@ -209,6 +211,12 @@ public interface JdlTokenTypes {
       }
       else if (type == RELATIONSHIP_MAPPING) {
         return new JdlRelationshipMappingImpl(node);
+      }
+      else if (type == RELATIONSHIP_OPTION) {
+        return new JdlRelationshipOptionImpl(node);
+      }
+      else if (type == RELATIONSHIP_OPTION_ID) {
+        return new JdlRelationshipOptionIdImpl(node);
       }
       else if (type == RELATIONSHIP_TYPE) {
         return new JdlRelationshipTypeImpl(node);

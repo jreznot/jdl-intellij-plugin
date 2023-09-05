@@ -3,6 +3,6 @@ package org.strangeway.jdl.psi;
 
 import com.intellij.psi.PsiElement;
 
-public interface JdlConfigKeyword extends PsiElement {
+public interface JdlRelationshipOptionId extends PsiElement {
 
 }

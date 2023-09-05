@@ -4,12 +4,12 @@ package org.strangeway.jdl.psi;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.Nullable;
 
-public interface JdlAnnotationValue extends PsiElement {
+public interface JdlRelationshipOption extends PsiElement {
 
   @Nullable
-  JdlValue getValue();
+  JdlRelationshipOptionId getRelationshipOptionId();
 
   @Nullable
-  JdlWithOptionValue getWithOptionValue();
+  JdlStringLiteral getStringLiteral();
 
 }

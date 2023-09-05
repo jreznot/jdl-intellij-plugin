@@ -33,7 +33,8 @@ tasks {
     untilBuild.set("241.*")
 
     changeNotes.set("""
-      Enabled JDL highlighting during indexing
+      Enabled JDL highlighting during indexing. 
+      Support relationship options syntax.
     """.trimIndent())
   }
 

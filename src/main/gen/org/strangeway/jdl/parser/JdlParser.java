@@ -1,15 +1,16 @@
 // This is a generated file. Not intended for manual editing.
 package org.strangeway.jdl.parser;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LightPsiParser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import static org.strangeway.jdl.psi.JdlTokenTypes.*;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
-import com.intellij.lang.LightPsiParser;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
+
+import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
+import static org.strangeway.jdl.psi.JdlTokenTypes.*;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class JdlParser implements PsiParser, LightPsiParser {
@@ -1341,22 +1342,30 @@ public class JdlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id relationshipDetails?
+  // relationshipOption? id relationshipDetails?
   public static boolean relationshipEntity(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "relationshipEntity")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    if (!nextTokenIs(b, "<relationship entity>", IDENTIFIER, STRUDEL)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, RELATIONSHIP_ENTITY, null);
-    r = id(b, l + 1);
-    p = r; // pin = 1
-    r = r && relationshipEntity_1(b, l + 1);
+    Marker m = enter_section_(b, l, _NONE_, RELATIONSHIP_ENTITY, "<relationship entity>");
+    r = relationshipEntity_0(b, l + 1);
+    r = r && id(b, l + 1);
+    p = r; // pin = 2
+    r = r && relationshipEntity_2(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // relationshipOption?
+  private static boolean relationshipEntity_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipEntity_0")) return false;
+    relationshipOption(b, l + 1);
+    return true;
+  }
+
   // relationshipDetails?
-  private static boolean relationshipEntity_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "relationshipEntity_1")) return false;
+  private static boolean relationshipEntity_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipEntity_2")) return false;
     relationshipDetails(b, l + 1);
     return true;
   }
@@ -1416,9 +1425,9 @@ public class JdlParser implements PsiParser, LightPsiParser {
   // relationshipEntity NEWLINE* TO_KEYWORD NEWLINE* relationshipEntity withOption?
   public static boolean relationshipMapping(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "relationshipMapping")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    if (!nextTokenIs(b, "<relationship mapping>", IDENTIFIER, STRUDEL)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, RELATIONSHIP_MAPPING, null);
+    Marker m = enter_section_(b, l, _NONE_, RELATIONSHIP_MAPPING, "<relationship mapping>");
     r = relationshipEntity(b, l + 1);
     p = r; // pin = 1
     r = r && report_error_(b, relationshipMapping_1(b, l + 1));
@@ -1457,6 +1466,52 @@ public class JdlParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "relationshipMapping_5")) return false;
     withOption(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // STRUDEL relationshipOptionId (LPARENTH stringLiteral RPARENTH)?
+  public static boolean relationshipOption(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipOption")) return false;
+    if (!nextTokenIs(b, STRUDEL)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, RELATIONSHIP_OPTION, null);
+    r = consumeToken(b, STRUDEL);
+    p = r; // pin = 1
+    r = r && report_error_(b, relationshipOptionId(b, l + 1));
+    r = p && relationshipOption_2(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // (LPARENTH stringLiteral RPARENTH)?
+  private static boolean relationshipOption_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipOption_2")) return false;
+    relationshipOption_2_0(b, l + 1);
+    return true;
+  }
+
+  // LPARENTH stringLiteral RPARENTH
+  private static boolean relationshipOption_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipOption_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPARENTH);
+    r = r && stringLiteral(b, l + 1);
+    r = r && consumeToken(b, RPARENTH);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean relationshipOptionId(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "relationshipOptionId")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, RELATIONSHIP_OPTION_ID, r);
+    return r;
   }
 
   /* ********************************************************** */

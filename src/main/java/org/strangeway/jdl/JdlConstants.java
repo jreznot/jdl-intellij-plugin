@@ -66,6 +66,20 @@ public final class JdlConstants {
       "to"
   );
 
+  public static final List<String> RELATIONSHIP_OPTIONS = List.of(
+      "Id",
+      "OnDelete",
+      "OnUpdate"
+  );
+
+  public static final List<String> RELATIONSHIP_OPTION_VALUES = List.of(
+      "NO ACTION",
+      "RESTRICT",
+      "CASCADE",
+      "SET NULL",
+      "SET DEFAULT"
+  );
+
   public static final List<String> RELATIONSHIP_TYPES = List.of(
       "OneToMany",
       "ManyToOne",
